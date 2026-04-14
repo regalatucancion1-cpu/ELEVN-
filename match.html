@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Your DJ | ELEVN DJ'S</title>
+  <meta name="description" content="Answer a few questions and we'll match you with the right DJ for your wedding. Takes 3 minutes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --dark: #1a1a1a;
+      --darker: #111111;
+      --card: #1f1f1f;
+      --line: rgba(255,255,255,0.08);
+      --line-strong: rgba(255,255,255,0.22);
+      --light: #f0ede8;
+      --accent: #C46A35;
+      --accent-hover: #d47a42;
+      --white: #ffffff;
+      --gray: #888;
+      --light-gray: #ccc;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: #fff;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .mono { font-family: 'Space Mono', monospace; }
+
+    /* === NAV === */
+    nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 100;
+      background: var(--darker);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.1rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.02em;
+      color: #fff;
+      text-decoration: none;
+    }
+    .nav-logo span { font-weight: 400; color: rgba(255,255,255,0.5); }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a.active { color: var(--accent); }
+    @media (max-width: 820px) {
+      .nav-inner { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+    }
+
+    /* === PAGE SHELL === */
+    .shell {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 9rem 3rem 5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    @media (max-width: 820px) {
+      .shell { padding: 7rem 1.5rem 4rem; }
+    }
+
+    /* === PROGRESS BAR === */
+    .progress {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 3rem;
+      gap: 1.5rem;
+    }
+    .progress-label span { color: var(--accent); }
+    .progress-track {
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+      position: relative;
+      max-width: 600px;
+    }
+    .progress-fill {
+      position: absolute;
+      top: 0; left: 0;
+      height: 100%;
+      background: var(--accent);
+      transition: width .5s cubic-bezier(.6,.2,.2,1);
+    }
+
+    /* === STEP CARD === */
+    .step {
+      display: none;
+      flex-direction: column;
+      gap: 2.5rem;
+      animation: fadeUp .5s ease;
+    }
+    .step.active { display: flex; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .step-title {
+      font-size: clamp(2rem, 4.8vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      max-width: 20ch;
+    }
+    .step-sub {
+      color: var(--light-gray);
+      font-size: 1rem;
+      max-width: 55ch;
+    }
+
+    /* === INPUTS === */
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      max-width: 560px;
+    }
+    .field label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+    .field input, .field select, .field textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--line-strong);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      padding: .6rem 0;
+      outline: none;
+      transition: border-color .3s;
+    }
+    .field textarea {
+      font-size: 1.05rem;
+      font-weight: 400;
+      min-height: 100px;
+      resize: vertical;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: var(--accent);
+    }
+    .field input::placeholder, .field textarea::placeholder {
+      color: rgba(255,255,255,0.25);
+    }
+    .field select {
+      appearance: none;
+      cursor: pointer;
+      background-image: linear-gradient(45deg, transparent 50%, #fff 50%), linear-gradient(135deg, #fff 50%, transparent 50%);
+      background-position: calc(100% - 14px) 18px, calc(100% - 8px) 18px;
+      background-size: 6px 6px;
+      background-repeat: no-repeat;
+    }
+    .field select option { background: var(--dark); color: #fff; }
+
+    .fields-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      max-width: 720px;
+    }
+    @media (max-width: 640px) {
+      .fields-row { grid-template-columns: 1fr; }
+    }
+
+    /* === CHOICE CARDS === */
+    .choices {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      max-width: 860px;
+    }
+    @media (max-width: 720px) {
+      .choices { grid-template-columns: 1fr; }
+    }
+    .choice {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.5rem 1.5rem 1.4rem;
+      border: 1px solid var(--line-strong);
+      background: var(--card);
+      cursor: pointer;
+      transition: all .25s ease;
+      text-align: left;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+    }
+    .choice:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .choice.selected {
+      border-color: var(--accent);
+      background: rgba(196,106,53,0.08);
+    }
+    .choice-key {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      padding-top: 2px;
+      min-width: 20px;
+    }
+    .choice-text {
+      font-size: 1rem;
+      line-height: 1.45;
+      color: #f0ede8;
+    }
+
+    /* Multi-select chips */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .7rem;
+      max-width: 860px;
+    }
+    .chip {
+      padding: .8rem 1.2rem;
+      border: 1px solid var(--line-strong);
+      background: transparent;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: .92rem;
+      cursor: pointer;
+      border-radius: 999px;
+      transition: all .2s ease;
+    }
+    .chip:hover { border-color: var(--accent); }
+    .chip.selected {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* === BUTTONS === */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 3.5rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      padding: 1rem 2rem;
+      font-family: 'Space Mono', monospace;
+      font-size: .78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 1px solid var(--line-strong);
+      background: transparent;
+      color: #fff;
+      text-decoration: none;
+      transition: all .25s ease;
+    }
+    .btn:hover {
+      border-color: #fff;
+    }
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+      transform: translateX(3px);
+    }
+    .btn-ghost { opacity: .55; }
+    .btn-ghost:hover { opacity: 1; }
+    .btn[disabled] { opacity: .3; pointer-events: none; }
+
+    /* === INTRO === */
+    .intro { text-align: left; max-width: 780px; }
+    .intro .eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      display: inline-block;
+    }
+    .intro h1 {
+      font-size: clamp(2.8rem, 7vw, 5.8rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.035em;
+      margin-bottom: 1.8rem;
+    }
+    .intro h1 em {
+      font-style: normal;
+      color: var(--accent);
+      font-weight: 300;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: -0.01em;
+    }
+    .intro p {
+      font-size: 1.15rem;
+      color: var(--light-gray);
+      max-width: 55ch;
+      margin-bottom: 2.8rem;
+    }
+    .intro-meta {
+      display: flex;
+      gap: 2.5rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+    .intro-meta div {
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+    }
+    .intro-meta .mono-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .intro-meta .mono-value {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    /* === RESULT === */
+    .result {
+      display: none;
+      animation: fadeUp .6s ease;
+    }
+    .result.active { display: block; }
+    .result-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .result h2 {
+      font-size: clamp(2.6rem, 6.5vw, 5rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.8rem;
+      max-width: 16ch;
+    }
+    .result h2 span { color: var(--accent); }
+    .result-desc {
+      font-size: 1.15rem;
+      color: var(--light-gray);
+      max-width: 58ch;
+      margin-bottom: 2.8rem;
+    }
+    .result-card {
+      border: 1px solid var(--line-strong);
+      padding: 2rem;
+      background: var(--card);
+      max-width: 640px;
+      margin-bottom: 2.5rem;
+    }
+    .result-card h4 {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1rem;
+    }
+    .result-card ol {
+      list-style: none;
+      counter-reset: stepcount;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+    .result-card ol li {
+      counter-increment: stepcount;
+      padding-left: 2.2rem;
+      position: relative;
+      color: #f0ede8;
+    }
+    .result-card ol li::before {
+      content: counter(stepcount, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent);
+    }
+
+    /* textarea long question */
+    .long-field {
+      max-width: 760px;
+    }
+
+    /* Footer nav under form */
+    .backlink {
+      margin-top: 4rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .backlink a { color: #fff; text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><span>( </span>ELEVN<span> )</span> DJ'S</a>
+      <ul class="nav-links">
+        <li><a href="about.html">ABOUT US</a></li>
+        <li><a href="index.html#how-it-works">HOW IT WORKS</a></li>
+        <li><a href="index.html#profiles">PROFILES</a></li>
+        <li><a href="match.html" class="active">FIND YOUR DJ</a></li>
+        <li><a href="index.html#contact">GET IN TOUCH</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="shell">
+
+    <!-- Progress -->
+    <div class="progress" id="progressBar" style="display:none;">
+      <div class="progress-label"><span id="stepNow">01</span> / <span id="stepTotal">16</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="progress-label">FIND YOUR DJ</div>
+    </div>
+
+    <!-- INTRO -->
+    <section class="step active" id="intro">
+      <div class="intro">
+        <span class="eyebrow">( MATCHING ENGINE )</span>
+        <h1>Let's find <em>your</em> DJ.</h1>
+        <p>No guesswork. Tell us about your wedding, your crowd and your taste, and we'll match you with the right DJ from our selection. Takes about 3 minutes.</p>
+        <div class="intro-meta">
+          <div>
+            <span class="mono-label">QUESTIONS</span>
+            <span class="mono-value">16</span>
+          </div>
+          <div>
+            <span class="mono-label">TIME</span>
+            <span class="mono-value">~3 min</span>
+          </div>
+          <div>
+            <span class="mono-label">RESPONSE</span>
+            <span class="mono-value">Within 48h</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="startQuiz()">&rarr; Start matching</button>
+      </div>
+    </section>
+
+    <!-- Questions container — generated dynamically via JS -->
+    <div id="questions"></div>
+
+    <!-- RESULT -->
+    <section class="result" id="result">
+      <div class="result-eyebrow">( YOUR MATCH )</div>
+      <h2>You're a <span id="profileName">Crossover Elegant</span>.</h2>
+      <p class="result-desc" id="profileDesc"></p>
+
+      <div class="result-card">
+        <h4>What happens next</h4>
+        <ol>
+          <li>We review your answers and confirm DJ availability for your date.</li>
+          <li>We send you a proposal with details and pricing.</li>
+          <li>Once confirmed, your DJ will reach out to align on the vision.</li>
+        </ol>
+      </div>
+
+      <button class="btn btn-primary" id="sendBtn" onclick="sendAnswers()">&rarr; Send my answers</button>
+      <p class="backlink">Changed your mind? <a href="match.html">Start over</a></p>
+    </section>
+
+  </main>
+
+  <script>
+    // ============================================================
+    // ELEVN DJ MATCHING — Quiz logic
+    // Profiles: CS, CE, HED, GUS
+    // ============================================================
+
+    const PROFILES = {
+      CS:  { name: "Club Sophisticate",    desc: "Your sound is elegant, deep and curated. Think rooftop at golden hour rolling into a late-night club set. Taste over hits. Atmosphere over loudness." },
+      CE:  { name: "Crossover Elegant",    desc: "Your sound connects every generation without ever feeling cheesy. Classics, modern pop and dance floor anthems, delivered with a modern ear." },
+      HED: { name: "High Energy Driver",   desc: "Your sound is built for impact. Big drops, relentless momentum and a dance floor that refuses to empty. A party that builds and explodes." },
+      GUS: { name: "Global Urban Selector", desc: "Your sound is international and forward. R&B, hip-hop, Afrobeats and global grooves for a crowd that's been everywhere and heard it all." }
+    };
+
+    const QUESTIONS = [
+      // Section 1: Basics (no scoring)
+      { id: "name",    type: "text",  label: "01 / Basics",        title: "What's your name?", placeholder: "Your name" },
+      { id: "email",   type: "email", label: "02 / Basics",        title: "Your email", placeholder: "you@domain.com" },
+      { id: "date",    type: "date",  label: "03 / Basics",        title: "When is your wedding?" },
+      { id: "venue",   type: "text",  label: "04 / Basics",        title: "Where is your wedding?", placeholder: "City / venue" },
+      { id: "guests",  type: "select",label: "05 / Basics",        title: "Approximately how many guests?",
+        options: ["Under 50", "50–100", "100–150", "150–200", "200+"] },
+
+      // Section 2: Vibe (scoring)
+      { id: "vibe", type: "choice", label: "06 / Vibe", title: "How would you describe the vibe you want?",
+        options: [
+          { key: "A", text: "Elegant and sophisticated — think rooftop bar, not nightclub", score: { CS: 2 } },
+          { key: "B", text: "Fun and familiar — everyone singing along, all ages happy",    score: { CE: 2 } },
+          { key: "C", text: "High energy — we want people sweating on the dance floor",      score: { HED: 2 } },
+          { key: "D", text: "Cool and international — the sound of London, NYC, or Lagos",   score: { GUS: 2 } }
+        ]},
+      { id: "peak", type: "choice", label: "07 / Vibe", title: "When you imagine the peak of your party, what do you see?",
+        options: [
+          { key: "A", text: "A stylish crowd grooving to a deep, classy beat",                     score: { CS: 2 } },
+          { key: "B", text: "Everyone — grandparents included — on the dance floor to a classic",   score: { CE: 2 } },
+          { key: "C", text: "Hands in the air, bass drops, pure energy",                            score: { HED: 2 } },
+          { key: "D", text: "People vibing to R&B, Afrobeats, or hip-hop they've never heard at a wedding", score: { GUS: 2 } }
+        ]},
+      { id: "important", type: "choice", label: "08 / Vibe", title: "What's more important to you?",
+        options: [
+          { key: "A", text: "Taste and curation — fewer hits but better music",       score: { CS: 1, GUS: 1 } },
+          { key: "B", text: "Crowd connection — I want everyone to feel included",    score: { CE: 2 } },
+          { key: "C", text: "Energy and momentum — a party that builds and explodes", score: { HED: 2 } },
+          { key: "D", text: "Something different — I don't want it to sound like every other wedding", score: { CS: 1, GUS: 1 } }
+        ]},
+      { id: "crowd", type: "choice", label: "09 / Vibe", title: "Describe your crowd:",
+        options: [
+          { key: "A", text: "Mostly friends, 25–40, into music and nightlife",       score: { CS: 1, HED: 1 } },
+          { key: "B", text: "Mixed ages — parents, uncles, colleagues, and friends", score: { CE: 2 } },
+          { key: "C", text: "Young, energetic, here to party hard",                  score: { HED: 2 } },
+          { key: "D", text: "International, diverse backgrounds, well-traveled",     score: { GUS: 2 } }
+        ]},
+      { id: "place", type: "choice", label: "10 / Vibe", title: "If your wedding party was a place, it would be:",
+        options: [
+          { key: "A", text: "A rooftop bar in Barcelona with a view",                  score: { CS: 2 } },
+          { key: "B", text: "A lively wedding in Tuscany where everyone dances",       score: { CE: 2 } },
+          { key: "C", text: "A club at 2am when everyone's lost in the music",         score: { HED: 2 } },
+          { key: "D", text: "A warehouse party in East London with a global crowd",    score: { GUS: 2 } }
+        ]},
+
+      // Section 3: Music references
+      { id: "artists", type: "multi", label: "11 / Music", title: "Pick the artists that resonate with you",
+        sub: "Select all that apply.",
+        options: [
+          { text: "Disclosure, Peggy Gou, Kaytranada",        score: { CS: 1 } },
+          { text: "Dua Lipa, Bruno Mars, Michael Jackson",    score: { CE: 1 } },
+          { text: "Calvin Harris, David Guetta, Swedish House Mafia", score: { HED: 1 } },
+          { text: "Drake, Beyoncé, Burna Boy, Wizkid",        score: { GUS: 1 } },
+          { text: "Arctic Monkeys, The Strokes, Indie/Rock",  score: { CS: 1 } },
+          { text: "Bad Bunny, J Balvin, Reggaeton",           score: { HED: 1, CE: 1 } },
+          { text: "Frank Ocean, SZA, Tyler the Creator",      score: { GUS: 1 } },
+          { text: "ABBA, Queen, 80s classics",                score: { CE: 1 } }
+        ]},
+      { id: "reference", type: "textarea", label: "12 / Music",
+        title: "Describe a party where you loved the music.",
+        sub: "What made it great? Optional but helpful.",
+        placeholder: "A friend's wedding in Menorca — the DJ opened with deep house, moved into classics around 1am..."
+      },
+      { id: "avoid", type: "textarea", label: "13 / Music",
+        title: "Anything you definitely DON'T want?",
+        sub: "Genres, songs or vibes to avoid.",
+        placeholder: "No cheesy wedding classics, no commercial EDM..."
+      },
+
+      // Section 4: Final details
+      { id: "service", type: "choice", label: "14 / Details", title: "What do you need from us?",
+        options: [
+          { key: "A", text: "Full reception — cocktail, dinner, party" },
+          { key: "B", text: "Party only, after dinner" },
+          { key: "C", text: "After-party set" },
+          { key: "D", text: "Not sure yet, let's discuss" }
+        ]},
+      { id: "notes", type: "textarea", label: "15 / Details",
+        title: "Anything else we should know?",
+        sub: "Optional.",
+        placeholder: "Surprise performance, language of the crowd, bilingual MC..."
+      },
+      { id: "confirm", type: "confirm", label: "16 / Ready", title: "That's it.",
+        sub: "We'll review your answers and get back to you within 48 hours with your DJ match."
+      }
+    ];
+
+    // ---- State
+    let currentStep = 0; // 0 = intro
+    let answers = {};
+    let scores = { CS: 0, CE: 0, HED: 0, GUS: 0 };
+
+    const questionsEl = document.getElementById("questions");
+    const progressBar = document.getElementById("progressBar");
+    const progressFill = document.getElementById("progressFill");
+    const stepNow = document.getElementById("stepNow");
+    const stepTotal = document.getElementById("stepTotal");
+    stepTotal.textContent = String(QUESTIONS.length).padStart(2, "0");
+
+    // Build all steps
+    QUESTIONS.forEach((q, idx) => {
+      const section = document.createElement("section");
+      section.className = "step";
+      section.id = "q-" + q.id;
+
+      let body = "";
+      body += `<div class="step-num">${q.label}</div>`;
+      body += `<h2 class="step-title">${q.title}</h2>`;
+      if (q.sub) body += `<p class="step-sub">${q.sub}</p>`;
+
+      if (q.type === "text" || q.type === "email" || q.type === "date") {
+        body += `<div class="field">
+          <input type="${q.type}" id="in-${q.id}" placeholder="${q.placeholder || ''}">
+        </div>`;
+      } else if (q.type === "select") {
+        body += `<div class="field">
+          <select id="in-${q.id}">
+            <option value="">Select one</option>
+            ${q.options.map(o => `<option value="${o}">${o}</option>`).join("")}
+          </select>
+        </div>`;
+      } else if (q.type === "textarea") {
+        body += `<div class="field long-field">
+          <textarea id="in-${q.id}" placeholder="${q.placeholder || ''}"></textarea>
+        </div>`;
+      } else if (q.type === "choice") {
+        body += `<div class="choices" data-field="${q.id}">`;
+        q.options.forEach((opt, i) => {
+          body += `<button type="button" class="choice" data-idx="${i}">
+            <span class="choice-key">${opt.key}</span>
+            <span class="choice-text">${opt.text}</span>
+          </button>`;
+        });
+        body += `</div>`;
+      } else if (q.type === "multi") {
+        body += `<div class="chips" data-field="${q.id}">`;
+        q.options.forEach((opt, i) => {
+          body += `<button type="button" class="chip" data-idx="${i}">${opt.text}</button>`;
+        });
+        body += `</div>`;
+      } else if (q.type === "confirm") {
+        // just the sub is enough
+      }
+
+      // Nav buttons
+      body += `<div class="nav-buttons">
+        <button class="btn btn-ghost" onclick="prevStep()">&larr; Back</button>
+        <button class="btn btn-primary" id="next-${q.id}" onclick="nextStep()">
+          ${q.type === "confirm" ? "&rarr; See my match" : "Next &rarr;"}
+        </button>
+      </div>`;
+
+      section.innerHTML = body;
+      questionsEl.appendChild(section);
+    });
+
+    // Wire choice interactions
+    document.querySelectorAll(".choices").forEach(group => {
+      const field = group.dataset.field;
+      group.querySelectorAll(".choice").forEach(btn => {
+        btn.addEventListener("click", () => {
+          group.querySelectorAll(".choice").forEach(c => c.classList.remove("selected"));
+          btn.classList.add("selected");
+          answers[field] = parseInt(btn.dataset.idx, 10);
+        });
+      });
+    });
+    document.querySelectorAll(".chips").forEach(group => {
+      const field = group.dataset.field;
+      answers[field] = [];
+      group.querySelectorAll(".chip").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const idx = parseInt(btn.dataset.idx, 10);
+          btn.classList.toggle("selected");
+          const arr = answers[field];
+          const pos = arr.indexOf(idx);
+          if (pos >= 0) arr.splice(pos, 1); else arr.push(idx);
+        });
+      });
+    });
+
+    function startQuiz() {
+      document.getElementById("intro").classList.remove("active");
+      progressBar.style.display = "flex";
+      currentStep = 1;
+      showStep();
+    }
+
+    function showStep() {
+      document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+      document.getElementById("result").classList.remove("active");
+
+      if (currentStep === 0) {
+        document.getElementById("intro").classList.add("active");
+        progressBar.style.display = "none";
+        return;
+      }
+
+      const q = QUESTIONS[currentStep - 1];
+      document.getElementById("q-" + q.id).classList.add("active");
+      stepNow.textContent = String(currentStep).padStart(2, "0");
+      progressFill.style.width = ((currentStep - 1) / QUESTIONS.length * 100) + "%";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function nextStep() {
+      const q = QUESTIONS[currentStep - 1];
+
+      // Collect value from inputs
+      if (["text", "email", "date", "select"].includes(q.type)) {
+        const val = document.getElementById("in-" + q.id).value.trim();
+        if (!val && q.type !== "textarea") {
+          alert("Please fill this one in before continuing.");
+          return;
+        }
+        answers[q.id] = val;
+      } else if (q.type === "textarea") {
+        answers[q.id] = document.getElementById("in-" + q.id).value.trim();
+      } else if (q.type === "choice") {
+        if (answers[q.id] === undefined) {
+          alert("Pick one option to continue.");
+          return;
+        }
+      }
+      // multi and confirm: no validation
+
+      if (currentStep === QUESTIONS.length) {
+        computeResult();
+        return;
+      }
+      currentStep++;
+      showStep();
+    }
+
+    function prevStep() {
+      if (currentStep <= 1) {
+        currentStep = 0;
+        showStep();
+        return;
+      }
+      currentStep--;
+      showStep();
+    }
+
+    function computeResult() {
+      // Reset
+      scores = { CS: 0, CE: 0, HED: 0, GUS: 0 };
+
+      QUESTIONS.forEach(q => {
+        if (q.type === "choice") {
+          const idx = answers[q.id];
+          if (idx === undefined) return;
+          const opt = q.options[idx];
+          if (opt && opt.score) {
+            Object.entries(opt.score).forEach(([k, v]) => scores[k] += v);
+          }
+        } else if (q.type === "multi") {
+          (answers[q.id] || []).forEach(idx => {
+            const opt = q.options[idx];
+            if (opt && opt.score) {
+              Object.entries(opt.score).forEach(([k, v]) => scores[k] += v);
+            }
+          });
+        }
+      });
+
+      // Find winner, tie breaks to CE
+      let winner = "CE";
+      let max = -1;
+      ["CS", "CE", "HED", "GUS"].forEach(k => {
+        if (scores[k] > max) { max = scores[k]; winner = k; }
+      });
+
+      // Render result
+      document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+      progressFill.style.width = "100%";
+      stepNow.textContent = String(QUESTIONS.length).padStart(2, "0");
+
+      document.getElementById("profileName").textContent = PROFILES[winner].name;
+      document.getElementById("profileDesc").textContent = PROFILES[winner].desc;
+      document.getElementById("result").classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      // Store result in state for send
+      answers.__profile = winner;
+      answers.__scores = scores;
+    }
+
+    function sendAnswers() {
+      const lead = {
+        name: answers.name,
+        email: answers.email,
+        date: answers.date,
+        venue: answers.venue,
+        guests: answers.guests,
+        service: QUESTIONS.find(q => q.id === "service").options[answers.service]?.text,
+        reference: answers.reference,
+        avoid: answers.avoid,
+        notes: answers.notes,
+        profile: PROFILES[answers.__profile].name,
+        scores: answers.__scores
+      };
+
+      const body = encodeURIComponent(
+`New matching lead — ${lead.profile}
+
+NAME: ${lead.name || '-'}
+EMAIL: ${lead.email || '-'}
+DATE: ${lead.date || '-'}
+VENUE: ${lead.venue || '-'}
+GUESTS: ${lead.guests || '-'}
+SERVICE: ${lead.service || '-'}
+
+PROFILE ASSIGNED: ${lead.profile}
+SCORES: CS=${lead.scores.CS}  CE=${lead.scores.CE}  HED=${lead.scores.HED}  GUS=${lead.scores.GUS}
+
+REFERENCE PARTY:
+${lead.reference || '-'}
+
+EXCLUSIONS:
+${lead.avoid || '-'}
+
+NOTES:
+${lead.notes || '-'}
+`);
+      const subject = encodeURIComponent(`ELEVN match — ${lead.name || 'New lead'} (${lead.profile})`);
+      window.location.href = `mailto:hello@elevndjs.com?subject=${subject}&body=${body}`;
+    }
+  </script>
+</body>
+</html>

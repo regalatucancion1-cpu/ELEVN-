@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ELEVN DJ'S | Boutique DJ Agency in Spain</title>
+  <meta name="description" content="Boutique DJ agency for modern events, weddings, and international celebrations in Spain. We match you with the right DJ. No guesswork.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #1a1a1a;
+      color: #fff;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .mono {
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* === COLORS === */
+    :root {
+      --dark: #1a1a1a;
+      --darker: #111111;
+      --light: #f0ede8;
+      --accent: #C46A35;
+      --accent-hover: #d47a42;
+      --white: #ffffff;
+      --gray: #888;
+      --light-gray: #ccc;
+    }
+
+    /* === NAV === */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: var(--darker);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.1rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.02em;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      font-weight: 400;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* === CONTAINERS === */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+
+    /* === BUTTONS === */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      text-decoration: none;
+      padding: 0.9rem 2rem;
+      border-radius: 100px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-accent:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-dark {
+      background: var(--darker);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .btn-dark:hover {
+      border-color: rgba(255,255,255,0.4);
+    }
+
+    .btn-outline-dark {
+      background: transparent;
+      color: var(--dark);
+      border: 1.5px solid var(--dark);
+    }
+
+    .btn-outline-dark:hover {
+      background: var(--dark);
+      color: #fff;
+    }
+
+    /* === DOTTED SEPARATOR === */
+    .dotted-sep {
+      border: none;
+      border-top: 2px dotted rgba(255,255,255,0.2);
+      margin: 0;
+    }
+
+    .dotted-sep-dark {
+      border-top-color: rgba(0,0,0,0.15);
+    }
+
+    .dotted-sep-light {
+      border-top-color: rgba(255,255,255,0.25);
+    }
+
+    /* === SECTION NUMBERING === */
+    .section-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(26,26,26,0.3) 0%,
+        rgba(180,90,40,0.35) 40%,
+        rgba(26,26,26,0.85) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 3rem;
+      padding-bottom: 5rem;
+      padding-top: 8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 3rem;
+    }
+
+    .hero-left {
+      max-width: 750px;
+    }
+
+    #hero h1 {
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 0.98;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.03em;
+      font-style: italic;
+    }
+
+    .hero-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 460px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .hero-right {
+      text-align: right;
+    }
+
+    .hero-services {
+      list-style: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 2.2;
+    }
+
+    .hero-services li::before {
+      content: "/ ";
+      color: var(--accent);
+    }
+
+    /* ============================================================
+       STATS (light section)
+    ============================================================ */
+    #stats {
+      background: var(--light);
+      color: var(--dark);
+      padding: 6rem 0;
+    }
+
+    .stats-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 5rem;
+      gap: 2rem;
+    }
+
+    .stats-top h2 {
+      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      max-width: 700px;
+      color: var(--dark);
+    }
+
+    .stats-top .btn {
+      flex-shrink: 0;
+      margin-top: 1rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .stat-item .stat-number {
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--dark);
+    }
+
+    .stat-item .stat-number span {
+      color: var(--accent);
+    }
+
+    .stat-item .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-top: 0.75rem;
+      margin-bottom: 0.35rem;
+      color: var(--dark);
+    }
+
+    .stat-item .stat-desc {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       PROBLEM (dark section)
+    ============================================================ */
+    #problem {
+      background: var(--dark);
+      padding: 8rem 0;
+    }
+
+    .problem-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .problem-text h2 {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+    }
+
+    .problem-text .body-copy {
+      font-family: 'Space Mono', monospace;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.85rem;
+      line-height: 1.85;
+      margin-bottom: 2.5rem;
+    }
+
+    .problem-text .transition-line {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.9);
+      padding-top: 2rem;
+      border-top: 2px dotted rgba(255,255,255,0.15);
+    }
+
+    .problem-image {
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+    }
+
+    .problem-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ============================================================
+       HOW IT WORKS (terracotta section)
+    ============================================================ */
+    #how-it-works {
+      background: var(--accent);
+      padding: 7rem 0;
+    }
+
+    .hiw-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+      gap: 2rem;
+    }
+
+    .hiw-header h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .step-row {
+      padding: 2.5rem 0;
+    }
+
+    .step-row-inner {
+      display: grid;
+      grid-template-columns: 140px 1fr 1.2fr;
+      gap: 2rem;
+      align-items: baseline;
+    }
+
+    .step-row .step-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .step-row h3 {
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      font-weight: 800;
+      color: #fff;
+      font-style: italic;
+    }
+
+    .step-row p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.75;
+    }
+
+    /* ============================================================
+       PROFILES (light section)
+    ============================================================ */
+    #profiles {
+      background: var(--light);
+      color: var(--dark);
+      padding: 7rem 0 5rem;
+    }
+
+    .profiles-header {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .profiles-header h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--dark);
+    }
+
+    .profiles-header .year-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      color: var(--accent);
+      margin-top: 0.5rem;
+    }
+
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .profiles-grid .profile-card:nth-child(3),
+    .profiles-grid .profile-card:nth-child(4) {
+      /* second row swaps ratio */
+    }
+
+    .profile-card {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      min-height: 420px;
+      display: flex;
+      align-items: flex-end;
+      cursor: default;
+    }
+
+    .profile-card-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .profile-card-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .profile-card:hover .profile-card-bg img {
+      transform: scale(1.04);
+    }
+
+    .profile-card-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 55%, transparent 100%);
+    }
+
+    .profile-card-body {
+      position: relative;
+      z-index: 2;
+      padding: 2.25rem;
+      width: 100%;
+    }
+
+    .profile-card h3 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    .profile-card .tagline {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 0.65rem;
+      font-style: italic;
+    }
+
+    .profile-card .desc {
+      font-family: 'Space Mono', monospace;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.75rem;
+      line-height: 1.65;
+      margin-bottom: 0.65rem;
+    }
+
+    .profile-card .best-for {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .profiles-cta {
+      text-align: center;
+      margin-top: 3.5rem;
+      padding-top: 2.5rem;
+      border-top: 2px dotted rgba(0,0,0,0.12);
+    }
+
+    .profiles-cta p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ============================================================
+       SERVICES (dark section)
+    ============================================================ */
+    #services {
+      background: var(--dark);
+      padding: 7rem 0;
+    }
+
+    .services-header {
+      margin-bottom: 4rem;
+    }
+
+    .services-header h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .service-card {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      min-height: 440px;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .service-card-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .service-card-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .service-card-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,26,26,0.95) 15%, rgba(26,26,26,0.5) 55%, rgba(26,26,26,0.2) 100%);
+    }
+
+    .service-card-content {
+      position: relative;
+      z-index: 2;
+      padding: 2.5rem;
+      width: 100%;
+    }
+
+    .service-card h3 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .service-card p {
+      font-family: 'Space Mono', monospace;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 0.82rem;
+      line-height: 1.8;
+    }
+
+    .service-card .note {
+      margin-top: 0.75rem;
+      font-size: 0.72rem;
+      color: var(--accent);
+    }
+
+    .service-list {
+      list-style: none;
+      margin: 0.5rem 0;
+    }
+
+    .service-list li {
+      font-family: 'Space Mono', monospace;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 0.82rem;
+      padding: 0.15rem 0;
+    }
+
+    .service-list li::before {
+      content: "\2014\00a0";
+      color: var(--accent);
+    }
+
+    /* ============================================================
+       TESTIMONIAL / CTA BREAK (photo bg)
+    ============================================================ */
+    #cta-break {
+      position: relative;
+      padding: 10rem 0;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .cta-break-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .cta-break-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%);
+    }
+
+    .cta-break-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(26,26,26,0.6);
+    }
+
+    .cta-break-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-break-content h2 {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ============================================================
+       FAQ (light section)
+    ============================================================ */
+    #faq {
+      background: var(--light);
+      color: var(--dark);
+      padding: 7rem 0;
+    }
+
+    .faq-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .faq-header h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--dark);
+    }
+
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-top: 2px dotted rgba(0,0,0,0.12);
+    }
+
+    .faq-item:last-child {
+      border-bottom: 2px dotted rgba(0,0,0,0.12);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--dark);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: left;
+      padding: 1.5rem 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      transition: color 0.3s;
+    }
+
+    .faq-question:hover {
+      color: var(--accent);
+    }
+
+    .faq-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--dark);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 300;
+      transition: all 0.3s;
+      flex-shrink: 0;
+    }
+
+    .faq-item.active .faq-icon {
+      background: var(--accent);
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .faq-answer-inner {
+      padding-bottom: 1.5rem;
+      font-family: 'Space Mono', monospace;
+      color: var(--gray);
+      font-size: 0.82rem;
+      line-height: 1.85;
+    }
+
+    /* ============================================================
+       CONTACT (dark section)
+    ============================================================ */
+    #contact {
+      background: var(--dark);
+      padding: 7rem 0 8rem;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-info h2 {
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-info .intro {
+      font-family: 'Space Mono', monospace;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.85rem;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-info .alt-contact {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .contact-info .alt-contact a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .contact-info .alt-contact a:hover {
+      color: var(--accent-hover);
+    }
+
+    .contact-form {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 2.75rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      transition: all 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .form-group textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .form-submit {
+      margin-top: 1.25rem;
+    }
+
+    .form-submit .btn {
+      width: 100%;
+      justify-content: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+    }
+
+    /* ============================================================
+       FOOTER (very dark)
+    ============================================================ */
+    footer {
+      background: var(--darker);
+      padding: 4rem 3rem 2rem;
+    }
+
+    .footer-top {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.5fr 1fr;
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-col-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-col a,
+    .footer-col p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      display: block;
+      line-height: 2.2;
+      transition: color 0.3s;
+    }
+
+    .footer-col a:hover {
+      color: #fff;
+    }
+
+    .footer-brand {
+      max-width: 1400px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .footer-brand-text {
+      font-size: clamp(4rem, 10vw, 10rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: rgba(255,255,255,0.06);
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .footer-bottom {
+      max-width: 1400px;
+      margin: 2rem auto 0;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .footer-bottom p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ============================================================
+       ANIMATIONS
+    ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ============================================================
+       MOBILE MENU
+    ============================================================ */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(17, 17, 17, 0.98);
+      z-index: 99;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.8rem;
+      font-weight: 800;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .profiles-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .step-row-inner {
+        grid-template-columns: 100px 1fr 1.2fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container, .nav-inner, .hero-content {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      footer {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+
+      .hero-content {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 3rem;
+      }
+
+      .hero-right {
+        text-align: left;
+      }
+
+      #hero h1 {
+        font-size: clamp(2.5rem, 10vw, 3.5rem);
+      }
+
+      .stats-top {
+        flex-direction: column;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem 1.5rem;
+      }
+
+      .problem-layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .problem-image {
+        aspect-ratio: 16/9;
+        order: -1;
+      }
+
+      .hiw-header {
+        flex-direction: column;
+      }
+
+      .step-row-inner {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      .profiles-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-card {
+        min-height: 350px;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-layout {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .contact-form {
+        padding: 1.75rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- === NAV === -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo"><span>( </span>ELEVN<span> )</span> DJ'S</a>
+      <ul class="nav-links">
+        <li><a href="about.html">ABOUT US</a></li>
+        <li><a href="#how-it-works">HOW IT WORKS</a></li>
+        <li><a href="#profiles">PROFILES</a></li>
+        <li><a href="match.html">FIND YOUR DJ</a></li>
+        <li><a href="#contact">GET IN TOUCH</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="about.html">About Us</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#profiles">Profiles</a>
+    <a href="#services">Services</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- === HERO === -->
+  <section id="hero">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1571266028243-d220c6a8b0e5?w=1920&q=80" alt="DJ atmosphere" loading="eager">
+    </div>
+    <div class="hero-content">
+      <div class="hero-left reveal">
+        <h1>The right DJ for your event in Spain.</h1>
+        <p class="hero-sub">Boutique DJ agency for modern events and international celebrations. We match you with the perfect DJ based on your taste, your crowd, and your vision.</p>
+        <a href="match.html" class="btn btn-dark">&rarr; Find Your DJ</a>
+      </div>
+      <div class="hero-right reveal reveal-delay-2">
+        <ul class="hero-services">
+          <li>Weddings</li>
+          <li>Private Events</li>
+          <li>Corporate Events</li>
+          <li>After-Parties</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- === STATS (light) === -->
+  <section id="stats">
+    <div class="container">
+      <div class="stats-top reveal">
+        <h2>Real impact, built through music and trusted selection</h2>
+        <a href="#how-it-works" class="btn btn-accent">&rarr; See How It Works</a>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-item reveal">
+          <p class="stat-number">200<span>+</span></p>
+          <p class="stat-label">Events covered</p>
+          <p class="stat-desc">From intimate celebrations to large-scale productions across Spain.</p>
+        </div>
+        <div class="stat-item reveal reveal-delay-1">
+          <p class="stat-number">12<span>+</span></p>
+          <p class="stat-label">Curated DJs</p>
+          <p class="stat-desc">Every DJ vetted, briefed, and matched to your style.</p>
+        </div>
+        <div class="stat-item reveal reveal-delay-2">
+          <p class="stat-number">98<span>%</span></p>
+          <p class="stat-label">Client satisfaction</p>
+          <p class="stat-desc">Trusted by international clients across Europe.</p>
+        </div>
+        <div class="stat-item reveal reveal-delay-3">
+          <p class="stat-number">48<span>h</span></p>
+          <p class="stat-label">Response time</p>
+          <p class="stat-desc">Your match delivered within two business days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- === PROBLEM (dark) === -->
+  <section id="problem">
+    <div class="container">
+      <div class="problem-layout">
+        <div class="problem-text reveal">
+          <p class="section-num">( about )</p>
+          <h2 style="margin-top:1rem;">Planning an event in Spain?<br>The music shouldn't be a gamble.</h2>
+          <p class="body-copy">
+            You're organizing an event abroad. You don't know the local DJ scene. You don't want generic playlists or someone who doesn't get your vibe.
+            <br><br>
+            You want to delegate the music to someone who understands what you're going for&mdash;without endless calls or guesswork.
+            <br><br>
+            That's what ELEVN does.
+          </p>
+          <p class="transition-line">We've done this hundreds of times. You're in good hands.</p>
+        </div>
+        <div class="problem-image reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80" alt="Party atmosphere with lights" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- === HOW IT WORKS (terracotta) === -->
+  <section id="how-it-works">
+    <div class="container">
+      <div class="hiw-header reveal">
+        <h2>Our process is<br>shaped for you</h2>
+        <a href="#contact" class="btn btn-accent">&rarr; Get in Touch</a>
+      </div>
+
+      <hr class="dotted-sep dotted-sep-light">
+      <div class="step-row reveal">
+        <div class="step-row-inner">
+          <span class="step-num">( 01 )</span>
+          <h3>Tell Us About Your Event</h3>
+          <p>Fill out a short form: date, location, guest count, and a few questions about your musical taste. Takes 3 minutes.</p>
+        </div>
+      </div>
+
+      <hr class="dotted-sep dotted-sep-light">
+      <div class="step-row reveal">
+        <div class="step-row-inner">
+          <span class="step-num">( 02 )</span>
+          <h3>We Match You</h3>
+          <p>Based on your answers, we assign you to one of our curated profiles&mdash;not a random DJ, but the style that fits your event.</p>
+        </div>
+      </div>
+
+      <hr class="dotted-sep dotted-sep-light">
+      <div class="step-row reveal">
+        <div class="step-row-inner">
+          <span class="step-num">( 03 )</span>
+          <h3>You Relax. We Handle It.</h3>
+          <p>Your DJ is briefed on your event. You get a confirmation, a clear timeline, and zero stress.</p>
+        </div>
+      </div>
+      <hr class="dotted-sep dotted-sep-light">
+
+      <div style="text-align:center; margin-top:3rem;" class="reveal">
+        <a href="#contact" class="btn btn-dark">&rarr; Get in Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- === PROFILES (light) === -->
+  <section id="profiles">
+    <div class="container">
+      <div class="profiles-header reveal">
+        <h2>A curated selection of DJ profiles</h2>
+        <p class="year-label">2k25</p>
+      </div>
+
+      <div class="profiles-grid">
+        <div class="profile-card reveal">
+          <div class="profile-card-bg">
+            <img src="https://images.unsplash.com/photo-1574169208507-8437680681b5?w=800&q=80" alt="Club Sophisticate" loading="lazy">
+          </div>
+          <div class="profile-card-body">
+            <h3>Club Sophisticate</h3>
+            <p class="tagline">Elegant. European. Refined.</p>
+            <p class="desc">House, disco, indie dance&mdash;the sound of sophisticated European clubs. Taste over trends.</p>
+            <p class="best-for">Best for: Editorial events. Fashion-forward crowds.</p>
+          </div>
+        </div>
+
+        <div class="profile-card reveal reveal-delay-1">
+          <div class="profile-card-bg">
+            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=80" alt="Crossover Elegant" loading="lazy">
+          </div>
+          <div class="profile-card-body">
+            <h3>Crossover Elegant</h3>
+            <p class="tagline">Hits with taste.</p>
+            <p class="desc">Bridges generations, keeps the dance floor full. No cheese. Just smart selections.</p>
+            <p class="best-for">Best for: Mixed-age crowds. Classic venues.</p>
+          </div>
+        </div>
+
+        <div class="profile-card reveal">
+          <div class="profile-card-bg">
+            <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800&q=80" alt="Global Urban Selector" loading="lazy">
+          </div>
+          <div class="profile-card-body">
+            <h3>Global Urban Selector</h3>
+            <p class="tagline">R&B. Afrobeats. Amapiano. Global heat.</p>
+            <p class="desc">Hip-hop roots, African rhythms, contemporary R&B. For cosmopolitan crowds.</p>
+            <p class="best-for">Best for: International events. Diverse guest lists.</p>
+          </div>
+        </div>
+
+        <div class="profile-card reveal reveal-delay-1">
+          <div class="profile-card-bg">
+            <img src="https://images.unsplash.com/photo-1571397171710-4896d84df334?w=800&q=80" alt="High Energy Driver" loading="lazy">
+          </div>
+          <div class="profile-card-body">
+            <h3>High Energy Driver</h3>
+            <p class="tagline">When you want the party to peak.</p>
+            <p class="desc">High BPM, clear build-ups, controlled energy. No gimmicks&mdash;just momentum.</p>
+            <p class="best-for">Best for: Late-night sets. After-parties.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="profiles-cta reveal">
+        <p>Not sure which profile fits? We'll figure it out together.</p>
+        <a href="match.html" class="btn btn-outline-dark">&rarr; Find Your DJ</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- === SERVICES (dark) === -->
+  <section id="services">
+    <div class="container">
+      <div class="services-header reveal">
+        <p class="section-num" style="margin-bottom:1rem;">( services )</p>
+        <h2>What we do</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-card-bg">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80" alt="Wedding reception" loading="lazy">
+          </div>
+          <div class="service-card-content">
+            <h3>Weddings</h3>
+            <p>Modern, international, memorable.</p>
+            <ul class="service-list">
+              <li>Cocktail hour</li>
+              <li>Dinner music</li>
+              <li>Party (the real deal)</li>
+              <li>After-party sets</li>
+            </ul>
+            <p>One DJ or multiple sets&mdash;whatever your event needs.</p>
+            <p class="note">Based in Spain. Available across Europe.</p>
+          </div>
+        </div>
+
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-card-bg">
+            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&q=80" alt="Corporate event" loading="lazy">
+          </div>
+          <div class="service-card-content">
+            <h3>Private & Corporate Events</h3>
+            <p>Brand launches. Private dinners. Company parties. International clients who need quality without compromise.</p>
+            <br>
+            <p>Same matching system. Same standards.</p>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <a href="#contact" class="btn btn-accent">&rarr; Let's talk about your event</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- === CTA BREAK (photo) === -->
+  <section id="cta-break">
+    <div class="cta-break-bg">
+      <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1920&q=80" alt="Festival crowd" loading="lazy">
+    </div>
+    <div class="cta-break-content reveal">
+      <h2>Ready to find<br>your DJ?</h2>
+      <a href="#contact" class="btn btn-accent">&rarr; Get in Touch</a>
+    </div>
+  </section>
+
+  <!-- === FAQ (light) === -->
+  <section id="faq">
+    <div class="container">
+      <div class="faq-header reveal">
+        <p class="section-num" style="margin-bottom:0.75rem;">( faq )</p>
+        <h2>Questions</h2>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-question">How much does it cost? <span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Our standard package starts at &euro;1,000 for a full event (cocktail through party). Final pricing depends on duration, location, and specific requirements. We'll give you a clear quote after the matching process.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">How far in advance should I book? <span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">For peak season (May&ndash;October), we recommend reaching out at least 6 months in advance. But if you're closer to the date, still get in touch&mdash;we might have availability.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Can I meet the DJ before the event? <span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Yes. Once matched, you'll have a video call with your assigned DJ to align on the vision, music, and timeline.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Do you provide sound equipment? <span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">We provide DJ equipment. Sound systems (PA, speakers) are typically arranged through your venue or production team. We can advise or connect you with trusted partners.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">What if I don't know what music I want? <span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">That's exactly why the matching system exists. You don't need to know genres or artists&mdash;just describe the vibe, and we'll translate it into the right DJ for you.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Do you work outside Spain? <span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Yes. We're based in Spain but available across Europe for events across the continent. Travel fees may apply.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Can I send a playlist or requests? <span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Absolutely. Your DJ will work with your input. But we also trust our DJs to read the room and adapt in real time. The best parties are a balance of both.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- === CONTACT (dark) === -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-layout">
+        <div class="contact-info reveal">
+          <p class="section-num" style="margin-bottom:1rem;">( contact )</p>
+          <h2>Ready to find your DJ?</h2>
+          <p class="intro">Fill out the form. It takes 3 minutes. We'll get back to you within 48 hours with your match.</p>
+          <p class="alt-contact">Or email us directly:<br><a href="mailto:hello@elevndjs.com">hello@elevndjs.com</a></p>
+        </div>
+
+        <form class="contact-form reveal reveal-delay-1" onsubmit="return false;">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your name</label>
+              <input type="text" id="name" placeholder="Full name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" placeholder="you@email.com" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="date">Event date</label>
+              <input type="date" id="date">
+            </div>
+            <div class="form-group">
+              <label for="location">Venue / Location</label>
+              <input type="text" id="location" placeholder="City or venue name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="guests">Guest count</label>
+            <input type="text" id="guests" placeholder="e.g. 120">
+          </div>
+          <div class="form-group">
+            <label for="vibe">Tell us about the vibe</label>
+            <textarea id="vibe" placeholder="A few sentences is fine"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="artists">Artists or genres you love?</label>
+            <textarea id="artists" placeholder="Help us understand your taste" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="notes">Anything else?</label>
+            <textarea id="notes" placeholder="Special requests, timeline, etc." rows="3"></textarea>
+          </div>
+          <div class="form-submit">
+            <button type="submit" class="btn btn-accent">&rarr; Find Your DJ</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- === FOOTER === -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-col">
+        <p class="footer-col-title">Navigation:</p>
+        <a href="#hero">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="#profiles">Profiles</a>
+        <a href="#contact">Get in Touch</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Socials:</p>
+        <a href="https://instagram.com/elevndjs" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Info:</p>
+        <p>Work: hello@elevndjs.com</p>
+        <p>Based in Spain</p>
+        <p>Available across Europe</p>
+      </div>
+      <div class="footer-col" style="text-align:right;">
+        <p style="margin-top:auto;">&copy; 2025 ELEVN DJ'S. All rights reserved.</p>
+      </div>
+    </div>
+    <div class="footer-brand">
+      <p class="footer-brand-text">( ELEVN ) DJ'S</p>
+    </div>
+    <div class="footer-bottom">
+      <p>Privacy Policy &middot; Terms</p>
+    </div>
+  </footer>
+
+  <!-- === JS === -->
+  <script>
+    // FAQ
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const answer = item.querySelector('.faq-answer');
+        const isOpen = item.classList.contains('active');
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('active');
+          i.querySelector('.faq-answer').style.maxHeight = null;
+        });
+        if (!isOpen) {
+          item.classList.add('active');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // Reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Mobile menu
+    const toggle = document.querySelector('.nav-toggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    toggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      toggle.textContent = mobileMenu.classList.contains('open') ? '\u2715' : '\u2630';
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        toggle.textContent = '\u2630';
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Nav bg on scroll
+    const navEl = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      navEl.style.background = window.scrollY > 80 ? 'rgba(17,17,17,0.95)' : 'var(--darker)';
+    }, { passive: true });
+  </script>
+
+</body>
+</html>

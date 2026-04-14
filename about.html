@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | ELEVN DJ'S</title>
+  <meta name="description" content="ELEVN is a boutique DJ agency based in Spain, specializing in modern events and international celebrations. Learn about our approach.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #1a1a1a;
+      color: #fff;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    :root {
+      --dark: #1a1a1a;
+      --darker: #111111;
+      --light: #f0ede8;
+      --accent: #C46A35;
+      --accent-hover: #d47a42;
+      --white: #ffffff;
+      --gray: #888;
+    }
+
+    /* === NAV === */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: var(--darker);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.1rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.02em;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      font-weight: 400;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      text-decoration: none;
+      padding: 0.9rem 2rem;
+      border-radius: 100px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-accent:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-dark {
+      background: var(--darker);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .btn-dark:hover {
+      border-color: rgba(255,255,255,0.4);
+    }
+
+    .section-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .dotted-sep {
+      border: none;
+      border-top: 2px dotted rgba(255,255,255,0.15);
+      margin: 0;
+    }
+
+    .dotted-sep-dark {
+      border-top-color: rgba(0,0,0,0.12);
+    }
+
+    /* === HERO === */
+    .about-hero {
+      position: relative;
+      min-height: 70vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      padding-bottom: 5rem;
+      padding-top: 8rem;
+    }
+
+    .about-hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .about-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      filter: grayscale(30%);
+    }
+
+    .about-hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(26,26,26,0.5) 0%,
+        rgba(180,90,40,0.25) 40%,
+        rgba(26,26,26,0.9) 100%
+      );
+    }
+
+    .about-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+
+    .about-hero-content h1 {
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-hero-content .lead {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 550px;
+      line-height: 1.8;
+    }
+
+    /* === INTRO (light) === */
+    .about-intro {
+      background: var(--light);
+      color: var(--dark);
+      padding: 7rem 0;
+    }
+
+    .about-intro-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-intro h2 {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--dark);
+    }
+
+    .about-intro .body-copy {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.9;
+    }
+
+    .about-intro .body-copy p + p {
+      margin-top: 1.25rem;
+    }
+
+    /* === WHAT WE ARE NOT (dark) === */
+    .about-not {
+      background: var(--dark);
+      padding: 7rem 0;
+    }
+
+    .about-not h2 {
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 3.5rem;
+    }
+
+    .not-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .not-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 2.25rem;
+      transition: border-color 0.3s;
+    }
+
+    .not-card:hover {
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    .not-card .x-icon {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .not-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.65rem;
+    }
+
+    .not-card p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.75;
+    }
+
+    /* === VALUES (terracotta) === */
+    .about-values {
+      background: var(--accent);
+      padding: 7rem 0;
+    }
+
+    .about-values h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 4rem;
+      color: #fff;
+    }
+
+    .value-row {
+      padding: 2.25rem 0;
+    }
+
+    .value-row-inner {
+      display: grid;
+      grid-template-columns: 140px 1fr 1.3fr;
+      gap: 2rem;
+      align-items: baseline;
+    }
+
+    .value-row .val-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .value-row h3 {
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 800;
+      color: #fff;
+      font-style: italic;
+    }
+
+    .value-row p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.75;
+    }
+
+    .dotted-sep-val {
+      border-top: 2px dotted rgba(255,255,255,0.25);
+    }
+
+    /* === EVERY DJ (light) === */
+    .about-djs {
+      background: var(--light);
+      color: var(--dark);
+      padding: 7rem 0;
+    }
+
+    .about-djs-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-djs h2 {
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--dark);
+      margin-bottom: 2rem;
+    }
+
+    .dj-trait-list {
+      list-style: none;
+    }
+
+    .dj-trait-list li {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.88rem;
+      color: var(--dark);
+      padding: 1rem 0;
+      border-bottom: 2px dotted rgba(0,0,0,0.1);
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    .dj-trait-list li .trait-dash {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .about-djs-img {
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+    }
+
+    .about-djs-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* === CTA (photo bg) === */
+    .about-cta {
+      position: relative;
+      padding: 10rem 0;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .about-cta-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .about-cta-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%);
+    }
+
+    .about-cta-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(26,26,26,0.65);
+    }
+
+    .about-cta-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .about-cta-content h2 {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+
+    .about-cta-content p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 2.5rem;
+    }
+
+    /* === FOOTER === */
+    footer {
+      background: var(--darker);
+      padding: 4rem 3rem 2rem;
+    }
+
+    .footer-top {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.5fr 1fr;
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-col-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-col a,
+    .footer-col p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      display: block;
+      line-height: 2.2;
+      transition: color 0.3s;
+    }
+
+    .footer-col a:hover {
+      color: #fff;
+    }
+
+    .footer-brand {
+      max-width: 1400px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .footer-brand-text {
+      font-size: clamp(4rem, 10vw, 10rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: rgba(255,255,255,0.06);
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .footer-bottom {
+      max-width: 1400px;
+      margin: 2rem auto 0;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .footer-bottom p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* === ANIMATIONS === */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* MOBILE MENU */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(17, 17, 17, 0.98);
+      z-index: 99;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.8rem;
+      font-weight: 800;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 1024px) {
+      .not-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .value-row-inner {
+        grid-template-columns: 100px 1fr 1.2fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container, .nav-inner, .about-hero-content {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      footer {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+
+      .about-hero {
+        min-height: 60vh;
+      }
+
+      .about-hero-content h1 {
+        font-size: clamp(2.5rem, 10vw, 3.5rem);
+      }
+
+      .about-intro-layout {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .not-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .value-row-inner {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      .about-djs-layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .about-djs-img {
+        aspect-ratio: 16/9;
+        order: -1;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- === NAV === -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><span>( </span>ELEVN<span> )</span> DJ'S</a>
+      <ul class="nav-links">
+        <li><a href="about.html">ABOUT US</a></li>
+        <li><a href="index.html#how-it-works">HOW IT WORKS</a></li>
+        <li><a href="index.html#profiles">PROFILES</a></li>
+        <li><a href="match.html">FIND YOUR DJ</a></li>
+        <li><a href="index.html#contact">GET IN TOUCH</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="about.html">About Us</a>
+    <a href="index.html#how-it-works">How it works</a>
+    <a href="index.html#profiles">Profiles</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+
+  <!-- === HERO === -->
+  <section class="about-hero">
+    <div class="about-hero-bg">
+      <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1920&q=80" alt="DJ mixing atmosphere" loading="eager">
+    </div>
+    <div class="about-hero-content">
+      <div class="reveal">
+        <p class="section-num" style="margin-bottom:1.25rem;">( about us )</p>
+        <h1>About ELEVN</h1>
+        <p class="lead">A boutique DJ agency based in Spain, specializing in modern events and international celebrations. We exist because finding the right DJ shouldn't be a guessing game.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- === INTRO (light) === -->
+  <section class="about-intro">
+    <div class="container">
+      <div class="about-intro-layout">
+        <div class="reveal">
+          <h2>We're not a booking platform. We're a curated selection.</h2>
+        </div>
+        <div class="body-copy reveal reveal-delay-1">
+          <p>ELEVN is a boutique DJ agency based in Spain, built for modern events and international clients.</p>
+          <p>We're not a sound company. We're not a DJ collective. We're a curated selection of DJs with a system built for quality.</p>
+          <p>We handle the selection. You enjoy the party.</p>
+          <p>Every event gets personal attention. Every DJ is briefed specifically for your celebration. We translate your taste, your vibe, and your vision into the perfect set.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- === WHAT WE ARE NOT (dark) === -->
+  <section class="about-not">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-num" style="margin-bottom:1rem;">( what we're not )</p>
+        <h2>Clear about who we are</h2>
+      </div>
+      <div class="not-grid">
+        <div class="not-card reveal reveal-delay-1">
+          <span class="x-icon">&times;</span>
+          <h3>Not a sound company</h3>
+          <p>We focus on DJs and musical curation. Sound systems are handled by your venue or production team.</p>
+        </div>
+        <div class="not-card reveal reveal-delay-2">
+          <span class="x-icon">&times;</span>
+          <h3>Not a DJ collective</h3>
+          <p>We're a brand, not a group of friends. Every DJ is vetted, briefed, and matched through our system.</p>
+        </div>
+        <div class="not-card reveal reveal-delay-3">
+          <span class="x-icon">&times;</span>
+          <h3>Not a personal brand</h3>
+          <p>ELEVN is bigger than any individual. The agency quality stays consistent regardless of the DJ assigned.</p>
+        </div>
+        <div class="not-card reveal">
+          <span class="x-icon">&times;</span>
+          <h3>Not a traditional agency</h3>
+          <p>No cheesy playlists, no generic "DJ for your party" approach. We're specific, modern, and club-cultured.</p>
+        </div>
+        <div class="not-card reveal reveal-delay-1">
+          <span class="x-icon">&times;</span>
+          <h3>Not volume-driven</h3>
+          <p>Boutique means selection, not quantity. Every event matters. We don't overbook.</p>
+        </div>
+        <div class="not-card reveal reveal-delay-2">
+          <span class="x-icon">&times;</span>
+          <h3>Not aggressive sellers</h3>
+          <p>We don't push. We attract. If we're the right fit, you'll know. And so will we.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- === VALUES (terracotta) === -->
+  <section class="about-values">
+    <div class="container">
+      <div class="reveal">
+        <h2>What ELEVN stands for</h2>
+      </div>
+
+      <hr class="dotted-sep dotted-sep-val">
+      <div class="value-row reveal">
+        <div class="value-row-inner">
+          <span class="val-num">( 01 )</span>
+          <h3>Boutique</h3>
+          <p>Selection, not volume. Every event is treated with full attention and dedicated preparation.</p>
+        </div>
+      </div>
+
+      <hr class="dotted-sep dotted-sep-val">
+      <div class="value-row reveal">
+        <div class="value-row-inner">
+          <span class="val-num">( 02 )</span>
+          <h3>Modern</h3>
+          <p>Current, not outdated. No cliches. We stay connected to what's happening in music and culture.</p>
+        </div>
+      </div>
+
+      <hr class="dotted-sep dotted-sep-val">
+      <div class="value-row reveal">
+        <div class="value-row-inner">
+          <span class="val-num">( 03 )</span>
+          <h3>Club-Cultured</h3>
+          <p>Roots in real club culture. Not hotel DJs, not playlist machines. Our DJs know the craft.</p>
+        </div>
+      </div>
+
+      <hr class="dotted-sep dotted-sep-val">
+      <div class="value-row reveal">
+        <div class="value-row-inner">
+          <span class="val-num">( 04 )</span>
+          <h3>International</h3>
+          <p>We speak the client's language. Literally. Native English, European mindset, global taste.</p>
+        </div>
+      </div>
+
+      <hr class="dotted-sep dotted-sep-val">
+      <div class="value-row reveal">
+        <div class="value-row-inner">
+          <span class="val-num">( 05 )</span>
+          <h3>Sophisticated</h3>
+          <p>Elegant without being pretentious. We let the work speak. Quality in every detail.</p>
+        </div>
+      </div>
+      <hr class="dotted-sep dotted-sep-val">
+    </div>
+  </section>
+
+  <!-- === EVERY DJ (light) === -->
+  <section class="about-djs">
+    <div class="container">
+      <div class="about-djs-layout">
+        <div class="reveal">
+          <p class="section-num" style="margin-bottom:1rem;">( our DJs )</p>
+          <h2>Every DJ in our roster</h2>
+          <ul class="dj-trait-list">
+            <li><span class="trait-dash">&mdash;</span> Speaks fluent English</li>
+            <li><span class="trait-dash">&mdash;</span> Has experience with international clients</li>
+            <li><span class="trait-dash">&mdash;</span> Specializes in a specific sound</li>
+            <li><span class="trait-dash">&mdash;</span> Is personally vetted and briefed for every event</li>
+            <li><span class="trait-dash">&mdash;</span> Understands how to read a room</li>
+            <li><span class="trait-dash">&mdash;</span> Comes from real club culture</li>
+          </ul>
+        </div>
+        <div class="about-djs-img reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1574169208507-8437680681b5?w=800&q=80" alt="DJ performing at event" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- === CTA === -->
+  <section class="about-cta">
+    <div class="about-cta-bg">
+      <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1920&q=80" alt="Event crowd" loading="lazy">
+    </div>
+    <div class="about-cta-content reveal">
+      <h2>ELEVN handles<br>the selection.</h2>
+      <p>You enjoy the party.</p>
+      <a href="index.html#contact" class="btn btn-accent">&rarr; Get in Touch</a>
+    </div>
+  </section>
+
+  <!-- === FOOTER === -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-col">
+        <p class="footer-col-title">Navigation:</p>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="index.html#profiles">Profiles</a>
+        <a href="index.html#contact">Get in Touch</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Socials:</p>
+        <a href="https://instagram.com/elevndjs" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Info:</p>
+        <p>Work: hello@elevndjs.com</p>
+        <p>Based in Spain</p>
+        <p>Available across Europe</p>
+      </div>
+      <div class="footer-col" style="text-align:right;">
+        <p style="margin-top:auto;">&copy; 2025 ELEVN DJ'S. All rights reserved.</p>
+      </div>
+    </div>
+    <div class="footer-brand">
+      <p class="footer-brand-text">( ELEVN ) DJ'S</p>
+    </div>
+    <div class="footer-bottom">
+      <p>Privacy Policy &middot; Terms</p>
+    </div>
+  </footer>
+
+  <script>
+    // Reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Mobile menu
+    const toggle = document.querySelector('.nav-toggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    toggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      toggle.textContent = mobileMenu.classList.contains('open') ? '\u2715' : '\u2630';
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        toggle.textContent = '\u2630';
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
+
+</body>
+</html>
