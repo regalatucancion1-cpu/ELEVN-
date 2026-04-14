@@ -7,7 +7,7 @@
   <meta name="description" content="ELEVN is a boutique DJ agency based in Spain, specializing in modern events and international celebrations. Learn about our approach.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=League+Spartan:wght@700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after {
       margin: 0;
@@ -58,19 +58,20 @@
       align-items: center;
     }
 
-    .nav-logo {
-      font-family: 'Inter', sans-serif;
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: 0.02em;
+    /* ELEVN logo — League Spartan text */
+    .elevn-logo {
+      font-family: 'League Spartan', 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 1.65rem;
+      line-height: 0.8;
+      letter-spacing: -0.055em;
+      text-transform: lowercase;
       color: #fff;
       text-decoration: none;
+      display: inline-block;
+      white-space: nowrap;
     }
-
-    .nav-logo span {
-      font-weight: 400;
-      color: rgba(255,255,255,0.5);
-    }
+    .elevn-logo .dot { color: var(--accent); }
 
     .nav-links {
       display: flex;
@@ -644,7 +645,7 @@
   <!-- === NAV === -->
   <nav>
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo"><span>( </span>ELEVN<span> )</span> DJ'S</a>
+      <a href="index.html" class="elevn-logo" aria-label="elevn. home">elevn<span class="dot">.</span></a>
       <ul class="nav-links">
         <li><a href="about.html">ABOUT US</a></li>
         <li><a href="index.html#how-it-works">HOW IT WORKS</a></li>

@@ -7,7 +7,7 @@
   <meta name="description" content="Answer a few questions and we'll match you with the right DJ for your wedding. Takes 3 minutes.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=League+Spartan:wght@700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -55,14 +55,20 @@
       justify-content: space-between;
       align-items: center;
     }
-    .nav-logo {
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: 0.02em;
-      color: #fff;
+    /* ELEVN logo — League Spartan text, single source of truth */
+    .elevn-logo {
+      font-family: 'League Spartan', 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 1.65rem;
+      line-height: 0.8;
+      letter-spacing: -0.055em;
+      text-transform: lowercase;
+      color: #f0ede8;
       text-decoration: none;
+      display: inline-block;
+      white-space: nowrap;
     }
-    .nav-logo span { font-weight: 400; color: rgba(255,255,255,0.5); }
+    .elevn-logo .dot { color: var(--accent); }
     .nav-links {
       display: flex;
       gap: 2.5rem;
@@ -456,6 +462,65 @@
       max-width: 760px;
     }
 
+    /* Event type selector (Step 0) */
+    .event-types {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      max-width: 820px;
+      margin-top: 2rem;
+    }
+    @media (max-width: 720px) {
+      .event-types { grid-template-columns: 1fr; }
+    }
+    .event-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      padding: 2rem 1.8rem;
+      border: 1px solid var(--line-strong);
+      background: var(--card);
+      cursor: pointer;
+      text-align: left;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      transition: all .25s ease;
+      min-height: 190px;
+    }
+    .event-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+    .event-card .et-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+    }
+    .event-card h3 {
+      font-size: 1.9rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .event-card p {
+      font-size: 0.92rem;
+      color: var(--light-gray);
+      line-height: 1.5;
+      flex: 1;
+    }
+    .event-card .et-arrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream, #fff);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .event-card .et-arrow span { color: var(--accent); }
+
     /* Footer nav under form */
     .backlink {
       margin-top: 4rem;
@@ -472,7 +537,7 @@
 
   <nav>
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo"><span>( </span>ELEVN<span> )</span> DJ'S</a>
+      <a href="syncra.html" class="elevn-logo" aria-label="elevn. home">elevn<span class="dot">.</span></a>
       <ul class="nav-links">
         <li><a href="about.html">ABOUT US</a></li>
         <li><a href="index.html#how-it-works">HOW IT WORKS</a></li>
@@ -492,17 +557,13 @@
       <div class="progress-label">FIND YOUR DJ</div>
     </div>
 
-    <!-- INTRO -->
+    <!-- INTRO / STEP 0 — Event type selector -->
     <section class="step active" id="intro">
       <div class="intro">
         <span class="eyebrow">( MATCHING ENGINE )</span>
         <h1>Let's find <em>your</em> DJ.</h1>
-        <p>No guesswork. Tell us about your wedding, your crowd and your taste, and we'll match you with the right DJ from our selection. Takes about 3 minutes.</p>
+        <p>No guesswork. Tell us about your event, your crowd and your taste, and we'll match you with the right DJ from our selection. Takes about 3 minutes.</p>
         <div class="intro-meta">
-          <div>
-            <span class="mono-label">QUESTIONS</span>
-            <span class="mono-value">16</span>
-          </div>
           <div>
             <span class="mono-label">TIME</span>
             <span class="mono-value">~3 min</span>
@@ -511,8 +572,27 @@
             <span class="mono-label">RESPONSE</span>
             <span class="mono-value">Within 48h</span>
           </div>
+          <div>
+            <span class="mono-label">LANGUAGES</span>
+            <span class="mono-value">EN &middot; ES</span>
+          </div>
         </div>
-        <button class="btn btn-primary" onclick="startQuiz()">&rarr; Start matching</button>
+
+        <div class="step-num" style="margin-bottom: 1rem;">( 00 ) SELECT EVENT TYPE</div>
+        <div class="event-types">
+          <button type="button" class="event-card" onclick="startQuiz('wedding')">
+            <span class="et-num">01</span>
+            <h3>Wedding</h3>
+            <p>International couples getting married in Spain. Cocktail, dinner and party, with a DJ matched to your crowd and taste.</p>
+            <span class="et-arrow">Start <span>&rarr;</span></span>
+          </button>
+          <button type="button" class="event-card" onclick="startQuiz('corporate')">
+            <span class="et-num">02</span>
+            <h3>Corporate Event</h3>
+            <p>Brand activations, gala dinners, product launches, Christmas parties and private client events. Professional, on-brand, reliable.</p>
+            <span class="et-arrow">Start <span>&rarr;</span></span>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -553,7 +633,7 @@
       GUS: { name: "Global Urban Selector", desc: "Your sound is international and forward. R&B, hip-hop, Afrobeats and global grooves for a crowd that's been everywhere and heard it all." }
     };
 
-    const QUESTIONS = [
+    const WEDDING_QUESTIONS = [
       // Section 1: Basics (no scoring)
       { id: "name",    type: "text",  label: "01 / Basics",        title: "What's your name?", placeholder: "Your name" },
       { id: "email",   type: "email", label: "02 / Basics",        title: "Your email", placeholder: "you@domain.com" },
@@ -641,8 +721,116 @@
       }
     ];
 
-    // ---- State
-    let currentStep = 0; // 0 = intro
+    // ============================================================
+    // CORPORATE event questions
+    // ============================================================
+    const CORPORATE_QUESTIONS = [
+      // Section 1: Basics
+      { id: "name",    type: "text",  label: "01 / Basics", title: "What's your name?", placeholder: "Your name" },
+      { id: "email",   type: "email", label: "02 / Basics", title: "Your work email", placeholder: "you@company.com" },
+      { id: "company", type: "text",  label: "03 / Basics", title: "Company or brand", placeholder: "Company name" },
+      { id: "date",    type: "date",  label: "04 / Basics", title: "When is your event?" },
+      { id: "venue",   type: "text",  label: "05 / Basics", title: "Where is it?", placeholder: "City / venue" },
+      { id: "guests",  type: "select",label: "06 / Basics", title: "Approximate number of attendees?",
+        options: ["Under 50", "50–150", "150–300", "300–500", "500+"] },
+
+      // Section 2: Event format (no scoring)
+      { id: "format", type: "choice", label: "07 / Format", title: "What kind of corporate event is it?",
+        options: [
+          { key: "A", text: "Gala dinner / awards night" },
+          { key: "B", text: "Product launch / brand activation" },
+          { key: "C", text: "Conference afterparty" },
+          { key: "D", text: "Christmas party / team celebration" },
+          { key: "E", text: "Private client event" },
+          { key: "F", text: "Other — tell us in the notes" }
+        ]},
+
+      // Section 3: Audience & vibe (scoring)
+      { id: "audience", type: "choice", label: "08 / Audience", title: "Who's in the room?",
+        options: [
+          { key: "A", text: "Executives and senior stakeholders — mature, conservative",        score: { CS: 2 } },
+          { key: "B", text: "Mixed corporate — all ages, all levels, broad appeal",             score: { CE: 2 } },
+          { key: "C", text: "Young professionals — here to let loose",                          score: { HED: 2 } },
+          { key: "D", text: "International clients — well-traveled, cosmopolitan",              score: { GUS: 2 } }
+        ]},
+      { id: "vibe", type: "choice", label: "09 / Vibe", title: "What energy are you going for?",
+        options: [
+          { key: "A", text: "Elegant background — never intrusive, always on-brand",           score: { CS: 2 } },
+          { key: "B", text: "Smooth cocktail into a controlled party after dinner",             score: { CE: 2 } },
+          { key: "C", text: "Full party — we want them dancing, no holding back",               score: { HED: 2 } },
+          { key: "D", text: "Cool, international, current — the sound of a global brand",       score: { GUS: 2 } }
+        ]},
+      { id: "moment", type: "choice", label: "10 / Vibe", title: "When is the music most important?",
+        options: [
+          { key: "A", text: "Cocktail and welcome — set the tone, look polished",               score: { CS: 1, CE: 1 } },
+          { key: "B", text: "Dinner background — elegant, never loud",                          score: { CS: 2 } },
+          { key: "C", text: "After dinner — get people up and moving",                          score: { HED: 1, CE: 1 } },
+          { key: "D", text: "Late night — proper club-level set",                               score: { HED: 1, GUS: 1 } }
+        ]},
+      { id: "place", type: "choice", label: "11 / Vibe", title: "If the event had a reference, it would be:",
+        options: [
+          { key: "A", text: "A rooftop launch in Barcelona with minimal, elegant music",        score: { CS: 2 } },
+          { key: "B", text: "A Christmas party where HR and the CEO both dance",                score: { CE: 2 } },
+          { key: "C", text: "An afterparty where the conference crowd forgets it's a work event", score: { HED: 2 } },
+          { key: "D", text: "A global brand activation in Ibiza or Mallorca",                    score: { GUS: 2 } }
+        ]},
+
+      // Section 4: Music references (scoring)
+      { id: "artists", type: "multi", label: "12 / Music", title: "Pick the sounds that fit your brand",
+        sub: "Select all that apply.",
+        options: [
+          { text: "Deep house, lounge, Café del Mar",          score: { CS: 1 } },
+          { text: "Modern pop, Dua Lipa, The Weeknd",          score: { CE: 1 } },
+          { text: "Classic crowd-pleasers, 80s / 90s / 2000s", score: { CE: 1 } },
+          { text: "Commercial dance, Calvin Harris, David Guetta", score: { HED: 1 } },
+          { text: "R&B, hip-hop, Drake, Beyoncé",              score: { GUS: 1 } },
+          { text: "Afrobeats, Burna Boy, Wizkid",              score: { GUS: 1 } },
+          { text: "Tech-house, Peggy Gou, Kaytranada",         score: { CS: 1 } },
+          { text: "Reggaeton, Bad Bunny, Latin hits",          score: { HED: 1, CE: 1 } }
+        ]},
+
+      // Section 5: Operations (no scoring)
+      { id: "brand", type: "choice", label: "13 / Brief", title: "Any brand alignment we need to respect?",
+        options: [
+          { key: "A", text: "Yes — strict brand guidelines, tone and volume" },
+          { key: "B", text: "Somewhat — we'll share a brief" },
+          { key: "C", text: "No — total creative freedom" }
+        ]},
+      { id: "mc", type: "choice", label: "14 / Brief", title: "Do you need MC / announcements?",
+        options: [
+          { key: "A", text: "Yes — awards, speeches, call-outs" },
+          { key: "B", text: "Only welcome and closing" },
+          { key: "C", text: "No — just music" }
+        ]},
+      { id: "avoid", type: "textarea", label: "15 / Brief",
+        title: "Anything you definitely DON'T want?",
+        sub: "Genres, songs, vibes to avoid.",
+        placeholder: "No reggaeton, no explicit lyrics, nothing political..."
+      },
+      { id: "service", type: "choice", label: "16 / Details", title: "What do you need from us?",
+        options: [
+          { key: "A", text: "Full event — cocktail, dinner, party" },
+          { key: "B", text: "Dinner + party only" },
+          { key: "C", text: "Party only / after-dinner set" },
+          { key: "D", text: "Background music all day" },
+          { key: "E", text: "Not sure yet — let's discuss" }
+        ]},
+      { id: "notes", type: "textarea", label: "17 / Details",
+        title: "Anything else we should know?",
+        sub: "Optional.",
+        placeholder: "Speeches, video cues, dress code, language of the crowd..."
+      },
+      { id: "confirm", type: "confirm", label: "18 / Ready", title: "That's it.",
+        sub: "We'll review your brief and get back to you within 48 hours with your DJ match and a proposal."
+      }
+    ];
+
+    // ============================================================
+    // State & engine
+    // ============================================================
+    let QUESTIONS = [];           // populated once event type is chosen
+    let eventType = null;         // 'wedding' | 'corporate'
+    let currentStep = 0;          // 0 = intro
     let answers = {};
     let scores = { CS: 0, CE: 0, HED: 0, GUS: 0 };
 
@@ -651,7 +839,10 @@
     const progressFill = document.getElementById("progressFill");
     const stepNow = document.getElementById("stepNow");
     const stepTotal = document.getElementById("stepTotal");
-    stepTotal.textContent = String(QUESTIONS.length).padStart(2, "0");
+
+    function renderQuestions() {
+      questionsEl.innerHTML = "";
+      stepTotal.textContent = String(QUESTIONS.length).padStart(2, "0");
 
     // Build all steps
     QUESTIONS.forEach((q, idx) => {
@@ -710,32 +901,38 @@
       questionsEl.appendChild(section);
     });
 
-    // Wire choice interactions
-    document.querySelectorAll(".choices").forEach(group => {
-      const field = group.dataset.field;
-      group.querySelectorAll(".choice").forEach(btn => {
-        btn.addEventListener("click", () => {
-          group.querySelectorAll(".choice").forEach(c => c.classList.remove("selected"));
-          btn.classList.add("selected");
-          answers[field] = parseInt(btn.dataset.idx, 10);
+      // Wire choice interactions
+      questionsEl.querySelectorAll(".choices").forEach(group => {
+        const field = group.dataset.field;
+        group.querySelectorAll(".choice").forEach(btn => {
+          btn.addEventListener("click", () => {
+            group.querySelectorAll(".choice").forEach(c => c.classList.remove("selected"));
+            btn.classList.add("selected");
+            answers[field] = parseInt(btn.dataset.idx, 10);
+          });
         });
       });
-    });
-    document.querySelectorAll(".chips").forEach(group => {
-      const field = group.dataset.field;
-      answers[field] = [];
-      group.querySelectorAll(".chip").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const idx = parseInt(btn.dataset.idx, 10);
-          btn.classList.toggle("selected");
-          const arr = answers[field];
-          const pos = arr.indexOf(idx);
-          if (pos >= 0) arr.splice(pos, 1); else arr.push(idx);
+      questionsEl.querySelectorAll(".chips").forEach(group => {
+        const field = group.dataset.field;
+        answers[field] = [];
+        group.querySelectorAll(".chip").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const idx = parseInt(btn.dataset.idx, 10);
+            btn.classList.toggle("selected");
+            const arr = answers[field];
+            const pos = arr.indexOf(idx);
+            if (pos >= 0) arr.splice(pos, 1); else arr.push(idx);
+          });
         });
       });
-    });
+    } // end renderQuestions
 
-    function startQuiz() {
+    function startQuiz(type) {
+      eventType = type || "wedding";
+      QUESTIONS = eventType === "corporate" ? CORPORATE_QUESTIONS : WEDDING_QUESTIONS;
+      answers = { __eventType: eventType };
+      scores = { CS: 0, CE: 0, HED: 0, GUS: 0 };
+      renderQuestions();
       document.getElementById("intro").classList.remove("active");
       progressBar.style.display = "flex";
       currentStep = 1;
@@ -842,14 +1039,25 @@
       answers.__scores = scores;
     }
 
+    function resolveChoice(qid) {
+      const q = QUESTIONS.find(x => x.id === qid);
+      if (!q || answers[qid] === undefined || !q.options) return '-';
+      return q.options[answers[qid]]?.text || '-';
+    }
+
     function sendAnswers() {
       const lead = {
+        eventType: eventType,
         name: answers.name,
         email: answers.email,
+        company: answers.company,
         date: answers.date,
         venue: answers.venue,
         guests: answers.guests,
-        service: QUESTIONS.find(q => q.id === "service").options[answers.service]?.text,
+        format: resolveChoice('format'),
+        service: resolveChoice('service'),
+        brand: resolveChoice('brand'),
+        mc: resolveChoice('mc'),
         reference: answers.reference,
         avoid: answers.avoid,
         notes: answers.notes,
@@ -858,19 +1066,20 @@
       };
 
       const body = encodeURIComponent(
-`New matching lead — ${lead.profile}
+`New matching lead — ${lead.eventType?.toUpperCase()} — ${lead.profile}
 
+EVENT TYPE: ${lead.eventType || '-'}
 NAME: ${lead.name || '-'}
 EMAIL: ${lead.email || '-'}
-DATE: ${lead.date || '-'}
+${lead.eventType === 'corporate' ? 'COMPANY: ' + (lead.company || '-') + '\n' : ''}DATE: ${lead.date || '-'}
 VENUE: ${lead.venue || '-'}
 GUESTS: ${lead.guests || '-'}
-SERVICE: ${lead.service || '-'}
+${lead.eventType === 'corporate' ? 'FORMAT: ' + lead.format + '\nBRAND ALIGNMENT: ' + lead.brand + '\nMC NEEDED: ' + lead.mc + '\n' : ''}SERVICE: ${lead.service || '-'}
 
 PROFILE ASSIGNED: ${lead.profile}
 SCORES: CS=${lead.scores.CS}  CE=${lead.scores.CE}  HED=${lead.scores.HED}  GUS=${lead.scores.GUS}
 
-REFERENCE PARTY:
+REFERENCE:
 ${lead.reference || '-'}
 
 EXCLUSIONS:
@@ -879,7 +1088,7 @@ ${lead.avoid || '-'}
 NOTES:
 ${lead.notes || '-'}
 `);
-      const subject = encodeURIComponent(`ELEVN match — ${lead.name || 'New lead'} (${lead.profile})`);
+      const subject = encodeURIComponent(`ELEVN match — ${lead.name || 'New lead'} (${lead.eventType} · ${lead.profile})`);
       window.location.href = `mailto:hello@elevndjs.com?subject=${subject}&body=${body}`;
     }
   </script>
