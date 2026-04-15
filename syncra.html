@@ -202,10 +202,81 @@
     }
 
     @media (max-width: 960px) {
-      .nav-inner { padding: 1rem 1.5rem; }
-      .nav-links, .nav-cta { display: none; }
+      .nav-inner { padding: 1rem 1.25rem; }
+      .nav-links, .nav-cta, .nav-ig { display: none; }
       .nav-toggle { display: block; }
+      .nav-logo { font-size: 1.5rem; }
     }
+
+    /* =====================================================
+       MOBILE MENU DRAWER
+    ===================================================== */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: var(--darker);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      padding: 5.5rem 1.75rem 2.5rem;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(.2,.7,.2,1);
+      visibility: hidden;
+      overflow-y: auto;
+    }
+    .mobile-menu.open { transform: translateX(0); visibility: visible; }
+    .mobile-menu ul {
+      list-style: none;
+      margin: 0 0 2rem;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+    .mobile-menu ul a {
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.8rem, 7vw, 2.4rem);
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+      line-height: 1;
+    }
+    .mobile-menu ul a.accent { color: var(--accent); }
+    .mm-footer {
+      margin-top: auto;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .mm-footer a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      text-decoration: none;
+    }
+    .mm-close {
+      position: absolute;
+      top: 1.1rem;
+      right: 1.25rem;
+      background: none;
+      border: none;
+      color: var(--cream);
+      font-size: 2rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      z-index: 201;
+    }
+    body.no-scroll { overflow: hidden; }
+    @media (min-width: 961px) { .mobile-menu { display: none; } }
 
     /* =====================================================
        HERO, real Syncra layout:
@@ -370,16 +441,22 @@
     .hero-image-caption .sq { background: var(--accent); }
 
     @media (max-width: 860px) {
-      #hero { padding: 9rem 1.5rem 3rem; min-height: auto; }
-      .hero-eyebrow { margin-bottom: 2rem; }
+      #hero { padding: 8rem 1.25rem 3rem; min-height: auto; }
+      .hero-eyebrow { margin-bottom: 1.8rem; font-size: 0.65rem; flex-wrap: wrap; }
+      .hero-headline { font-size: clamp(2.4rem, 11vw, 5rem); max-width: 14ch; }
       .hero-bottom {
         grid-template-columns: 1fr;
         gap: 2rem;
-        margin-top: 3rem;
+        margin-top: 2.5rem;
       }
-      .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
-      .hero-stats strong { font-size: 1.15rem; }
-      .hero-image-caption { left: 1.2rem; right: 1.2rem; font-size: 0.6rem; }
+      .hero-stats { flex-wrap: wrap; gap: 1.4rem 2rem; }
+      .hero-stats strong { font-size: 1.1rem; }
+      .hero-cta { padding: 1rem 1.6rem; font-size: 0.72rem; justify-content: center; }
+      .hero-image-caption { left: 1.2rem; right: 1.2rem; font-size: 0.58rem; flex-wrap: wrap; gap: 0.6rem; }
+    }
+    @media (max-width: 480px) {
+      #hero { padding: 7rem 1rem 2.5rem; }
+      .hero-headline { font-size: clamp(2rem, 12vw, 3.2rem); }
     }
 
     /* =====================================================
@@ -518,8 +595,9 @@
     }
 
     @media (max-width: 960px) {
-      #about { padding: 6rem 1.5rem; }
-      .about-inner { grid-template-columns: 1fr; gap: 3.5rem; }
+      #about { padding: 6rem 1.25rem; }
+      .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .about-headline { margin-bottom: 2rem; }
       .about-image { max-width: 520px; }
     }
 
@@ -547,7 +625,7 @@
     .services-headline .lower { text-transform: lowercase; font-style: italic; font-weight: 300; }
     .services-sub { font-size: 1rem; line-height: 1.6; color: var(--cream-dim); max-width: 38ch; align-self: flex-end; }
     .services-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 0; border-top: 1px solid var(--line); }
-    .service-item { padding: 3.5rem 3rem; border-right: 1px solid var(--line); position: relative; transition: background 0.3s ease; }
+    .service-item { padding: 3.5rem 2.5rem; border-right: 1px solid var(--line); position: relative; transition: background 0.3s ease; }
     .service-item:last-child { border-right: none; }
     .service-item:hover { background: rgba(240,237,232,0.03); }
     .service-num { font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.18em; color: var(--accent); margin-bottom: 2rem; display: block; }
@@ -556,9 +634,10 @@
     .service-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
     .service-tag { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-dim); border: 1px solid var(--line-strong); padding: 0.3rem 0.7rem; }
     @media (max-width: 900px) {
-      #services { padding: 6rem 1.5rem; }
+      #services { padding: 6rem 1.25rem; }
+      .services-header { margin-bottom: 3rem; gap: 2rem; }
       .services-grid { grid-template-columns: 1fr; }
-      .service-item { border-right: none; border-bottom: 1px solid var(--line); }
+      .service-item { padding: 2.8rem 1.5rem; border-right: none; border-bottom: 1px solid var(--line); }
       .service-item:last-child { border-bottom: none; }
     }
 
@@ -576,8 +655,8 @@
     .story-body { font-size: 1.02rem; line-height: 1.7; color: var(--cream-dim); max-width: 52ch; margin-bottom: 1.5rem; }
     .story-body strong { color: var(--cream); font-weight: 500; }
     @media (max-width: 960px) {
-      #story { padding: 6rem 1.5rem; }
-      .story-inner { grid-template-columns: 1fr; gap: 3.5rem; }
+      #story { padding: 6rem 1.25rem; }
+      .story-inner { grid-template-columns: 1fr; gap: 3rem; }
       .story-image { max-width: 480px; }
     }
 
@@ -590,12 +669,31 @@
     .contact-headline .lower { text-transform: lowercase; font-style: italic; font-weight: 300; }
     .contact-headline .accent { color: var(--accent); }
     .contact-sub { font-size: 1.05rem; line-height: 1.6; color: var(--cream-dim); max-width: 44ch; margin: 0 auto 3.5rem; }
-    .contact-actions { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
+    .contact-actions { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 4rem; }
+    .contact-form { max-width: 640px; margin: 0 auto; text-align: left; }
+    .contact-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; margin-bottom: 1.5rem; }
+    .contact-field { display: flex; flex-direction: column; gap: 0.5rem; }
+    .contact-field.full { grid-column: 1 / -1; }
+    .contact-field label { font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-dim); }
+    .contact-field input, .contact-field textarea { background: transparent; border: none; border-bottom: 1px solid var(--line-strong); color: var(--cream); font-family: 'Inter', sans-serif; font-size: 1.05rem; padding: 0.6rem 0; outline: none; transition: border-color 0.25s; resize: vertical; }
+    .contact-field input:focus, .contact-field textarea:focus { border-bottom-color: var(--accent); }
+    .contact-field textarea { min-height: 90px; font-size: 0.95rem; line-height: 1.5; }
+    .contact-form .btn-primary { border: 1px solid var(--accent); cursor: pointer; font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream); padding: 1.2rem 2.4rem; background: var(--accent); transition: all 0.25s; margin-top: 1rem; }
+    .contact-form .btn-primary:hover { background: transparent; border-color: var(--cream); }
+    .contact-form .btn-primary[disabled] { opacity: 0.5; cursor: not-allowed; }
+    .contact-status { margin-top: 1.2rem; min-height: 1.2em; font-family: 'Space Mono', monospace; font-size: 0.78rem; color: var(--cream-dim); }
+    .contact-status.success { color: var(--accent); }
+    .contact-status.error { color: #ff6b6b; }
+    @media (max-width: 600px) { .contact-form-grid { grid-template-columns: 1fr; gap: 1.2rem; } }
     .btn-primary { font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream); text-decoration: none; padding: 1.2rem 2.4rem; background: var(--accent); border: 1px solid var(--accent); transition: all 0.25s ease; }
     .btn-primary:hover { background: transparent; border-color: var(--cream); }
     .btn-ghost { font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream); text-decoration: none; padding: 1.2rem 2.4rem; background: transparent; border: 1px solid var(--line-strong); transition: all 0.25s ease; }
     .btn-ghost:hover { border-color: var(--cream); }
-    @media (max-width: 600px) { #contact { padding: 6rem 1.5rem; } }
+    @media (max-width: 720px) {
+      #contact { padding: 6rem 1.25rem; }
+      .contact-actions { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-ghost { text-align: center; padding: 1.1rem 1.6rem; }
+    }
 
     /* FOOTER */
     footer { padding: 4rem 2.5rem; background: #080808; border-top: 1px solid var(--line); }
@@ -631,9 +729,27 @@
       </ul>
       <a href="https://www.instagram.com/elevndjs/" target="_blank" rel="noopener" class="nav-ig" aria-label="Instagram @elevndjs"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
       <a href="match.html" class="nav-cta">Find your DJ &rarr;</a>
-      <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+      <button class="nav-toggle" aria-label="Open menu" onclick="toggleMenu()">&#9776;</button>
     </div>
   </nav>
+
+  <!-- Mobile menu drawer -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <button class="mm-close" aria-label="Close menu" onclick="toggleMenu()">&times;</button>
+    <ul>
+      <li><a href="#services" onclick="toggleMenu()">Services</a></li>
+      <li><a href="weddings.html">Weddings</a></li>
+      <li><a href="corporate.html">Corporate</a></li>
+      <li><a href="#story" onclick="toggleMenu()">About</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
+      <li><a href="match.html" class="accent">Find your DJ &rarr;</a></li>
+    </ul>
+    <div class="mm-footer">
+      <a href="https://www.instagram.com/elevndjs/" target="_blank" rel="noopener">@elevndjs</a>
+      <a href="mailto:hello@elevndjs.com">hello@elevndjs.com</a>
+    </div>
+  </div>
 
   <!-- =====================================================
        HERO
@@ -777,6 +893,33 @@
         <a href="match.html" class="btn-primary">Start the matching &rarr;</a>
         <a href="mailto:hello@elevndjs.com" class="btn-ghost">Email us directly</a>
       </div>
+
+      <form class="contact-form" id="contactForm" onsubmit="sendContact(event)">
+        <div class="contact-form-grid">
+          <div class="contact-field">
+            <label for="cfName">Name</label>
+            <input type="text" id="cfName" name="name" required autocomplete="name">
+          </div>
+          <div class="contact-field">
+            <label for="cfEmail">Email</label>
+            <input type="email" id="cfEmail" name="email" required autocomplete="email">
+          </div>
+          <div class="contact-field">
+            <label for="cfEvent">Event type</label>
+            <input type="text" id="cfEvent" name="event_type" placeholder="Wedding / Corporate / Private" autocomplete="off">
+          </div>
+          <div class="contact-field">
+            <label for="cfDate">Date (approx)</label>
+            <input type="text" id="cfDate" name="date" placeholder="June 2026" autocomplete="off">
+          </div>
+          <div class="contact-field full">
+            <label for="cfMessage">Tell us about your event</label>
+            <textarea id="cfMessage" name="message" required></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary" id="contactSubmit">&rarr; Send message</button>
+        <p class="contact-status" id="contactStatus" role="status" aria-live="polite"></p>
+      </form>
     </div>
   </section>
 
@@ -793,6 +936,63 @@
       <span class="footer-right"><a href="https://www.instagram.com/elevndjs/" target="_blank" rel="noopener" style="color:var(--cream-dim);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--cream)'" onmouseout="this.style.color='var(--cream-dim)'">@elevndjs</a> &nbsp;&#8231;&nbsp; hello@elevndjs.com</span>
     </div>
   </footer>
+
+  <script>
+    function toggleMenu() {
+      const m = document.getElementById('mobileMenu');
+      const open = m.classList.toggle('open');
+      m.setAttribute('aria-hidden', String(!open));
+      document.body.classList.toggle('no-scroll', open);
+    }
+
+    // Contact form, POSTs to FormSubmit.co (delivers to elevndjs@gmail.com)
+    const CONTACT_ENDPOINT = 'https://formsubmit.co/ajax/elevndjs@gmail.com';
+    async function sendContact(ev) {
+      ev.preventDefault();
+      const form = ev.target;
+      const btn = document.getElementById('contactSubmit');
+      const status = document.getElementById('contactStatus');
+      if (btn.disabled) return;
+
+      const data = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        event_type: form.event_type.value.trim(),
+        date: form.date.value.trim(),
+        message: form.message.value.trim(),
+        _subject: 'ELEVN contact, ' + (form.name.value.trim() || 'New lead'),
+        _template: 'table',
+        _captcha: 'false'
+      };
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      status.className = 'contact-status';
+      status.textContent = '';
+
+      try {
+        const res = await fetch(CONTACT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const json = await res.json().catch(() => ({}));
+        if (res.ok && (json.success === 'true' || json.success === true)) {
+          btn.textContent = 'Sent';
+          status.className = 'contact-status success';
+          status.textContent = 'Thanks, we received your message. We will get back to you within 48 hours.';
+          form.reset();
+        } else {
+          throw new Error(json.message || 'Failed');
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = '\u2192 Send message';
+        status.className = 'contact-status error';
+        status.textContent = 'Something went wrong. Please email us directly at hello@elevndjs.com.';
+      }
+    }
+  </script>
 
 </body>
 </html>
