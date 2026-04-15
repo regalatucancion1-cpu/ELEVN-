@@ -3,14 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>elevn. — DJ Agency for Modern Weddings & Events in Spain</title>
-  <meta name="description" content="Boutique DJ agency for modern weddings and international events in Spain. We match you with the right DJ. No guesswork.">
+  <title>elevn. Wedding DJ Barcelona | International DJ Agency Spain</title>
+  <meta name="description" content="elevn is Barcelona's boutique international DJ agency for destination weddings, corporate events and private parties. Based in Barcelona, working across all of Spain. We match you with the right DJ, no guesswork.">
+  <meta name="keywords" content="wedding DJ Barcelona, DJ Barcelona wedding, international DJ Spain, destination wedding DJ Spain, DJ agency Barcelona, corporate event DJ Barcelona, DJ boda Barcelona, english speaking DJ Spain">
+  <meta name="author" content="elevn. DJ Agency">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:title" content="elevn. Wedding DJ Barcelona | International DJ Agency Spain">
+  <meta property="og:description" content="Boutique DJ agency for destination weddings, corporate events and private parties. Based in Barcelona, covering all of Spain. We match you with the right DJ.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="elevn. DJ Agency">
+  <meta property="og:url" content="https://elevndjs.com/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="elevn. Wedding DJ Barcelona | International DJ Agency Spain">
+  <meta name="twitter:description" content="Barcelona's boutique international DJ agency. We match you with the right DJ for your wedding, corporate event or private party.">
+  <meta name="geo.region" content="ES-CT">
+  <meta name="geo.placename" content="Barcelona">
+  <link rel="canonical" href="https://elevndjs.com/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://elevndjs.com/#business",
+    "name": "elevn. DJ Agency",
+    "alternateName": "ELEVN DJS",
+    "description": "Barcelona based boutique international DJ agency for destination weddings, corporate events and private parties across Spain.",
+    "url": "https://elevndjs.com",
+    "email": "hello@elevndjs.com",
+    "priceRange": "$$$",
+    "sameAs": ["https://www.instagram.com/elevndjs/"],
+    "address": { "@type": "PostalAddress", "addressLocality": "Barcelona", "addressRegion": "Catalonia", "addressCountry": "ES" },
+    "areaServed": { "@type": "Country", "name": "Spain" },
+    "serviceType": ["Wedding DJ", "Corporate Event DJ", "Private Party DJ", "International DJ Agency"]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=League+Spartan:wght@700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     /* =====================================================
-       ELEVN — Syncra-inspired rebuild
+       ELEVN, Syncra-inspired rebuild
        Part 1: Nav + Hero
     ===================================================== */
 
@@ -42,7 +74,7 @@
       font-weight: 400;
     }
 
-    /* Square bullet accent — Syncra signature */
+    /* Square bullet accent, Syncra signature */
     .sq {
       display: inline-block;
       width: 0.55em;
@@ -68,7 +100,7 @@
     }
 
     .nav-inner {
-      max-width: 1480px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 1.25rem 2.5rem;
       display: flex;
@@ -78,29 +110,39 @@
     }
 
     /* =====================================================
-       ELEVN LOGO — single source of truth
-       Uses League Spartan 900, rendered as text so it stays
-       crisp at any size and can be reused everywhere.
+       ELEVN LOGO, single source of truth
+       League Spartan 900 + custom CSS circle as the dot
+       (matches the oversized solid period in the brand logo).
     ===================================================== */
     .elevn-logo {
       font-family: 'League Spartan', 'Inter', sans-serif;
       font-weight: 900;
-      font-size: 1.75rem;
+      font-size: 2.2rem;
       line-height: 0.8;
-      letter-spacing: -0.055em;
+      letter-spacing: -0.05em;
       text-transform: lowercase;
       color: var(--cream);
       text-decoration: none;
-      display: inline-block;
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 0.06em;
       white-space: nowrap;
-      padding: 0;
     }
-    .elevn-logo .dot { color: var(--cream); }
-    .elevn-logo.accent-dot .dot { color: var(--accent); }
+    .elevn-text { display: inline-block; }
+    .elevn-dot {
+      display: inline-block;
+      width: 0.28em;
+      height: 0.28em;
+      border-radius: 50%;
+      background: currentColor;
+      margin-bottom: 0.15em;
+      flex-shrink: 0;
+    }
+    .elevn-logo.accent-dot .elevn-dot { background: var(--accent); }
 
     /* Nav-specific sizing */
     .nav-logo {
-      font-size: 1.65rem;
+      font-size: 1.7rem;
       flex-shrink: 0;
     }
 
@@ -142,6 +184,9 @@
       border-color: var(--accent);
       color: var(--cream);
     }
+    .nav-ig { display:inline-flex; align-items:center; color:var(--cream-dim); text-decoration:none; transition:color 0.2s; flex-shrink:0; }
+    .nav-ig:hover { color:var(--cream); }
+    .nav-ig svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
 
     .nav-toggle {
       display: none;
@@ -159,49 +204,27 @@
     }
 
     /* =====================================================
-       HERO
+       HERO, real Syncra layout:
+       Clean surface, oversized editorial headline, no bg image.
+       Image sits in its own full-bleed band below.
     ===================================================== */
     #hero {
       position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: flex-end;
-      padding: 7rem 2.5rem 4rem;
-      overflow: hidden;
       background: var(--dark);
+      padding: 12rem 2.5rem 5rem;
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
     }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url('fotos/stock-dj-perform.jpg');
-      background-size: cover;
-      background-position: center;
-      filter: grayscale(100%) contrast(1.08) brightness(0.52);
-      z-index: 0;
-    }
-    .hero-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(14,14,14,0.65) 0%, rgba(14,14,14,0.35) 45%, rgba(14,14,14,0.95) 100%);
-    }
-
     .hero-inner {
-      position: relative;
-      z-index: 2;
       max-width: 1480px;
       width: 100%;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      grid-template-rows: auto auto;
-      gap: 2rem 3rem;
-      align-items: end;
     }
 
     .hero-eyebrow {
-      grid-column: 1 / -1;
       font-family: 'Space Mono', monospace;
       font-size: 0.72rem;
       letter-spacing: 0.2em;
@@ -210,7 +233,7 @@
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      margin-bottom: 1rem;
+      margin-bottom: 3rem;
     }
     .hero-eyebrow .line {
       display: inline-block;
@@ -222,41 +245,63 @@
     .hero-headline {
       font-family: 'Inter', sans-serif;
       font-weight: 800;
-      font-size: clamp(2.8rem, 7.2vw, 7.6rem);
-      line-height: 0.92;
-      letter-spacing: -0.035em;
+      font-size: clamp(3rem, 10.5vw, 10.5rem);
+      line-height: 0.88;
+      letter-spacing: -0.04em;
       text-transform: uppercase;
       color: var(--cream);
-      max-width: 14ch;
+      max-width: 13ch;
+      margin-bottom: 0;
     }
     .hero-headline .lower {
       text-transform: lowercase;
-      font-weight: 300;
+      font-weight: 200;
       font-style: italic;
-      font-family: 'Inter', serif;
+      font-family: Georgia, 'Times New Roman', serif;
       color: var(--cream);
-      letter-spacing: -0.01em;
+      letter-spacing: -0.015em;
     }
-    .hero-headline .accent {
-      color: var(--accent);
-    }
+    .hero-headline .accent { color: var(--accent); }
 
-    .hero-meta {
-      grid-column: 2;
-      grid-row: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 1.8rem;
-      max-width: 320px;
-      padding-bottom: 0.4rem;
+    /* Bottom row, meta + CTA */
+    .hero-bottom {
+      max-width: 1480px;
+      width: 100%;
+      margin: 5rem auto 0;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr auto;
+      gap: 3rem;
+      align-items: end;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
     }
     .hero-sub {
-      font-size: 0.95rem;
+      font-size: 1rem;
       line-height: 1.55;
       color: var(--cream-dim);
-      text-align: right;
-      max-width: 32ch;
+      max-width: 38ch;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 2.4rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+    }
+    .hero-stats div {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .hero-stats strong {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+      text-transform: none;
     }
     .hero-cta {
       font-family: 'Space Mono', monospace;
@@ -268,7 +313,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.8rem;
-      padding: 1.15rem 1.8rem;
+      padding: 1.2rem 2rem;
       background: var(--accent);
       border: 1px solid var(--accent);
       transition: all 0.25s ease;
@@ -280,42 +325,57 @@
     }
     .hero-cta .arrow { font-size: 1rem; }
 
-    /* Bottom bar: mono info ticker */
-    .hero-ticker {
-      grid-column: 1 / -1;
-      grid-row: 3;
-      margin-top: 3rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--line);
+    /* =====================================================
+       HERO IMAGE BAND, full bleed B&W, sits below hero
+    ===================================================== */
+    .hero-image-band {
+      position: relative;
+      width: 100%;
+      height: clamp(340px, 55vh, 620px);
+      overflow: hidden;
+      background: var(--darker);
+    }
+    .hero-image-band img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.1) brightness(0.75);
+    }
+    .hero-image-band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(14,14,14,0.35) 0%, transparent 30%, transparent 70%, rgba(14,14,14,0.85) 100%);
+      z-index: 2;
+    }
+    .hero-image-caption {
+      position: absolute;
+      left: 2.5rem;
+      right: 2.5rem;
+      bottom: 1.8rem;
       display: flex;
       justify-content: space-between;
-      flex-wrap: wrap;
       gap: 1.5rem;
       font-family: 'Space Mono', monospace;
       font-size: 0.7rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--cream-dim);
-    }
-    .hero-ticker span b {
       color: var(--cream);
-      font-weight: 400;
-      margin-left: 0.4rem;
+      z-index: 3;
     }
+    .hero-image-caption .sq { background: var(--accent); }
 
     @media (max-width: 860px) {
-      #hero { padding: 7rem 1.5rem 3rem; }
-      .hero-inner {
+      #hero { padding: 9rem 1.5rem 3rem; min-height: auto; }
+      .hero-eyebrow { margin-bottom: 2rem; }
+      .hero-bottom {
         grid-template-columns: 1fr;
         gap: 2rem;
+        margin-top: 3rem;
       }
-      .hero-meta {
-        grid-column: 1;
-        align-items: flex-start;
-      }
-      .hero-sub { text-align: left; }
-      .hero-headline { font-size: clamp(2.6rem, 12vw, 5rem); }
-      .hero-ticker { font-size: 0.62rem; gap: 1rem; }
+      .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+      .hero-stats strong { font-size: 1.15rem; }
+      .hero-image-caption { left: 1.2rem; right: 1.2rem; font-size: 0.6rem; }
     }
 
     /* =====================================================
@@ -472,6 +532,81 @@
     @keyframes fadeUp {
       to { opacity: 1; transform: translateY(0); }
     }
+
+    /* SERVICES */
+    #services { padding: 9rem 2.5rem; background: var(--darker); border-top: 1px solid var(--line); }
+    .services-inner { max-width: 1480px; margin: 0 auto; }
+    .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5rem; gap: 3rem; flex-wrap: wrap; }
+    .services-label { font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-dim); display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.8rem; }
+    .services-label .line { display: inline-block; width: 44px; height: 1px; background: var(--accent); }
+    .services-headline { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 0.96; letter-spacing: -0.03em; text-transform: uppercase; color: var(--cream); max-width: 18ch; }
+    .services-headline .lower { text-transform: lowercase; font-style: italic; font-weight: 300; }
+    .services-sub { font-size: 1rem; line-height: 1.6; color: var(--cream-dim); max-width: 38ch; align-self: flex-end; }
+    .services-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 0; border-top: 1px solid var(--line); }
+    .service-item { padding: 3.5rem 3rem; border-right: 1px solid var(--line); position: relative; transition: background 0.3s ease; }
+    .service-item:last-child { border-right: none; }
+    .service-item:hover { background: rgba(240,237,232,0.03); }
+    .service-num { font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.18em; color: var(--accent); margin-bottom: 2rem; display: block; }
+    .service-title { font-family: 'Inter', sans-serif; font-weight: 700; font-size: clamp(1.3rem, 2.2vw, 1.9rem); letter-spacing: -0.02em; text-transform: uppercase; color: var(--cream); margin-bottom: 1.4rem; line-height: 1.05; }
+    .service-body { font-size: 0.92rem; line-height: 1.65; color: var(--cream-dim); margin-bottom: 2rem; }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .service-tag { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-dim); border: 1px solid var(--line-strong); padding: 0.3rem 0.7rem; }
+    @media (max-width: 900px) {
+      #services { padding: 6rem 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-item { border-right: none; border-bottom: 1px solid var(--line); }
+      .service-item:last-child { border-bottom: none; }
+    }
+
+    /* STORY */
+    #story { padding: 9rem 2.5rem; background: var(--dark); border-top: 1px solid var(--line); }
+    .story-inner { max-width: 1480px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.1fr; gap: 8rem; align-items: center; }
+    .story-image { position: relative; aspect-ratio: 3/4; overflow: hidden; background: var(--darker); }
+    .story-image img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.08) brightness(0.7); }
+    .story-image-label { position: absolute; bottom: 1.5rem; left: 1.5rem; font-family: 'Space Mono', monospace; font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream); z-index: 2; }
+    .story-label { font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-dim); display: flex; align-items: center; gap: 0.8rem; margin-bottom: 2.5rem; }
+    .story-label .line { display: inline-block; width: 44px; height: 1px; background: var(--accent); }
+    .story-headline { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(2rem, 3.8vw, 3.4rem); line-height: 0.98; letter-spacing: -0.028em; text-transform: uppercase; color: var(--cream); margin-bottom: 2.5rem; }
+    .story-headline .lower { text-transform: lowercase; font-style: italic; font-weight: 300; }
+    .story-headline .accent { color: var(--accent); }
+    .story-body { font-size: 1.02rem; line-height: 1.7; color: var(--cream-dim); max-width: 52ch; margin-bottom: 1.5rem; }
+    .story-body strong { color: var(--cream); font-weight: 500; }
+    @media (max-width: 960px) {
+      #story { padding: 6rem 1.5rem; }
+      .story-inner { grid-template-columns: 1fr; gap: 3.5rem; }
+      .story-image { max-width: 480px; }
+    }
+
+    /* CONTACT CTA */
+    #contact { padding: 10rem 2.5rem; background: var(--darker); border-top: 1px solid var(--line); text-align: center; }
+    .contact-inner { max-width: 860px; margin: 0 auto; }
+    .contact-label { font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-dim); display: inline-flex; align-items: center; gap: 0.8rem; margin-bottom: 3rem; }
+    .contact-label .line { display: inline-block; width: 44px; height: 1px; background: var(--accent); }
+    .contact-headline { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(2.5rem, 7vw, 6.5rem); line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; color: var(--cream); margin-bottom: 2.5rem; }
+    .contact-headline .lower { text-transform: lowercase; font-style: italic; font-weight: 300; }
+    .contact-headline .accent { color: var(--accent); }
+    .contact-sub { font-size: 1.05rem; line-height: 1.6; color: var(--cream-dim); max-width: 44ch; margin: 0 auto 3.5rem; }
+    .contact-actions { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream); text-decoration: none; padding: 1.2rem 2.4rem; background: var(--accent); border: 1px solid var(--accent); transition: all 0.25s ease; }
+    .btn-primary:hover { background: transparent; border-color: var(--cream); }
+    .btn-ghost { font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream); text-decoration: none; padding: 1.2rem 2.4rem; background: transparent; border: 1px solid var(--line-strong); transition: all 0.25s ease; }
+    .btn-ghost:hover { border-color: var(--cream); }
+    @media (max-width: 600px) { #contact { padding: 6rem 1.5rem; } }
+
+    /* FOOTER */
+    footer { padding: 4rem 2.5rem; background: #080808; border-top: 1px solid var(--line); }
+    .footer-inner { max-width: 1480px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 2rem; }
+    .footer-copy { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-dim); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-dim); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-right { text-align: right; font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-dim); }
+    @media (max-width: 720px) {
+      footer { padding: 3rem 1.5rem; }
+      .footer-inner { grid-template-columns: 1fr; text-align: center; gap: 1.5rem; }
+      .footer-links { justify-content: center; }
+      .footer-right { text-align: center; }
+    }
   </style>
 </head>
 <body>
@@ -481,14 +616,16 @@
   ===================================================== -->
   <nav>
     <div class="nav-inner">
-      <a href="syncra.html" class="elevn-logo nav-logo accent-dot" aria-label="elevn. home">elevn<span class="dot">.</span></a>
+      <a href="syncra.html" class="elevn-logo nav-logo accent-dot" aria-label="elevn. home"><span class="elevn-text">elevn</span><i class="elevn-dot"></i></a>
       <ul class="nav-links">
         <li><a href="#services">Services</a></li>
-        <li><a href="#weddings">Weddings</a></li>
-        <li><a href="#corporate">Corporate</a></li>
+        <li><a href="weddings.html">Weddings</a></li>
+        <li><a href="corporate.html">Corporate</a></li>
         <li><a href="#story">About</a></li>
+        <li><a href="blog.html">Blog</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
+      <a href="https://www.instagram.com/elevndjs/" target="_blank" rel="noopener" class="nav-ig" aria-label="Instagram @elevndjs"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
       <a href="match.html" class="nav-cta">Find your DJ &rarr;</a>
       <button class="nav-toggle" aria-label="Menu">&#9776;</button>
     </div>
@@ -498,42 +635,45 @@
        HERO
   ===================================================== -->
   <section id="hero">
-    <div class="hero-bg"></div>
-
     <div class="hero-inner">
       <div class="hero-eyebrow reveal reveal-1">
         <span class="line"></span>
-        <span>( BOUTIQUE DJ AGENCY <span class="sq"></span> BARCELONA &middot; IBIZA &middot; MALLORCA )</span>
+        <span>( BOUTIQUE DJ AGENCY <span class="sq"></span> BARCELONA, SPAIN )</span>
       </div>
 
       <h1 class="hero-headline reveal reveal-2">
         THE RIGHT DJ<br>
-        FOR <span class="lower">your</span><br>
-        <span class="accent">WEDDING</span>.
+        FOR <span class="lower">every</span> <span class="accent">EVENT</span>.
       </h1>
+    </div>
 
-      <div class="hero-meta reveal reveal-3">
-        <p class="hero-sub">
-          We match international couples with the right DJ from our curated selection. Based on your taste, your crowd, your vision. No guesswork.
-        </p>
-        <a href="match.html" class="hero-cta">
-          <span class="sq" style="background:var(--cream);"></span>
-          Find your DJ
-          <span class="arrow">&rarr;</span>
-        </a>
+    <div class="hero-bottom reveal reveal-3">
+      <p class="hero-sub">
+        Weddings, corporate events, private parties. We match clients with the right DJ from our curated roster, built on your taste, your crowd and your vision.
+      </p>
+      <div class="hero-stats">
+        <div><strong>200+</strong><span>EVENTS DELIVERED</span></div>
+        <div><strong>12</strong><span>CURATED DJS</span></div>
+        <div><strong>48H</strong><span>RESPONSE TIME</span></div>
       </div>
+      <a href="match.html" class="hero-cta">
+        Find your DJ
+        <span class="arrow">&rarr;</span>
+      </a>
+    </div>
+  </section>
 
-      <div class="hero-ticker reveal reveal-4">
-        <span>( 01 ) <b>200+ EVENTS DELIVERED</b></span>
-        <span>( 02 ) <b>12 CURATED DJS</b></span>
-        <span>( 03 ) <b>48H RESPONSE</b></span>
-        <span>( 04 ) <b>EST. 2020</b></span>
-      </div>
+  <!-- Full-bleed B&W image band, sits directly under the hero -->
+  <section class="hero-image-band reveal reveal-4">
+    <img src="fotos/stock-dj-perform.jpg" alt="DJ performing">
+    <div class="hero-image-caption">
+      <span><span class="sq" style="display:inline-block;width:8px;height:8px;margin-right:0.6rem;vertical-align:middle;"></span>( ELEVN / SELECTED WORK 2020 &middot; 2026 )</span>
+      <span>SCROLL &darr;</span>
     </div>
   </section>
 
   <!-- =====================================================
-       ABOUT / MISSION — Part 2
+       ABOUT / MISSION, Part 2
   ===================================================== -->
   <section id="about">
     <div class="about-inner">
@@ -544,16 +684,16 @@
         </div>
 
         <h2 class="about-headline">
-          We match international<br>
-          couples and brands<br>
-          with the <span class="lower">right</span> <span class="accent">DJ</span>.
+          The <span class="lower">right</span> DJ<br>
+          for <span class="lower">every</span> room,<br>
+          every <span class="accent">occasion</span>.
         </h2>
 
         <p class="about-body">
-          <strong>elevn is a boutique DJ agency</strong> based in Barcelona, working across Spain and beyond. We connect international clients with a curated roster of DJs who understand the local scene and the global sound.
+          <strong>elevn is a boutique DJ agency</strong> based in Barcelona, working across all of Spain. Weddings, corporate events, private parties. We connect international clients with a curated roster of DJs who understand both the local scene and the global sound.
         </p>
         <p class="about-body">
-          No guesswork. No generic packages. We translate your taste, your crowd and your vision into the right DJ and the right set. You enjoy the party. We handle the music.
+          No guesswork. No generic packages. We translate your taste, your crowd and your vision into the right DJ and the right set. You enjoy the event. We handle the music.
         </p>
 
         <a href="#story" class="about-cta">
@@ -566,13 +706,89 @@
         <img src="fotos/stock-dj-night.jpg" alt="DJ set at night with crowd">
         <div class="about-caption">
           <span>( EST. 2020 )</span>
-          <span>BARCELONA &middot; IBIZA &middot; MALLORCA</span>
+          <span>BARCELONA, SPAIN</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== PARTS 3–6 COMING NEXT ===== -->
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="services-inner">
+      <div class="services-header">
+        <div>
+          <div class="services-label"><span class="line"></span><span>( 02 ) SERVICES <span class="sq"></span> WHAT WE DO</span></div>
+          <h2 class="services-headline">Music <span class="lower">for</span><br>every<br>occasion.</h2>
+        </div>
+        <p class="services-sub">From intimate weddings to large corporate events, we match each client with the DJ that fits the room, the brand and the moment.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-item">
+          <span class="service-num">( 01 )</span>
+          <h3 class="service-title">Weddings</h3>
+          <p class="service-body">Your day, your sound. We match you with a DJ who understands the arc of a wedding, from the first dance to the last song of the night. Curated for your crowd, not for the average couple.</p>
+          <div class="service-tags"><span class="service-tag">Cocktail hour</span><span class="service-tag">Dinner set</span><span class="service-tag">Dance floor</span><span class="service-tag">After-party</span></div>
+        </div>
+        <div class="service-item">
+          <span class="service-num">( 02 )</span>
+          <h3 class="service-title">Corporate Events</h3>
+          <p class="service-body">Music that elevates the brand. Product launches, galas, networking events. We provide DJs who read a room and deliver the right atmosphere without overshadowing the occasion.</p>
+          <div class="service-tags"><span class="service-tag">Brand events</span><span class="service-tag">Galas</span><span class="service-tag">Launches</span><span class="service-tag">Networking</span></div>
+        </div>
+        <div class="service-item">
+          <span class="service-num">( 03 )</span>
+          <h3 class="service-title">Private Parties</h3>
+          <p class="service-body">No brief is too specific. Birthday celebrations, villa parties, exclusive gatherings. We find the DJ that fits your vision and makes your guests talk about it the next day.</p>
+          <div class="service-tags"><span class="service-tag">Birthdays</span><span class="service-tag">Villa parties</span><span class="service-tag">Exclusive events</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section id="story">
+    <div class="story-inner">
+      <div class="story-image">
+        <img src="fotos/stock-dj-mix.jpg" alt="DJ mixing">
+        <span class="story-image-label">( EST. 2020 &middot; BARCELONA )</span>
+      </div>
+      <div class="story-text">
+        <div class="story-label"><span class="line"></span><span>( 03 ) STORY <span class="sq"></span> WHO WE ARE</span></div>
+        <h2 class="story-headline">DJs who knew<br><span class="lower">what clients</span><br><span class="accent">really needed</span>.</h2>
+        <p class="story-body"><strong>We are a group of DJs with years in the industry.</strong> We have played weddings, galas, corporate events and private parties across Spain and beyond. Over time, a pattern emerged from every client conversation: finding a DJ you could truly trust was genuinely hard.</p>
+        <p class="story-body">Clients told us the same thing over and over. They had gone through agencies, scrolled through endless profiles, made calls across time zones, and still arrived at their event not really knowing what they would get. For couples who care deeply about music, about the energy of the night, about their guests dancing until the venue closes, this uncertainty was unacceptable.</p>
+        <p class="story-body"><strong>So we built elevn.</strong> Not as a directory, but as a matchmaking service. We use everything we know about music, crowds and events to put the right DJ in front of the right client. Every time. No surprises. No going in blind.</p>
+        <p class="story-body">Based in Barcelona. Spain's premier destination DJ agency for international clients.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT CTA -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-label"><span class="line"></span><span>( 04 ) CONTACT <span class="sq"></span> GET STARTED</span></div>
+      <h2 class="contact-headline">Let's find<br><span class="lower">your</span> <span class="accent">DJ</span>.</h2>
+      <p class="contact-sub">Tell us about your event. We'll match you with the right DJ from our roster and come back within 48 hours.</p>
+      <div class="contact-actions">
+        <a href="match.html" class="btn-primary">Start the matching &rarr;</a>
+        <a href="mailto:hello@elevndjs.com" class="btn-ghost">Email us directly</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-copy">&copy; 2026 elevn. DJ Agency &middot; Barcelona</span>
+      <div class="footer-links">
+        <a href="#services">Services</a>
+        <a href="#story">About</a>
+        <a href="match.html">Find your DJ</a>
+        <a href="mailto:hello@elevndjs.com">Contact</a>
+      </div>
+      <span class="footer-right"><a href="https://www.instagram.com/elevndjs/" target="_blank" rel="noopener" style="color:var(--cream-dim);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--cream)'" onmouseout="this.style.color='var(--cream-dim)'">@elevndjs</a> &nbsp;&#8231;&nbsp; hello@elevndjs.com</span>
+    </div>
+  </footer>
 
 </body>
 </html>

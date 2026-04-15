@@ -58,20 +58,31 @@
       align-items: center;
     }
 
-    /* ELEVN logo — League Spartan text */
+    /* ELEVN logo, League Spartan + CSS circle dot */
     .elevn-logo {
       font-family: 'League Spartan', 'Inter', sans-serif;
       font-weight: 900;
-      font-size: 1.65rem;
+      font-size: 2.2rem;
       line-height: 0.8;
-      letter-spacing: -0.055em;
+      letter-spacing: -0.05em;
       text-transform: lowercase;
       color: #fff;
       text-decoration: none;
-      display: inline-block;
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 0.06em;
       white-space: nowrap;
     }
-    .elevn-logo .dot { color: var(--accent); }
+    .elevn-text { display: inline-block; }
+    .elevn-dot {
+      display: inline-block;
+      width: 0.28em;
+      height: 0.28em;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-bottom: 0.15em;
+      flex-shrink: 0;
+    }
 
     .nav-links {
       display: flex;
@@ -238,7 +249,7 @@
       font-size: clamp(2rem, 3.5vw, 3rem);
       font-weight: 900;
       line-height: 1.08;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.07em;
       color: var(--dark);
     }
 
@@ -443,7 +454,7 @@
     .about-cta-content h2 {
       font-size: clamp(2.5rem, 5vw, 4.5rem);
       font-weight: 900;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.07em;
       line-height: 1.05;
       margin-bottom: 1rem;
     }
@@ -645,7 +656,7 @@
   <!-- === NAV === -->
   <nav>
     <div class="nav-inner">
-      <a href="index.html" class="elevn-logo" aria-label="elevn. home">elevn<span class="dot">.</span></a>
+      <a href="index.html" class="elevn-logo" aria-label="elevn. home"><span class="elevn-text">elevn</span><i class="elevn-dot"></i></a>
       <ul class="nav-links">
         <li><a href="about.html">ABOUT US</a></li>
         <li><a href="index.html#how-it-works">HOW IT WORKS</a></li>
