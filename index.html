@@ -3,68 +3,117 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ELEVN DJ'S | Boutique DJ Agency in Spain</title>
-  <meta name="description" content="Boutique DJ agency for modern events, weddings, and international celebrations in Spain. We match you with the right DJ. No guesswork.">
+  <title>elevn. Wedding DJ Barcelona | International DJ Agency Spain</title>
+  <meta name="description" content="elevn is Barcelona's boutique international DJ agency for destination weddings, corporate events and private parties. Based in Barcelona, working across all of Spain. We match you with the right DJ, no guesswork.">
+  <meta name="keywords" content="wedding DJ Barcelona, DJ Barcelona wedding, international DJ Spain, destination wedding DJ Spain, DJ agency Barcelona, corporate event DJ Barcelona, DJ boda Barcelona, english speaking DJ Spain">
+  <meta name="author" content="elevn. DJ Agency">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:title" content="elevn. Wedding DJ Barcelona | International DJ Agency Spain">
+  <meta property="og:description" content="Boutique DJ agency for destination weddings, corporate events and private parties. Based in Barcelona, covering all of Spain. We match you with the right DJ.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="elevn. DJ Agency">
+  <meta property="og:url" content="https://elevndjs.com/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="elevn. Wedding DJ Barcelona | International DJ Agency Spain">
+  <meta name="twitter:description" content="Barcelona's boutique international DJ agency. We match you with the right DJ for your wedding, corporate event or private party.">
+  <meta name="geo.region" content="ES-CT">
+  <meta name="geo.placename" content="Barcelona">
+  <link rel="canonical" href="https://elevndjs.com/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://elevndjs.com/#business",
+    "name": "elevn. DJ Agency",
+    "alternateName": "ELEVN DJS",
+    "description": "Barcelona based boutique international DJ agency for destination weddings, corporate events and private parties across Spain.",
+    "url": "https://elevndjs.com",
+    "email": "hello@elevndjs.com",
+    "priceRange": "$$$",
+    "sameAs": ["https://www.instagram.com/elevndjs/"],
+    "address": { "@type": "PostalAddress", "addressLocality": "Barcelona", "addressRegion": "Catalonia", "addressCountry": "ES" },
+    "areaServed": { "@type": "Country", "name": "Spain" },
+    "serviceType": ["Wedding DJ", "Corporate Event DJ", "Private Party DJ", "International DJ Agency"]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=League+Spartan:wght@700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    /* =====================================================
+       ELEVN, Syncra-inspired rebuild
+       Part 1: Nav + Hero
+    ===================================================== */
 
-    html {
-      scroll-behavior: smooth;
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --dark: #1a1a1a;
+      --darker: #0e0e0e;
+      --line: rgba(240, 237, 232, 0.12);
+      --line-strong: rgba(240, 237, 232, 0.28);
+      --cream: #f0ede8;
+      --cream-dim: rgba(240, 237, 232, 0.6);
+      --accent: #C46A35;
+      --accent-hover: #d47a42;
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: #1a1a1a;
-      color: #fff;
-      line-height: 1.5;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--dark);
+      color: var(--cream);
+      line-height: 1.4;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
     .mono {
       font-family: 'Space Mono', monospace;
+      font-weight: 400;
     }
 
-    /* === COLORS === */
-    :root {
-      --dark: #1a1a1a;
-      --darker: #111111;
-      --light: #f0ede8;
-      --accent: #C46A35;
-      --accent-hover: #d47a42;
-      --white: #ffffff;
-      --gray: #888;
-      --light-gray: #ccc;
+    /* Square bullet accent, Syncra signature */
+    .sq {
+      display: inline-block;
+      width: 0.55em;
+      height: 0.55em;
+      background: var(--accent);
+      vertical-align: middle;
+      margin: 0 0.4em 0.15em;
     }
 
-    /* === NAV === */
+    /* =====================================================
+       NAV
+    ===================================================== */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       z-index: 100;
-      background: var(--darker);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(14, 14, 14, 0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
     }
 
     .nav-inner {
-      max-width: 1400px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 1.1rem 3rem;
+      padding: 1.25rem 2.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 2rem;
     }
 
-    /* ELEVN logo, League Spartan + CSS circle dot */
+    /* =====================================================
+       ELEVN LOGO, single source of truth
+       League Spartan 900 + custom CSS circle as the dot
+       (matches the oversized solid period in the brand logo).
+    ===================================================== */
     .elevn-logo {
       font-family: 'League Spartan', 'Inter', sans-serif;
       font-weight: 900;
@@ -72,7 +121,7 @@
       line-height: 0.8;
       letter-spacing: -0.05em;
       text-transform: lowercase;
-      color: #fff;
+      color: var(--cream);
       text-decoration: none;
       display: inline-flex;
       align-items: flex-end;
@@ -85,1518 +134,661 @@
       width: 0.28em;
       height: 0.28em;
       border-radius: 50%;
-      background: var(--accent);
+      background: currentColor;
       margin-bottom: 0.15em;
+      flex-shrink: 0;
+    }
+    .elevn-logo.accent-dot .elevn-dot { background: var(--accent); }
+
+    /* Nav-specific sizing */
+    .nav-logo {
+      font-size: 1.7rem;
       flex-shrink: 0;
     }
 
     .nav-links {
       display: flex;
-      gap: 2.5rem;
+      gap: 2.2rem;
       list-style: none;
       align-items: center;
     }
-
     .nav-links a {
       font-family: 'Space Mono', monospace;
-      color: rgba(255, 255, 255, 0.7);
+      color: var(--cream-dim);
       text-decoration: none;
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       transition: color 0.3s;
+      position: relative;
     }
+    .nav-links a:hover { color: var(--cream); }
+    .nav-links a.active { color: var(--accent); }
 
-    .nav-links a:hover {
-      color: #fff;
+    .nav-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+      border: 1px solid var(--line-strong);
+      padding: 0.75rem 1.4rem;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
+    .nav-cta:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--cream);
+    }
+    .nav-ig { display:inline-flex; align-items:center; color:var(--cream-dim); text-decoration:none; transition:color 0.2s; flex-shrink:0; }
+    .nav-ig:hover { color:var(--cream); }
+    .nav-ig svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
 
     .nav-toggle {
       display: none;
       background: none;
       border: none;
-      color: #fff;
-      font-size: 1.5rem;
+      color: var(--cream);
+      font-size: 1.4rem;
       cursor: pointer;
     }
 
-    /* === CONTAINERS === */
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 3rem;
+    @media (max-width: 960px) {
+      .nav-inner { padding: 1rem 1.5rem; }
+      .nav-links, .nav-cta { display: none; }
+      .nav-toggle { display: block; }
     }
 
-    /* === BUTTONS === */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.82rem;
-      text-decoration: none;
-      padding: 0.9rem 2rem;
-      border-radius: 100px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      border: none;
-      letter-spacing: 0.01em;
-    }
-
-    .btn-accent {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .btn-accent:hover {
-      background: var(--accent-hover);
-    }
-
-    .btn-dark {
-      background: var(--darker);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.15);
-    }
-
-    .btn-dark:hover {
-      border-color: rgba(255,255,255,0.4);
-    }
-
-    .btn-outline-dark {
-      background: transparent;
-      color: var(--dark);
-      border: 1.5px solid var(--dark);
-    }
-
-    .btn-outline-dark:hover {
-      background: var(--dark);
-      color: #fff;
-    }
-
-    /* === DOTTED SEPARATOR === */
-    .dotted-sep {
-      border: none;
-      border-top: 2px dotted rgba(255,255,255,0.2);
-      margin: 0;
-    }
-
-    .dotted-sep-dark {
-      border-top-color: rgba(0,0,0,0.15);
-    }
-
-    .dotted-sep-light {
-      border-top-color: rgba(255,255,255,0.25);
-    }
-
-    /* === SECTION NUMBERING === */
-    .section-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.85rem;
-      color: var(--accent);
-      letter-spacing: 0.05em;
-    }
-
-    /* ============================================================
-       HERO
-    ============================================================ */
+    /* =====================================================
+       HERO, real Syncra layout:
+       Clean surface, oversized editorial headline, no bg image.
+       Image sits in its own full-bleed band below.
+    ===================================================== */
     #hero {
       position: relative;
-      min-height: 100vh;
+      background: var(--dark);
+      padding: 12rem 2.5rem 5rem;
+      min-height: 88vh;
       display: flex;
-      align-items: flex-end;
-      overflow: hidden;
+      flex-direction: column;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
     }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-
-    .hero-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 20%;
-    }
-
-    .hero-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(26,26,26,0.3) 0%,
-        rgba(180,90,40,0.35) 40%,
-        rgba(26,26,26,0.85) 100%
-      );
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 1400px;
+    .hero-inner {
+      max-width: 1480px;
       width: 100%;
       margin: 0 auto;
-      padding: 0 3rem;
-      padding-bottom: 5rem;
-      padding-top: 8rem;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
       display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 3rem;
-    }
-
-    .hero-left {
-      max-width: 750px;
-    }
-
-    #hero h1 {
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      font-weight: 900;
-      line-height: 0.98;
-      margin-bottom: 1.5rem;
-      letter-spacing: -0.07em;
-      font-style: italic;
-    }
-
-    .hero-sub {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.88rem;
-      color: rgba(255,255,255,0.65);
-      max-width: 460px;
-      line-height: 1.7;
-      margin-bottom: 2rem;
-    }
-
-    .hero-right {
-      text-align: right;
-    }
-
-    .hero-services {
-      list-style: none;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.7);
-      line-height: 2.2;
-    }
-
-    .hero-services li::before {
-      content: "/ ";
-      color: var(--accent);
-    }
-
-    /* ============================================================
-       STATS (light section)
-    ============================================================ */
-    #stats {
-      background: var(--light);
-      color: var(--dark);
-      padding: 6rem 0;
-    }
-
-    .stats-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 5rem;
-      gap: 2rem;
-    }
-
-    .stats-top h2 {
-      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
-      font-weight: 900;
-      line-height: 1.05;
-      letter-spacing: -0.07em;
-      max-width: 700px;
-      color: var(--dark);
-    }
-
-    .stats-top .btn {
-      flex-shrink: 0;
-      margin-top: 1rem;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
-    }
-
-    .stat-item .stat-number {
-      font-size: clamp(3rem, 5vw, 5rem);
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -0.04em;
-      color: var(--dark);
-    }
-
-    .stat-item .stat-number span {
-      color: var(--accent);
-    }
-
-    .stat-item .stat-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.78rem;
-      font-weight: 700;
-      margin-top: 0.75rem;
-      margin-bottom: 0.35rem;
-      color: var(--dark);
-    }
-
-    .stat-item .stat-desc {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--gray);
-      line-height: 1.6;
-    }
-
-    /* ============================================================
-       PROBLEM (dark section)
-    ============================================================ */
-    #problem {
-      background: var(--dark);
-      padding: 8rem 0;
-    }
-
-    .problem-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
       align-items: center;
-    }
-
-    .problem-text h2 {
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      font-weight: 900;
-      line-height: 1.08;
-      letter-spacing: -0.02em;
-      margin-bottom: 2rem;
-    }
-
-    .problem-text .body-copy {
-      font-family: 'Space Mono', monospace;
-      color: rgba(255,255,255,0.5);
-      font-size: 0.85rem;
-      line-height: 1.85;
-      margin-bottom: 2.5rem;
-    }
-
-    .problem-text .transition-line {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: rgba(255,255,255,0.9);
-      padding-top: 2rem;
-      border-top: 2px dotted rgba(255,255,255,0.15);
-    }
-
-    .problem-image {
-      border-radius: 16px;
-      overflow: hidden;
-      aspect-ratio: 4/5;
-    }
-
-    .problem-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* ============================================================
-       HOW IT WORKS (terracotta section)
-    ============================================================ */
-    #how-it-works {
-      background: var(--accent);
-      padding: 7rem 0;
-    }
-
-    .hiw-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 4rem;
-      gap: 2rem;
-    }
-
-    .hiw-header h2 {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 900;
-      line-height: 1.08;
-      letter-spacing: -0.02em;
-      color: #fff;
-    }
-
-    .step-row {
-      padding: 2.5rem 0;
-    }
-
-    .step-row-inner {
-      display: grid;
-      grid-template-columns: 140px 1fr 1.2fr;
-      gap: 2rem;
-      align-items: baseline;
-    }
-
-    .step-row .step-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.6);
-    }
-
-    .step-row h3 {
-      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
-      font-weight: 800;
-      color: #fff;
-      font-style: italic;
-    }
-
-    .step-row p {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.75);
-      line-height: 1.75;
-    }
-
-    /* ============================================================
-       PROFILES (light section)
-    ============================================================ */
-    #profiles {
-      background: var(--light);
-      color: var(--dark);
-      padding: 7rem 0 5rem;
-    }
-
-    .profiles-header {
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-
-    .profiles-header h2 {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 900;
-      letter-spacing: -0.07em;
-      color: var(--dark);
-    }
-
-    .profiles-header .year-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 1rem;
-      color: var(--accent);
-      margin-top: 0.5rem;
-    }
-
-    .profiles-grid {
-      display: grid;
-      grid-template-columns: 1.3fr 1fr;
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-
-    .profiles-grid .profile-card:nth-child(3),
-    .profiles-grid .profile-card:nth-child(4) {
-      /* second row swaps ratio */
-    }
-
-    .profile-card {
-      border-radius: 16px;
-      overflow: hidden;
-      position: relative;
-      min-height: 420px;
-      display: flex;
-      align-items: flex-end;
-      cursor: default;
-    }
-
-    .profile-card-bg {
-      position: absolute;
-      inset: 0;
-    }
-
-    .profile-card-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-
-    .profile-card:hover .profile-card-bg img {
-      transform: scale(1.04);
-    }
-
-    .profile-card-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 55%, transparent 100%);
-    }
-
-    .profile-card-body {
-      position: relative;
-      z-index: 2;
-      padding: 2.25rem;
-      width: 100%;
-    }
-
-    .profile-card h3 {
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 0.25rem;
-      letter-spacing: -0.01em;
-    }
-
-    .profile-card .tagline {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--accent);
-      margin-bottom: 0.65rem;
-      font-style: italic;
-    }
-
-    .profile-card .desc {
-      font-family: 'Space Mono', monospace;
-      color: rgba(255,255,255,0.6);
-      font-size: 0.75rem;
-      line-height: 1.65;
-      margin-bottom: 0.65rem;
-    }
-
-    .profile-card .best-for {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.4);
-    }
-
-    .profiles-cta {
-      text-align: center;
-      margin-top: 3.5rem;
-      padding-top: 2.5rem;
-      border-top: 2px dotted rgba(0,0,0,0.12);
-    }
-
-    .profiles-cta p {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.85rem;
-      color: var(--gray);
-      margin-bottom: 1.5rem;
-    }
-
-    /* ============================================================
-       SERVICES (dark section)
-    ============================================================ */
-    #services {
-      background: var(--dark);
-      padding: 7rem 0;
-    }
-
-    .services-header {
-      margin-bottom: 4rem;
-    }
-
-    .services-header h2 {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 900;
-      letter-spacing: -0.02em;
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
+      gap: 0.8rem;
       margin-bottom: 3rem;
     }
-
-    .service-card {
-      border-radius: 16px;
-      overflow: hidden;
-      position: relative;
-      min-height: 440px;
-      display: flex;
-      align-items: flex-end;
-    }
-
-    .service-card-bg {
-      position: absolute;
-      inset: 0;
-    }
-
-    .service-card-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .service-card-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(26,26,26,0.95) 15%, rgba(26,26,26,0.5) 55%, rgba(26,26,26,0.2) 100%);
-    }
-
-    .service-card-content {
-      position: relative;
-      z-index: 2;
-      padding: 2.5rem;
-      width: 100%;
-    }
-
-    .service-card h3 {
-      font-size: 1.6rem;
-      font-weight: 800;
-      margin-bottom: 0.75rem;
-      letter-spacing: -0.01em;
-    }
-
-    .service-card p {
-      font-family: 'Space Mono', monospace;
-      color: rgba(255, 255, 255, 0.55);
-      font-size: 0.82rem;
-      line-height: 1.8;
-    }
-
-    .service-card .note {
-      margin-top: 0.75rem;
-      font-size: 0.72rem;
-      color: var(--accent);
-    }
-
-    .service-list {
-      list-style: none;
-      margin: 0.5rem 0;
-    }
-
-    .service-list li {
-      font-family: 'Space Mono', monospace;
-      color: rgba(255, 255, 255, 0.55);
-      font-size: 0.82rem;
-      padding: 0.15rem 0;
-    }
-
-    .service-list li::before {
-      content: "\2014\00a0";
-      color: var(--accent);
-    }
-
-    /* ============================================================
-       TESTIMONIAL / CTA BREAK (photo bg)
-    ============================================================ */
-    #cta-break {
-      position: relative;
-      padding: 10rem 0;
-      text-align: center;
-      overflow: hidden;
-    }
-
-    .cta-break-bg {
-      position: absolute;
-      inset: 0;
-    }
-
-    .cta-break-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(100%);
-    }
-
-    .cta-break-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(26,26,26,0.6);
-    }
-
-    .cta-break-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    .cta-break-content h2 {
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      font-weight: 900;
-      letter-spacing: -0.07em;
-      line-height: 1.05;
-      margin-bottom: 2.5rem;
-    }
-
-    /* ============================================================
-       FAQ (light section)
-    ============================================================ */
-    #faq {
-      background: var(--light);
-      color: var(--dark);
-      padding: 7rem 0;
-    }
-
-    .faq-header {
-      text-align: center;
-      margin-bottom: 3.5rem;
-    }
-
-    .faq-header h2 {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 900;
-      letter-spacing: -0.07em;
-      color: var(--dark);
-    }
-
-    .faq-list {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .faq-item {
-      border-top: 2px dotted rgba(0,0,0,0.12);
-    }
-
-    .faq-item:last-child {
-      border-bottom: 2px dotted rgba(0,0,0,0.12);
-    }
-
-    .faq-question {
-      width: 100%;
-      background: none;
-      border: none;
-      color: var(--dark);
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      text-align: left;
-      padding: 1.5rem 0;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      transition: color 0.3s;
-    }
-
-    .faq-question:hover {
-      color: var(--accent);
-    }
-
-    .faq-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--dark);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      font-weight: 300;
-      transition: all 0.3s;
-      flex-shrink: 0;
-    }
-
-    .faq-item.active .faq-icon {
+    .hero-eyebrow .line {
+      display: inline-block;
+      width: 44px;
+      height: 1px;
       background: var(--accent);
-      transform: rotate(45deg);
     }
 
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease;
-    }
-
-    .faq-answer-inner {
-      padding-bottom: 1.5rem;
-      font-family: 'Space Mono', monospace;
-      color: var(--gray);
-      font-size: 0.82rem;
-      line-height: 1.85;
-    }
-
-    /* ============================================================
-       CONTACT (dark section)
-    ============================================================ */
-    #contact {
-      background: var(--dark);
-      padding: 7rem 0 8rem;
-    }
-
-    .contact-layout {
-      display: grid;
-      grid-template-columns: 1fr 1.3fr;
-      gap: 5rem;
-      align-items: start;
-    }
-
-    .contact-info h2 {
-      font-size: clamp(2rem, 3.5vw, 2.75rem);
-      font-weight: 900;
-      line-height: 1.08;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.5rem;
-    }
-
-    .contact-info .intro {
-      font-family: 'Space Mono', monospace;
-      color: rgba(255,255,255,0.5);
-      font-size: 0.85rem;
-      line-height: 1.75;
-      margin-bottom: 2.5rem;
-    }
-
-    .contact-info .alt-contact {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.35);
-    }
-
-    .contact-info .alt-contact a {
-      color: var(--accent);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .contact-info .alt-contact a:hover {
-      color: var(--accent-hover);
-    }
-
-    .contact-form {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 20px;
-      padding: 2.75rem;
-    }
-
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
-
-    .form-group label {
-      display: block;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.5);
-      margin-bottom: 0.5rem;
+    .hero-headline {
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3rem, 10.5vw, 10.5rem);
+      line-height: 0.88;
+      letter-spacing: -0.04em;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      color: var(--cream);
+      max-width: 13ch;
+      margin-bottom: 0;
     }
+    .hero-headline .lower {
+      text-transform: lowercase;
+      font-weight: 200;
+      font-style: italic;
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--cream);
+      letter-spacing: -0.015em;
+    }
+    .hero-headline .accent { color: var(--accent); }
 
-    .form-group input,
-    .form-group textarea {
+    /* Bottom row, meta + CTA */
+    .hero-bottom {
+      max-width: 1480px;
       width: 100%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      padding: 0.85rem 1rem;
-      color: #fff;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.82rem;
-      transition: all 0.3s;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-      background: rgba(255,255,255,0.07);
-    }
-
-    .form-group textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
-
-    .form-group input::placeholder,
-    .form-group textarea::placeholder {
-      color: rgba(255, 255, 255, 0.2);
-    }
-
-    .form-row {
+      margin: 5rem auto 0;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
+      grid-template-columns: 1.2fr 1fr auto;
+      gap: 3rem;
+      align-items: end;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
     }
-
-    .form-submit {
-      margin-top: 1.25rem;
+    .hero-sub {
+      font-size: 1rem;
+      line-height: 1.55;
+      color: var(--cream-dim);
+      max-width: 38ch;
     }
-
-    .form-submit .btn {
-      width: 100%;
-      justify-content: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-    }
-
-    /* ============================================================
-       FOOTER (very dark)
-    ============================================================ */
-    footer {
-      background: var(--darker);
-      padding: 4rem 3rem 2rem;
-    }
-
-    .footer-top {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1.5fr 1fr;
-      gap: 2rem;
-      margin-bottom: 4rem;
-    }
-
-    .footer-col-title {
+    .hero-stats {
+      display: flex;
+      gap: 2.4rem;
       font-family: 'Space Mono', monospace;
       font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--accent);
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 1.25rem;
+      color: var(--cream-dim);
     }
-
-    .footer-col a,
-    .footer-col p {
+    .hero-stats div {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .hero-stats strong {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+      text-transform: none;
+    }
+    .hero-cta {
       font-family: 'Space Mono', monospace;
       font-size: 0.78rem;
-      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream);
       text-decoration: none;
-      display: block;
-      line-height: 2.2;
-      transition: color 0.3s;
-    }
-
-    .footer-col a:hover {
-      color: #fff;
-    }
-
-    .footer-brand {
-      max-width: 1400px;
-      margin: 0 auto;
-      overflow: hidden;
-    }
-
-    .footer-brand-text {
-      font-size: clamp(4rem, 10vw, 10rem);
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 1;
-      color: rgba(255,255,255,0.06);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1.2rem 2rem;
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      transition: all 0.25s ease;
       white-space: nowrap;
-      user-select: none;
     }
+    .hero-cta:hover {
+      background: transparent;
+      border-color: var(--cream);
+    }
+    .hero-cta .arrow { font-size: 1rem; }
 
-    .footer-bottom {
-      max-width: 1400px;
-      margin: 2rem auto 0;
+    /* =====================================================
+       HERO IMAGE BAND, full bleed B&W, sits below hero
+    ===================================================== */
+    .hero-image-band {
+      position: relative;
+      width: 100%;
+      height: clamp(340px, 55vh, 620px);
+      overflow: hidden;
+      background: var(--darker);
+    }
+    .hero-image-band img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.1) brightness(0.75);
+    }
+    .hero-image-band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(14,14,14,0.35) 0%, transparent 30%, transparent 70%, rgba(14,14,14,0.85) 100%);
+      z-index: 2;
+    }
+    .hero-image-caption {
+      position: absolute;
+      left: 2.5rem;
+      right: 2.5rem;
+      bottom: 1.8rem;
       display: flex;
-      justify-content: flex-end;
-    }
-
-    .footer-bottom p {
+      justify-content: space-between;
+      gap: 1.5rem;
       font-family: 'Space Mono', monospace;
       font-size: 0.7rem;
-      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream);
+      z-index: 3;
+    }
+    .hero-image-caption .sq { background: var(--accent); }
+
+    @media (max-width: 860px) {
+      #hero { padding: 9rem 1.5rem 3rem; min-height: auto; }
+      .hero-eyebrow { margin-bottom: 2rem; }
+      .hero-bottom {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+      .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+      .hero-stats strong { font-size: 1.15rem; }
+      .hero-image-caption { left: 1.2rem; right: 1.2rem; font-size: 0.6rem; }
     }
 
-    /* ============================================================
-       ANIMATIONS
-    ============================================================ */
+    /* =====================================================
+       SECTION: ABOUT / MISSION (Part 2)
+    ===================================================== */
+    #about {
+      position: relative;
+      padding: 9rem 2.5rem;
+      background: var(--dark);
+      border-top: 1px solid var(--line);
+    }
+    .about-inner {
+      max-width: 1480px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .about-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 2.5rem;
+    }
+    .about-label .line {
+      display: inline-block;
+      width: 44px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .about-headline {
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.2rem, 4.4vw, 4rem);
+      line-height: 0.98;
+      letter-spacing: -0.028em;
+      text-transform: uppercase;
+      color: var(--cream);
+      margin-bottom: 2.5rem;
+      max-width: 16ch;
+    }
+    .about-headline .lower {
+      text-transform: lowercase;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--cream);
+    }
+    .about-headline .accent { color: var(--accent); }
+
+    .about-body {
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--cream-dim);
+      max-width: 52ch;
+      margin-bottom: 1.6rem;
+    }
+    .about-body:last-of-type { margin-bottom: 2.8rem; }
+    .about-body strong {
+      color: var(--cream);
+      font-weight: 500;
+    }
+
+    .about-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--accent);
+      transition: gap 0.25s ease;
+    }
+    .about-cta:hover { gap: 1.2rem; }
+
+    .about-image {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background: var(--darker);
+    }
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.05) brightness(0.75);
+      transition: filter 1.2s ease, transform 8s ease;
+    }
+    #about:hover .about-image img {
+      filter: grayscale(80%) contrast(1.08) brightness(0.85);
+      transform: scale(1.03);
+    }
+    .about-image::before {
+      content: '';
+      position: absolute;
+      top: -14px; left: -14px;
+      width: 48px; height: 48px;
+      border-top: 1px solid var(--accent);
+      border-left: 1px solid var(--accent);
+      z-index: 2;
+    }
+    .about-image::after {
+      content: '';
+      position: absolute;
+      bottom: -14px; right: -14px;
+      width: 48px; height: 48px;
+      border-bottom: 1px solid var(--accent);
+      border-right: 1px solid var(--accent);
+      z-index: 2;
+    }
+
+    .about-caption {
+      position: absolute;
+      bottom: 1.2rem;
+      left: 1.2rem;
+      right: 1.2rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream);
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      mix-blend-mode: difference;
+    }
+
+    @media (max-width: 960px) {
+      #about { padding: 6rem 1.5rem; }
+      .about-inner { grid-template-columns: 1fr; gap: 3.5rem; }
+      .about-image { max-width: 520px; }
+    }
+
+    /* Subtle fade-in on load */
     .reveal {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(18px);
+      animation: fadeUp 0.9s cubic-bezier(.2,.7,.2,1) forwards;
+    }
+    .reveal-1 { animation-delay: 0.05s; }
+    .reveal-2 { animation-delay: 0.2s; }
+    .reveal-3 { animation-delay: 0.45s; }
+    .reveal-4 { animation-delay: 0.65s; }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
+    /* SERVICES */
+    #services { padding: 9rem 2.5rem; background: var(--darker); border-top: 1px solid var(--line); }
+    .services-inner { max-width: 1480px; margin: 0 auto; }
+    .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5rem; gap: 3rem; flex-wrap: wrap; }
+    .services-label { font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-dim); display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.8rem; }
+    .services-label .line { display: inline-block; width: 44px; height: 1px; background: var(--accent); }
+    .services-headline { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 0.96; letter-spacing: -0.03em; text-transform: uppercase; color: var(--cream); max-width: 18ch; }
+    .services-headline .lower { text-transform: lowercase; font-style: italic; font-weight: 300; }
+    .services-sub { font-size: 1rem; line-height: 1.6; color: var(--cream-dim); max-width: 38ch; align-self: flex-end; }
+    .services-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 0; border-top: 1px solid var(--line); }
+    .service-item { padding: 3.5rem 3rem; border-right: 1px solid var(--line); position: relative; transition: background 0.3s ease; }
+    .service-item:last-child { border-right: none; }
+    .service-item:hover { background: rgba(240,237,232,0.03); }
+    .service-num { font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.18em; color: var(--accent); margin-bottom: 2rem; display: block; }
+    .service-title { font-family: 'Inter', sans-serif; font-weight: 700; font-size: clamp(1.3rem, 2.2vw, 1.9rem); letter-spacing: -0.02em; text-transform: uppercase; color: var(--cream); margin-bottom: 1.4rem; line-height: 1.05; }
+    .service-body { font-size: 0.92rem; line-height: 1.65; color: var(--cream-dim); margin-bottom: 2rem; }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .service-tag { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-dim); border: 1px solid var(--line-strong); padding: 0.3rem 0.7rem; }
+    @media (max-width: 900px) {
+      #services { padding: 6rem 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-item { border-right: none; border-bottom: 1px solid var(--line); }
+      .service-item:last-child { border-bottom: none; }
     }
 
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-
-    /* ============================================================
-       MOBILE MENU
-    ============================================================ */
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: rgba(17, 17, 17, 0.98);
-      z-index: 99;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 2.5rem;
+    /* STORY */
+    #story { padding: 9rem 2.5rem; background: var(--dark); border-top: 1px solid var(--line); }
+    .story-inner { max-width: 1480px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.1fr; gap: 8rem; align-items: center; }
+    .story-image { position: relative; aspect-ratio: 3/4; overflow: hidden; background: var(--darker); }
+    .story-image img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.08) brightness(0.7); }
+    .story-image-label { position: absolute; bottom: 1.5rem; left: 1.5rem; font-family: 'Space Mono', monospace; font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream); z-index: 2; }
+    .story-label { font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-dim); display: flex; align-items: center; gap: 0.8rem; margin-bottom: 2.5rem; }
+    .story-label .line { display: inline-block; width: 44px; height: 1px; background: var(--accent); }
+    .story-headline { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(2rem, 3.8vw, 3.4rem); line-height: 0.98; letter-spacing: -0.028em; text-transform: uppercase; color: var(--cream); margin-bottom: 2.5rem; }
+    .story-headline .lower { text-transform: lowercase; font-style: italic; font-weight: 300; }
+    .story-headline .accent { color: var(--accent); }
+    .story-body { font-size: 1.02rem; line-height: 1.7; color: var(--cream-dim); max-width: 52ch; margin-bottom: 1.5rem; }
+    .story-body strong { color: var(--cream); font-weight: 500; }
+    @media (max-width: 960px) {
+      #story { padding: 6rem 1.5rem; }
+      .story-inner { grid-template-columns: 1fr; gap: 3.5rem; }
+      .story-image { max-width: 480px; }
     }
 
-    .mobile-menu.open {
-      display: flex;
-    }
+    /* CONTACT CTA */
+    #contact { padding: 10rem 2.5rem; background: var(--darker); border-top: 1px solid var(--line); text-align: center; }
+    .contact-inner { max-width: 860px; margin: 0 auto; }
+    .contact-label { font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-dim); display: inline-flex; align-items: center; gap: 0.8rem; margin-bottom: 3rem; }
+    .contact-label .line { display: inline-block; width: 44px; height: 1px; background: var(--accent); }
+    .contact-headline { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(2.5rem, 7vw, 6.5rem); line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; color: var(--cream); margin-bottom: 2.5rem; }
+    .contact-headline .lower { text-transform: lowercase; font-style: italic; font-weight: 300; }
+    .contact-headline .accent { color: var(--accent); }
+    .contact-sub { font-size: 1.05rem; line-height: 1.6; color: var(--cream-dim); max-width: 44ch; margin: 0 auto 3.5rem; }
+    .contact-actions { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream); text-decoration: none; padding: 1.2rem 2.4rem; background: var(--accent); border: 1px solid var(--accent); transition: all 0.25s ease; }
+    .btn-primary:hover { background: transparent; border-color: var(--cream); }
+    .btn-ghost { font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream); text-decoration: none; padding: 1.2rem 2.4rem; background: transparent; border: 1px solid var(--line-strong); transition: all 0.25s ease; }
+    .btn-ghost:hover { border-color: var(--cream); }
+    @media (max-width: 600px) { #contact { padding: 6rem 1.5rem; } }
 
-    .mobile-menu a {
-      font-family: 'Inter', sans-serif;
-      color: #fff;
-      text-decoration: none;
-      font-size: 1.8rem;
-      font-weight: 800;
-    }
-
-    /* ============================================================
-       RESPONSIVE
-    ============================================================ */
-    @media (max-width: 1024px) {
-      .profiles-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .step-row-inner {
-        grid-template-columns: 100px 1fr 1.2fr;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .container, .nav-inner, .hero-content {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-      }
-
-      footer {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .nav-toggle {
-        display: block;
-      }
-
-      .hero-content {
-        flex-direction: column;
-        align-items: flex-start;
-        padding-bottom: 3rem;
-      }
-
-      .hero-right {
-        text-align: left;
-      }
-
-      #hero h1 {
-        font-size: clamp(2.5rem, 10vw, 3.5rem);
-      }
-
-      .stats-top {
-        flex-direction: column;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 2.5rem 1.5rem;
-      }
-
-      .problem-layout {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-
-      .problem-image {
-        aspect-ratio: 16/9;
-        order: -1;
-      }
-
-      .hiw-header {
-        flex-direction: column;
-      }
-
-      .step-row-inner {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-      }
-
-      .profiles-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .profile-card {
-        min-height: 350px;
-      }
-
-      .services-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .contact-layout {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-      }
-
-      .contact-form {
-        padding: 1.75rem;
-      }
-
-      .form-row {
-        grid-template-columns: 1fr;
-        gap: 1.25rem;
-      }
-
-      .footer-top {
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-      }
-
-      .footer-bottom {
-        justify-content: flex-start;
-      }
+    /* FOOTER */
+    footer { padding: 4rem 2.5rem; background: #080808; border-top: 1px solid var(--line); }
+    .footer-inner { max-width: 1480px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 2rem; }
+    .footer-copy { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-dim); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-dim); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-right { text-align: right; font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-dim); }
+    @media (max-width: 720px) {
+      footer { padding: 3rem 1.5rem; }
+      .footer-inner { grid-template-columns: 1fr; text-align: center; gap: 1.5rem; }
+      .footer-links { justify-content: center; }
+      .footer-right { text-align: center; }
     }
   </style>
 </head>
 <body>
 
-  <!-- === NAV === -->
+  <!-- =====================================================
+       NAV
+  ===================================================== -->
   <nav>
     <div class="nav-inner">
-      <a href="#hero" class="elevn-logo" aria-label="elevn. home"><span class="elevn-text">elevn</span><i class="elevn-dot"></i></a>
+      <a href="syncra.html" class="elevn-logo nav-logo accent-dot" aria-label="elevn. home"><span class="elevn-text">elevn</span><i class="elevn-dot"></i></a>
       <ul class="nav-links">
-        <li><a href="about.html">ABOUT US</a></li>
-        <li><a href="#how-it-works">HOW IT WORKS</a></li>
-        <li><a href="#profiles">PROFILES</a></li>
-        <li><a href="match.html">FIND YOUR DJ</a></li>
-        <li><a href="#contact">GET IN TOUCH</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="weddings.html">Weddings</a></li>
+        <li><a href="corporate.html">Corporate</a></li>
+        <li><a href="#story">About</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
+      <a href="https://www.instagram.com/elevndjs/" target="_blank" rel="noopener" class="nav-ig" aria-label="Instagram @elevndjs"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+      <a href="match.html" class="nav-cta">Find your DJ &rarr;</a>
       <button class="nav-toggle" aria-label="Menu">&#9776;</button>
     </div>
   </nav>
 
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="about.html">About Us</a>
-    <a href="#how-it-works">How it works</a>
-    <a href="#profiles">Profiles</a>
-    <a href="#services">Services</a>
-    <a href="#faq">FAQ</a>
-    <a href="#contact">Contact</a>
-  </div>
-
-  <!-- === HERO === -->
+  <!-- =====================================================
+       HERO
+  ===================================================== -->
   <section id="hero">
-    <div class="hero-bg">
-      <img src="https://images.unsplash.com/photo-1571266028243-d220c6a8b0e5?w=1920&q=80" alt="DJ atmosphere" loading="eager">
-    </div>
-    <div class="hero-content">
-      <div class="hero-left reveal">
-        <h1>The right DJ for your event in Spain.</h1>
-        <p class="hero-sub">Boutique DJ agency for modern events and international celebrations. We match you with the perfect DJ based on your taste, your crowd, and your vision.</p>
-        <a href="match.html" class="btn btn-dark">&rarr; Find Your DJ</a>
+    <div class="hero-inner">
+      <div class="hero-eyebrow reveal reveal-1">
+        <span class="line"></span>
+        <span>( BOUTIQUE DJ AGENCY <span class="sq"></span> BARCELONA, SPAIN )</span>
       </div>
-      <div class="hero-right reveal reveal-delay-2">
-        <ul class="hero-services">
-          <li>Weddings</li>
-          <li>Private Events</li>
-          <li>Corporate Events</li>
-          <li>After-Parties</li>
-        </ul>
+
+      <h1 class="hero-headline reveal reveal-2">
+        THE RIGHT DJ<br>
+        FOR <span class="lower">every</span> <span class="accent">EVENT</span>.
+      </h1>
+    </div>
+
+    <div class="hero-bottom reveal reveal-3">
+      <p class="hero-sub">
+        Weddings, corporate events, private parties. We match clients with the right DJ from our curated roster, built on your taste, your crowd and your vision.
+      </p>
+      <div class="hero-stats">
+        <div><strong>200+</strong><span>EVENTS DELIVERED</span></div>
+        <div><strong>12</strong><span>CURATED DJS</span></div>
+        <div><strong>48H</strong><span>RESPONSE TIME</span></div>
+      </div>
+      <a href="match.html" class="hero-cta">
+        Find your DJ
+        <span class="arrow">&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Full-bleed B&W image band, sits directly under the hero -->
+  <section class="hero-image-band reveal reveal-4">
+    <img src="fotos/stock-dj-perform.jpg" alt="DJ performing">
+    <div class="hero-image-caption">
+      <span><span class="sq" style="display:inline-block;width:8px;height:8px;margin-right:0.6rem;vertical-align:middle;"></span>( ELEVN / SELECTED WORK 2020 &middot; 2026 )</span>
+      <span>SCROLL &darr;</span>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       ABOUT / MISSION, Part 2
+  ===================================================== -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-text">
+        <div class="about-label">
+          <span class="line"></span>
+          <span>( 01 ) ABOUT <span class="sq"></span> OUR MISSION</span>
+        </div>
+
+        <h2 class="about-headline">
+          The <span class="lower">right</span> DJ<br>
+          for <span class="lower">every</span> room,<br>
+          every <span class="accent">occasion</span>.
+        </h2>
+
+        <p class="about-body">
+          <strong>elevn is a boutique DJ agency</strong> based in Barcelona, working across all of Spain. Weddings, corporate events, private parties. We connect international clients with a curated roster of DJs who understand both the local scene and the global sound.
+        </p>
+        <p class="about-body">
+          No guesswork. No generic packages. We translate your taste, your crowd and your vision into the right DJ and the right set. You enjoy the event. We handle the music.
+        </p>
+
+        <a href="#story" class="about-cta">
+          Read our story
+          <span>&rarr;</span>
+        </a>
+      </div>
+
+      <div class="about-image">
+        <img src="fotos/stock-dj-night.jpg" alt="DJ set at night with crowd">
+        <div class="about-caption">
+          <span>( EST. 2020 )</span>
+          <span>BARCELONA, SPAIN</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- === STATS (light) === -->
-  <section id="stats">
-    <div class="container">
-      <div class="stats-top reveal">
-        <h2>Real impact, built through music and trusted selection</h2>
-        <a href="#how-it-works" class="btn btn-accent">&rarr; See How It Works</a>
-      </div>
-      <div class="stats-grid">
-        <div class="stat-item reveal">
-          <p class="stat-number">200<span>+</span></p>
-          <p class="stat-label">Events covered</p>
-          <p class="stat-desc">From intimate celebrations to large-scale productions across Spain.</p>
-        </div>
-        <div class="stat-item reveal reveal-delay-1">
-          <p class="stat-number">12<span>+</span></p>
-          <p class="stat-label">Curated DJs</p>
-          <p class="stat-desc">Every DJ vetted, briefed, and matched to your style.</p>
-        </div>
-        <div class="stat-item reveal reveal-delay-2">
-          <p class="stat-number">98<span>%</span></p>
-          <p class="stat-label">Client satisfaction</p>
-          <p class="stat-desc">Trusted by international clients across Europe.</p>
-        </div>
-        <div class="stat-item reveal reveal-delay-3">
-          <p class="stat-number">48<span>h</span></p>
-          <p class="stat-label">Response time</p>
-          <p class="stat-desc">Your match delivered within two business days.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- === PROBLEM (dark) === -->
-  <section id="problem">
-    <div class="container">
-      <div class="problem-layout">
-        <div class="problem-text reveal">
-          <p class="section-num">( about )</p>
-          <h2 style="margin-top:1rem;">Planning an event in Spain?<br>The music shouldn't be a gamble.</h2>
-          <p class="body-copy">
-            You're organizing an event abroad. You don't know the local DJ scene. You don't want generic playlists or someone who doesn't get your vibe.
-            <br><br>
-            You want to delegate the music to someone who understands what you're going for&mdash;without endless calls or guesswork.
-            <br><br>
-            That's what ELEVN does.
-          </p>
-          <p class="transition-line">We've done this hundreds of times. You're in good hands.</p>
-        </div>
-        <div class="problem-image reveal reveal-delay-2">
-          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80" alt="Party atmosphere with lights" loading="lazy">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- === HOW IT WORKS (terracotta) === -->
-  <section id="how-it-works">
-    <div class="container">
-      <div class="hiw-header reveal">
-        <h2>Our process is<br>shaped for you</h2>
-        <a href="#contact" class="btn btn-accent">&rarr; Get in Touch</a>
-      </div>
-
-      <hr class="dotted-sep dotted-sep-light">
-      <div class="step-row reveal">
-        <div class="step-row-inner">
-          <span class="step-num">( 01 )</span>
-          <h3>Tell Us About Your Event</h3>
-          <p>Fill out a short form: date, location, guest count, and a few questions about your musical taste. Takes 3 minutes.</p>
-        </div>
-      </div>
-
-      <hr class="dotted-sep dotted-sep-light">
-      <div class="step-row reveal">
-        <div class="step-row-inner">
-          <span class="step-num">( 02 )</span>
-          <h3>We Match You</h3>
-          <p>Based on your answers, we assign you to one of our curated profiles&mdash;not a random DJ, but the style that fits your event.</p>
-        </div>
-      </div>
-
-      <hr class="dotted-sep dotted-sep-light">
-      <div class="step-row reveal">
-        <div class="step-row-inner">
-          <span class="step-num">( 03 )</span>
-          <h3>You Relax. We Handle It.</h3>
-          <p>Your DJ is briefed on your event. You get a confirmation, a clear timeline, and zero stress.</p>
-        </div>
-      </div>
-      <hr class="dotted-sep dotted-sep-light">
-
-      <div style="text-align:center; margin-top:3rem;" class="reveal">
-        <a href="#contact" class="btn btn-dark">&rarr; Get in Touch</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- === PROFILES (light) === -->
-  <section id="profiles">
-    <div class="container">
-      <div class="profiles-header reveal">
-        <h2>A curated selection of DJ profiles</h2>
-        <p class="year-label">2k25</p>
-      </div>
-
-      <div class="profiles-grid">
-        <div class="profile-card reveal">
-          <div class="profile-card-bg">
-            <img src="https://images.unsplash.com/photo-1574169208507-8437680681b5?w=800&q=80" alt="Club Sophisticate" loading="lazy">
-          </div>
-          <div class="profile-card-body">
-            <h3>Club Sophisticate</h3>
-            <p class="tagline">Elegant. European. Refined.</p>
-            <p class="desc">House, disco, indie dance&mdash;the sound of sophisticated European clubs. Taste over trends.</p>
-            <p class="best-for">Best for: Editorial events. Fashion-forward crowds.</p>
-          </div>
-        </div>
-
-        <div class="profile-card reveal reveal-delay-1">
-          <div class="profile-card-bg">
-            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=80" alt="Crossover Elegant" loading="lazy">
-          </div>
-          <div class="profile-card-body">
-            <h3>Crossover Elegant</h3>
-            <p class="tagline">Hits with taste.</p>
-            <p class="desc">Bridges generations, keeps the dance floor full. No cheese. Just smart selections.</p>
-            <p class="best-for">Best for: Mixed-age crowds. Classic venues.</p>
-          </div>
-        </div>
-
-        <div class="profile-card reveal">
-          <div class="profile-card-bg">
-            <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800&q=80" alt="Global Urban Selector" loading="lazy">
-          </div>
-          <div class="profile-card-body">
-            <h3>Global Urban Selector</h3>
-            <p class="tagline">R&B. Afrobeats. Amapiano. Global heat.</p>
-            <p class="desc">Hip-hop roots, African rhythms, contemporary R&B. For cosmopolitan crowds.</p>
-            <p class="best-for">Best for: International events. Diverse guest lists.</p>
-          </div>
-        </div>
-
-        <div class="profile-card reveal reveal-delay-1">
-          <div class="profile-card-bg">
-            <img src="https://images.unsplash.com/photo-1571397171710-4896d84df334?w=800&q=80" alt="High Energy Driver" loading="lazy">
-          </div>
-          <div class="profile-card-body">
-            <h3>High Energy Driver</h3>
-            <p class="tagline">When you want the party to peak.</p>
-            <p class="desc">High BPM, clear build-ups, controlled energy. No gimmicks&mdash;just momentum.</p>
-            <p class="best-for">Best for: Late-night sets. After-parties.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="profiles-cta reveal">
-        <p>Not sure which profile fits? We'll figure it out together.</p>
-        <a href="match.html" class="btn btn-outline-dark">&rarr; Find Your DJ</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- === SERVICES (dark) === -->
+  <!-- SERVICES -->
   <section id="services">
-    <div class="container">
-      <div class="services-header reveal">
-        <p class="section-num" style="margin-bottom:1rem;">( services )</p>
-        <h2>What we do</h2>
+    <div class="services-inner">
+      <div class="services-header">
+        <div>
+          <div class="services-label"><span class="line"></span><span>( 02 ) SERVICES <span class="sq"></span> WHAT WE DO</span></div>
+          <h2 class="services-headline">Music <span class="lower">for</span><br>every<br>occasion.</h2>
+        </div>
+        <p class="services-sub">From intimate weddings to large corporate events, we match each client with the DJ that fits the room, the brand and the moment.</p>
       </div>
       <div class="services-grid">
-        <div class="service-card reveal">
-          <div class="service-card-bg">
-            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80" alt="Wedding reception" loading="lazy">
-          </div>
-          <div class="service-card-content">
-            <h3>Weddings</h3>
-            <p>Modern, international, memorable.</p>
-            <ul class="service-list">
-              <li>Cocktail hour</li>
-              <li>Dinner music</li>
-              <li>Party (the real deal)</li>
-              <li>After-party sets</li>
-            </ul>
-            <p>One DJ or multiple sets&mdash;whatever your event needs.</p>
-            <p class="note">Based in Spain. Available across Europe.</p>
-          </div>
+        <div class="service-item">
+          <span class="service-num">( 01 )</span>
+          <h3 class="service-title">Weddings</h3>
+          <p class="service-body">Your day, your sound. We match you with a DJ who understands the arc of a wedding, from the first dance to the last song of the night. Curated for your crowd, not for the average couple.</p>
+          <div class="service-tags"><span class="service-tag">Cocktail hour</span><span class="service-tag">Dinner set</span><span class="service-tag">Dance floor</span><span class="service-tag">After-party</span></div>
         </div>
-
-        <div class="service-card reveal reveal-delay-1">
-          <div class="service-card-bg">
-            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&q=80" alt="Corporate event" loading="lazy">
-          </div>
-          <div class="service-card-content">
-            <h3>Private & Corporate Events</h3>
-            <p>Brand launches. Private dinners. Company parties. International clients who need quality without compromise.</p>
-            <br>
-            <p>Same matching system. Same standards.</p>
-          </div>
+        <div class="service-item">
+          <span class="service-num">( 02 )</span>
+          <h3 class="service-title">Corporate Events</h3>
+          <p class="service-body">Music that elevates the brand. Product launches, galas, networking events. We provide DJs who read a room and deliver the right atmosphere without overshadowing the occasion.</p>
+          <div class="service-tags"><span class="service-tag">Brand events</span><span class="service-tag">Galas</span><span class="service-tag">Launches</span><span class="service-tag">Networking</span></div>
         </div>
-      </div>
-      <div class="reveal">
-        <a href="#contact" class="btn btn-accent">&rarr; Let's talk about your event</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- === CTA BREAK (photo) === -->
-  <section id="cta-break">
-    <div class="cta-break-bg">
-      <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1920&q=80" alt="Festival crowd" loading="lazy">
-    </div>
-    <div class="cta-break-content reveal">
-      <h2>Ready to find<br>your DJ?</h2>
-      <a href="#contact" class="btn btn-accent">&rarr; Get in Touch</a>
-    </div>
-  </section>
-
-  <!-- === FAQ (light) === -->
-  <section id="faq">
-    <div class="container">
-      <div class="faq-header reveal">
-        <p class="section-num" style="margin-bottom:0.75rem;">( faq )</p>
-        <h2>Questions</h2>
-      </div>
-      <div class="faq-list reveal">
-        <div class="faq-item">
-          <button class="faq-question">How much does it cost? <span class="faq-icon">+</span></button>
-          <div class="faq-answer"><div class="faq-answer-inner">Our standard package starts at &euro;1,000 for a full event (cocktail through party). Final pricing depends on duration, location, and specific requirements. We'll give you a clear quote after the matching process.</div></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question">How far in advance should I book? <span class="faq-icon">+</span></button>
-          <div class="faq-answer"><div class="faq-answer-inner">For peak season (May&ndash;October), we recommend reaching out at least 6 months in advance. But if you're closer to the date, still get in touch&mdash;we might have availability.</div></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question">Can I meet the DJ before the event? <span class="faq-icon">+</span></button>
-          <div class="faq-answer"><div class="faq-answer-inner">Yes. Once matched, you'll have a video call with your assigned DJ to align on the vision, music, and timeline.</div></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question">Do you provide sound equipment? <span class="faq-icon">+</span></button>
-          <div class="faq-answer"><div class="faq-answer-inner">We provide DJ equipment. Sound systems (PA, speakers) are typically arranged through your venue or production team. We can advise or connect you with trusted partners.</div></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question">What if I don't know what music I want? <span class="faq-icon">+</span></button>
-          <div class="faq-answer"><div class="faq-answer-inner">That's exactly why the matching system exists. You don't need to know genres or artists&mdash;just describe the vibe, and we'll translate it into the right DJ for you.</div></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question">Do you work outside Spain? <span class="faq-icon">+</span></button>
-          <div class="faq-answer"><div class="faq-answer-inner">Yes. We're based in Spain but available across Europe for events across the continent. Travel fees may apply.</div></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question">Can I send a playlist or requests? <span class="faq-icon">+</span></button>
-          <div class="faq-answer"><div class="faq-answer-inner">Absolutely. Your DJ will work with your input. But we also trust our DJs to read the room and adapt in real time. The best parties are a balance of both.</div></div>
+        <div class="service-item">
+          <span class="service-num">( 03 )</span>
+          <h3 class="service-title">Private Parties</h3>
+          <p class="service-body">No brief is too specific. Birthday celebrations, villa parties, exclusive gatherings. We find the DJ that fits your vision and makes your guests talk about it the next day.</p>
+          <div class="service-tags"><span class="service-tag">Birthdays</span><span class="service-tag">Villa parties</span><span class="service-tag">Exclusive events</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- === CONTACT (dark) === -->
+  <!-- STORY -->
+  <section id="story">
+    <div class="story-inner">
+      <div class="story-image">
+        <img src="fotos/stock-dj-mix.jpg" alt="DJ mixing">
+        <span class="story-image-label">( EST. 2020 &middot; BARCELONA )</span>
+      </div>
+      <div class="story-text">
+        <div class="story-label"><span class="line"></span><span>( 03 ) STORY <span class="sq"></span> WHO WE ARE</span></div>
+        <h2 class="story-headline">DJs who knew<br><span class="lower">what clients</span><br><span class="accent">really needed</span>.</h2>
+        <p class="story-body"><strong>We are a group of DJs with years in the industry.</strong> We have played weddings, galas, corporate events and private parties across Spain and beyond. Over time, a pattern emerged from every client conversation: finding a DJ you could truly trust was genuinely hard.</p>
+        <p class="story-body">Clients told us the same thing over and over. They had gone through agencies, scrolled through endless profiles, made calls across time zones, and still arrived at their event not really knowing what they would get. For couples who care deeply about music, about the energy of the night, about their guests dancing until the venue closes, this uncertainty was unacceptable.</p>
+        <p class="story-body"><strong>So we built elevn.</strong> Not as a directory, but as a matchmaking service. We use everything we know about music, crowds and events to put the right DJ in front of the right client. Every time. No surprises. No going in blind.</p>
+        <p class="story-body">Based in Barcelona. Spain's premier destination DJ agency for international clients.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT CTA -->
   <section id="contact">
-    <div class="container">
-      <div class="contact-layout">
-        <div class="contact-info reveal">
-          <p class="section-num" style="margin-bottom:1rem;">( contact )</p>
-          <h2>Ready to find your DJ?</h2>
-          <p class="intro">Fill out the form. It takes 3 minutes. We'll get back to you within 48 hours with your match.</p>
-          <p class="alt-contact">Or email us directly:<br><a href="mailto:hello@elevndjs.com">hello@elevndjs.com</a></p>
-        </div>
-
-        <form class="contact-form reveal reveal-delay-1" onsubmit="return false;">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="name">Your name</label>
-              <input type="text" id="name" placeholder="Full name" required>
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" placeholder="you@email.com" required>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="date">Event date</label>
-              <input type="date" id="date">
-            </div>
-            <div class="form-group">
-              <label for="location">Venue / Location</label>
-              <input type="text" id="location" placeholder="City or venue name">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="guests">Guest count</label>
-            <input type="text" id="guests" placeholder="e.g. 120">
-          </div>
-          <div class="form-group">
-            <label for="vibe">Tell us about the vibe</label>
-            <textarea id="vibe" placeholder="A few sentences is fine"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="artists">Artists or genres you love?</label>
-            <textarea id="artists" placeholder="Help us understand your taste" rows="3"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="notes">Anything else?</label>
-            <textarea id="notes" placeholder="Special requests, timeline, etc." rows="3"></textarea>
-          </div>
-          <div class="form-submit">
-            <button type="submit" class="btn btn-accent">&rarr; Find Your DJ</button>
-          </div>
-        </form>
+    <div class="contact-inner">
+      <div class="contact-label"><span class="line"></span><span>( 04 ) CONTACT <span class="sq"></span> GET STARTED</span></div>
+      <h2 class="contact-headline">Let's find<br><span class="lower">your</span> <span class="accent">DJ</span>.</h2>
+      <p class="contact-sub">Tell us about your event. We'll match you with the right DJ from our roster and come back within 48 hours.</p>
+      <div class="contact-actions">
+        <a href="match.html" class="btn-primary">Start the matching &rarr;</a>
+        <a href="mailto:hello@elevndjs.com" class="btn-ghost">Email us directly</a>
       </div>
     </div>
   </section>
 
-  <!-- === FOOTER === -->
+  <!-- FOOTER -->
   <footer>
-    <div class="footer-top">
-      <div class="footer-col">
-        <p class="footer-col-title">Navigation:</p>
-        <a href="#hero">Home</a>
-        <a href="about.html">About Us</a>
-        <a href="#profiles">Profiles</a>
-        <a href="#contact">Get in Touch</a>
+    <div class="footer-inner">
+      <span class="footer-copy">&copy; 2026 elevn. DJ Agency &middot; Barcelona</span>
+      <div class="footer-links">
+        <a href="#services">Services</a>
+        <a href="#story">About</a>
+        <a href="match.html">Find your DJ</a>
+        <a href="mailto:hello@elevndjs.com">Contact</a>
       </div>
-      <div class="footer-col">
-        <p class="footer-col-title">Socials:</p>
-        <a href="https://instagram.com/elevndjs" target="_blank" rel="noopener">Instagram</a>
-      </div>
-      <div class="footer-col">
-        <p class="footer-col-title">Info:</p>
-        <p>Work: hello@elevndjs.com</p>
-        <p>Based in Spain</p>
-        <p>Available across Europe</p>
-      </div>
-      <div class="footer-col" style="text-align:right;">
-        <p style="margin-top:auto;">&copy; 2025 ELEVN DJ'S. All rights reserved.</p>
-      </div>
-    </div>
-    <div class="footer-brand">
-      <p class="footer-brand-text">( ELEVN ) DJ'S</p>
-    </div>
-    <div class="footer-bottom">
-      <p>Privacy Policy &middot; Terms</p>
+      <span class="footer-right"><a href="https://www.instagram.com/elevndjs/" target="_blank" rel="noopener" style="color:var(--cream-dim);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--cream)'" onmouseout="this.style.color='var(--cream-dim)'">@elevndjs</a> &nbsp;&#8231;&nbsp; hello@elevndjs.com</span>
     </div>
   </footer>
-
-  <!-- === JS === -->
-  <script>
-    // FAQ
-    document.querySelectorAll('.faq-question').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const item = btn.parentElement;
-        const answer = item.querySelector('.faq-answer');
-        const isOpen = item.classList.contains('active');
-        document.querySelectorAll('.faq-item').forEach(i => {
-          i.classList.remove('active');
-          i.querySelector('.faq-answer').style.maxHeight = null;
-        });
-        if (!isOpen) {
-          item.classList.add('active');
-          answer.style.maxHeight = answer.scrollHeight + 'px';
-        }
-      });
-    });
-
-    // Reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // Mobile menu
-    const toggle = document.querySelector('.nav-toggle');
-    const mobileMenu = document.getElementById('mobileMenu');
-    toggle.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
-      toggle.textContent = mobileMenu.classList.contains('open') ? '\u2715' : '\u2630';
-      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-    });
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('open');
-        toggle.textContent = '\u2630';
-        document.body.style.overflow = '';
-      });
-    });
-
-    // Nav bg on scroll
-    const navEl = document.querySelector('nav');
-    window.addEventListener('scroll', () => {
-      navEl.style.background = window.scrollY > 80 ? 'rgba(17,17,17,0.95)' : 'var(--darker)';
-    }, { passive: true });
-  </script>
 
 </body>
 </html>
