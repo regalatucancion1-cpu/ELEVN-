@@ -684,6 +684,9 @@
     .contact-status { margin-top: 1.2rem; min-height: 1.2em; font-family: 'Space Mono', monospace; font-size: 0.78rem; color: var(--cream-dim); }
     .contact-status.success { color: var(--accent); }
     .contact-status.error { color: #ff6b6b; }
+    .contact-consent { display: flex; align-items: flex-start; gap: 0.7rem; margin-top: 1.6rem; font-family: 'Space Mono', monospace; font-size: 0.7rem; line-height: 1.65; color: var(--cream-dim); text-align: left; cursor: pointer; }
+    .contact-consent input { margin-top: 0.2rem; accent-color: var(--accent); width: 15px; height: 15px; flex-shrink: 0; cursor: pointer; }
+    .contact-consent a { color: var(--accent); text-decoration: underline; }
     @media (max-width: 600px) { .contact-form-grid { grid-template-columns: 1fr; gap: 1.2rem; } }
     .btn-primary { font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream); text-decoration: none; padding: 1.2rem 2.4rem; background: var(--accent); border: 1px solid var(--accent); transition: all 0.25s ease; }
     .btn-primary:hover { background: transparent; border-color: var(--cream); }
@@ -917,6 +920,14 @@
             <textarea id="cfMessage" name="message" required></textarea>
           </div>
         </div>
+        <!-- Honeypot, hidden from users, bots fill it in -->
+        <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+          <label>Leave this field empty <input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
+        </div>
+        <label class="contact-consent">
+          <input type="checkbox" id="cfConsent" name="consent" required>
+          <span>I have read and accept the <a href="privacy.html" target="_blank" rel="noopener">privacy policy</a> and consent to ELEVN DJS handling my data to respond to this inquiry.</span>
+        </label>
         <button type="submit" class="btn-primary" id="contactSubmit">&rarr; Send message</button>
         <p class="contact-status" id="contactStatus" role="status" aria-live="polite"></p>
       </form>
@@ -931,6 +942,7 @@
         <a href="#services">Services</a>
         <a href="#story">About</a>
         <a href="match.html">Find your DJ</a>
+        <a href="privacy.html">Privacy</a>
         <a href="mailto:hello@elevndjs.com">Contact</a>
       </div>
       <span class="footer-right"><a href="https://www.instagram.com/elevndjs/" target="_blank" rel="noopener" style="color:var(--cream-dim);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--cream)'" onmouseout="this.style.color='var(--cream-dim)'">@elevndjs</a> &nbsp;&#8231;&nbsp; hello@elevndjs.com</span>
@@ -954,12 +966,22 @@
       const status = document.getElementById('contactStatus');
       if (btn.disabled) return;
 
+      // Honeypot check, silently drop bot submissions
+      if (form._honey && form._honey.value) { return; }
+      // Consent is required by HTML, but double-check
+      if (!form.consent.checked) {
+        status.className = 'contact-status error';
+        status.textContent = 'Please accept the privacy policy to continue.';
+        return;
+      }
+
       const data = {
         name: form.name.value.trim(),
         email: form.email.value.trim(),
         event_type: form.event_type.value.trim(),
         date: form.date.value.trim(),
         message: form.message.value.trim(),
+        consent: 'Accepted privacy policy on ' + new Date().toISOString(),
         _subject: 'ELEVN contact, ' + (form.name.value.trim() || 'New lead'),
         _template: 'table',
         _captcha: 'false'
@@ -992,6 +1014,33 @@
         status.textContent = 'Something went wrong. Please email us directly at hello@elevndjs.com.';
       }
     }
+  </script>
+
+  <!-- Cookie consent banner -->
+  <style>
+    #cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(14,14,14,0.97); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid rgba(240,237,232,0.28); padding: 1.25rem 1.5rem; z-index: 300; display: none; flex-direction: row; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    #cookie-banner.show { display: flex; }
+    #cookie-banner p { font-family: 'Space Mono', monospace; font-size: 0.72rem; line-height: 1.7; color: #f0ede8; max-width: 680px; margin: 0; }
+    #cookie-banner p a { color: #C46A35; text-decoration: underline; }
+    #cookie-banner .cb-actions { display: flex; gap: 0.8rem; flex-shrink: 0; }
+    #cookie-banner button { font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.7rem 1.3rem; cursor: pointer; border: 1px solid rgba(240,237,232,0.28); background: transparent; color: #f0ede8; transition: all 0.25s; }
+    #cookie-banner button.accept { background: #C46A35; border-color: #C46A35; }
+    #cookie-banner button:hover { border-color: #f0ede8; }
+    @media (max-width: 720px) {
+      #cookie-banner { flex-direction: column; align-items: stretch; padding: 1rem; gap: 1rem; }
+      #cookie-banner .cb-actions button { flex: 1; }
+    }
+  </style>
+  <div id="cookie-banner" role="dialog" aria-label="Cookie consent">
+    <p>We use only essential cookies to make this site work. No trackers, no ads. See our <a href="privacy.html">privacy policy</a>.</p>
+    <div class="cb-actions">
+      <button type="button" onclick="cookieChoice('reject')">Reject</button>
+      <button type="button" class="accept" onclick="cookieChoice('accept')">Accept</button>
+    </div>
+  </div>
+  <script>
+    (function(){ try { if (!localStorage.getItem('elevn_cookies')) { var el = document.getElementById('cookie-banner'); if (el) el.classList.add('show'); } } catch(e) {} })();
+    function cookieChoice(v) { try { localStorage.setItem('elevn_cookies', v); } catch(e) {} var el = document.getElementById('cookie-banner'); if (el) el.classList.remove('show'); }
   </script>
 
 </body>
