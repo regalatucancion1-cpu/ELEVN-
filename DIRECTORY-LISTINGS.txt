@@ -1,119 +1,33 @@
 =========================================================
-ELEVN DJS - WEDDING DIRECTORY LISTINGS
-Ready-to-paste profiles for maximum SEO backlinks
+ELEVN DJS - LUXURY / INTERNATIONAL WEDDING DIRECTORY LISTINGS
+Ready-to-paste profiles for high-end backlinks
 =========================================================
 
-Copy-paste these descriptions when creating profiles on each
-platform. Each one includes the target keywords naturally.
-Always set the website URL to: https://elevndjs.com/weddings
-Always set contact email to: hello@elevndjs.com
+Target client: international couples, high budget,
+destination weddings in Spain. NO local Spanish directories.
+
+Website URL for all listings: https://elevndjs.com/weddings
+Contact email: hello@elevndjs.com
 Location: Barcelona, Spain
-Category: Wedding DJ / DJ Service / Entertainment
+Category: Wedding DJ / DJ Agency / Entertainment
+
+
+=========================================================
+TIER 1 - HIGH PRIORITY (do these first)
+=========================================================
 
 
 ---------------------------------------------------------
-1. BODAS.NET (Spain's largest wedding directory)
-   https://www.bodas.net
-   Create account > Add business > Category: DJs
----------------------------------------------------------
-
-Business name: ELEVN DJS
-Tagline: Wedding DJs in Barcelona and across Spain
-
-Description:
-ELEVN DJS is a boutique DJ agency based in Barcelona, specialising in destination weddings across Spain. We match international couples with curated wedding DJs based on their taste, their crowd and their venue.
-
-Every DJ on our roster has proven experience with international weddings. We cover Barcelona, Madrid, Ibiza, Mallorca, Marbella, Costa Brava and all of Spain.
-
-Our service includes personalised DJ matching, a pre-event briefing call, professional equipment and full coordination with your venue and planner. We respond to every inquiry within 48 hours.
-
-Whether you are planning an intimate masia wedding in the Catalan countryside or a grand celebration on the coast, we will find the right wedding DJ for your day.
-
-Services: Wedding DJ, Cocktail hour music, Dinner set, Dance floor, After-party DJ, Ceremony music
-Locations: Barcelona, Madrid, Ibiza, Mallorca, Marbella, Costa Brava, Valencia, all Spain
-Languages: English, Spanish, French
-
-
----------------------------------------------------------
-2. ZANKYOU
-   https://www.zankyou.com
-   Create vendor account > Category: Music & Entertainment
----------------------------------------------------------
-
-Business name: ELEVN DJS
-Tagline: Curated Wedding DJs for International Weddings in Spain
-
-Description:
-ELEVN DJS is Barcelona's boutique DJ agency for destination weddings. We specialise in matching international couples with the right wedding DJ from our curated roster of professionals.
-
-We are not a directory. We are a matching service. You tell us about your event, your musical taste and your crowd, and we assign the DJ whose style fits your wedding specifically. No guesswork.
-
-Based in Barcelona, our DJs work across all of Spain: Madrid, Ibiza, Mallorca, Marbella, the Costa Brava and beyond. Every DJ speaks fluent English and has extensive experience with multinational wedding crowds.
-
-What's included:
-- Personalised DJ matching based on your taste and event profile
-- Pre-event briefing call between you and your assigned DJ
-- Full professional sound equipment with backups
-- Coordination with your venue and wedding planner
-- From cocktail hour through the last song of the night
-
-Website: https://elevndjs.com/weddings
-
-
----------------------------------------------------------
-3. MATRIMONIO.COM (international, Italy-based but covers Spain)
-   https://www.matrimonio.com
-   Create vendor profile > Category: Music
----------------------------------------------------------
-
-Business name: ELEVN DJS - Wedding DJ Agency Barcelona
-Location: Barcelona, Spain (covers all Spain)
-
-Description:
-Looking for a wedding DJ in Spain? ELEVN DJS is a boutique DJ agency based in Barcelona that matches international couples with professional wedding DJs across the country.
-
-We don't just send a DJ. We match one to your event. Through a short questionnaire about your music taste, your guests and your venue, we identify the perfect DJ from our curated roster.
-
-Our DJs regularly play weddings in Barcelona, Madrid, Ibiza, Mallorca, Marbella, Costa Brava and more. All speak English fluently and specialise in international crowds.
-
-Starting from cocktail hour through dinner, first dance, dance floor and after-party. Full professional equipment, pre-event briefing and 48-hour response time.
-
-
----------------------------------------------------------
-4. THE WEDDING CLUB / LUXURY WEDDING DIRECTORIES
-   (e.g., One Fab Day, Brides Magazine Directory, etc.)
----------------------------------------------------------
-
-Business name: ELEVN DJS
-Location: Barcelona, Spain (destination weddings across Spain)
-
-Short bio (100 words):
-ELEVN DJS is a boutique DJ agency in Barcelona matching international couples with curated wedding DJs across Spain. We specialise in destination weddings where the crowd is multinational and the music needs to be exceptional. Our matching process starts with your taste, your crowd and your vision. We assign the DJ who fits your wedding specifically. Covering Barcelona, Ibiza, Mallorca, Marbella, Madrid and all of Spain. Professional setup, pre-event briefing, 48h response.
-
-Long description (200 words):
-ELEVN DJS is a boutique international DJ agency based in Barcelona, built for couples who care deeply about the music at their wedding.
-
-We are not a DJ directory. We are a matching service. You share details about your event, your musical taste, your guests and the atmosphere you are going for. We use that information to assign the wedding DJ from our curated roster whose style, experience and personality fit your specific celebration.
-
-Every DJ on our roster has proven experience with international weddings in Spain. They understand how to read multicultural crowds, manage the arc of a wedding night from cocktail hour to the last dance, and coordinate professionally with planners and venues.
-
-We cover destination weddings across all of Spain: Barcelona and the Catalan coast, Madrid, Ibiza, Mallorca, Marbella, Valencia, the Costa Brava, San Sebastian and beyond.
-
-Our service includes personalised matching, a pre-event call between you and your DJ, full professional equipment with backup systems, and coordination with your venue team. We respond to every inquiry within 48 hours.
-
-Based in Barcelona. Available across Spain. For couples who refuse to leave the music to chance.
-
-
----------------------------------------------------------
-5. GOOGLE BUSINESS PROFILE
-   (Christian should create this himself at business.google.com)
+1. GOOGLE BUSINESS PROFILE
+   https://business.google.com
+   THE most important listing for local SEO.
 ---------------------------------------------------------
 
 Business name: ELEVN DJS
 Category: DJ service (primary), Wedding service (secondary)
-Address: Barcelona, Spain (use real address or service area)
-Service area: Barcelona, Madrid, Ibiza, Mallorca, Marbella, Valencia, Spain
-Phone: (add if available)
+Address: Barcelona, Spain (service area business)
+Service area: Barcelona, Madrid, Ibiza, Mallorca, Marbella,
+             Valencia, Costa Brava, Spain
 Website: https://elevndjs.com
 Booking link: https://elevndjs.com/match
 
@@ -124,40 +38,180 @@ Services to list:
 - Wedding DJ matching
 - Corporate event DJ
 - Private party DJ
-- Cocktail hour music
-- After-party DJ
-- Destination wedding music
+- Destination wedding entertainment
+- Cocktail hour / dinner / dance floor music
 
 
 ---------------------------------------------------------
-6. INSTAGRAM BIO
-   @elevndjs
+2. JUNEBUG WEDDINGS
+   https://junebugweddings.com/apply-for-membership
+   Premier international wedding directory. US/UK/intl couples.
+   $25-150/month, 12-month contract. Worth it for the backlink
+   and the client profile (high budget, design-conscious).
+   Also unlocks editorial submissions.
 ---------------------------------------------------------
 
-Current bio should be:
+Business name: ELEVN DJS
+Category: Wedding DJs
+Location: Barcelona, Spain (serves all Spain)
 
+Short description:
+Boutique DJ agency in Barcelona matching international couples with curated wedding DJs across Spain. Personalised matching, not a directory. From cocktail hour to the last song of the night.
+
+Long description:
+ELEVN DJS is a boutique international DJ agency based in Barcelona, built for couples who care deeply about the music at their wedding.
+
+We are not a DJ directory. We are a matching service. You tell us about your event, your musical taste, your guests and the atmosphere you want. We use that to assign the wedding DJ from our curated roster whose style, experience and personality fit your celebration specifically.
+
+Every DJ on our roster has proven experience with international destination weddings in Spain. They understand how to read multicultural crowds, manage the arc of a wedding night from cocktail hour to the last dance, and coordinate professionally with planners and venues.
+
+We cover Barcelona, Madrid, Ibiza, Mallorca, Marbella, the Costa Brava and the rest of Spain. All DJs speak fluent English. 48-hour response to every inquiry.
+
+
+---------------------------------------------------------
+3. STYLE ME PRETTY
+   https://www.stylemepretty.com/vendors/home
+   Top-tier wedding media brand. Their vendor guide is
+   heavily used by US and UK couples planning abroad.
+   Paid listing. Strong domain authority backlink.
+---------------------------------------------------------
+
+Business name: ELEVN DJS
+Category: Entertainment / DJs
+Location: Barcelona, Spain
+
+Description:
+ELEVN DJS is Barcelona's boutique DJ agency for destination weddings in Spain. We match international couples with curated, vetted DJs based on their musical taste, crowd profile and venue. Professional equipment, pre-event DJ briefing, coordination with your planner. Covering all of Spain.
+
+
+---------------------------------------------------------
+4. 5 STAR WEDDING DIRECTORY
+   https://5starweddingdirectory.com/advertise
+   Luxury-only directory. Curated, application-based.
+   Already has a "Weddings in Spain" section.
+   Perfect match for your positioning.
+---------------------------------------------------------
+
+Business name: ELEVN DJS
+Category: Entertainment / Music
+Location: Barcelona, Spain
+
+Description:
+ELEVN DJS is a boutique DJ agency in Barcelona curating wedding music for international destination weddings across Spain. We do not operate as a directory. We match each couple with the specific DJ from our roster who fits their taste, their crowd and their venue.
+
+Our DJs have played at Spain's most prestigious venues, from Catalan masias to Ibizan clifftop estates. Every DJ speaks fluent English and has proven experience with high-end international celebrations. Covering Barcelona, Madrid, Ibiza, Mallorca, Marbella and all of Spain.
+
+
+=========================================================
+TIER 2 - STRONG BACKLINKS
+=========================================================
+
+
+---------------------------------------------------------
+5. OVER THE MOON
+   https://overthemoon.com/pages/directory
+   Upscale wedding media, curated vendor directory.
+   Reach out via their contact/submissions page.
+---------------------------------------------------------
+
+Business name: ELEVN DJS
+Category: Entertainment
+Location: Barcelona, Spain
+
+Description:
+Boutique DJ agency in Barcelona. We match international couples with curated wedding DJs across Spain based on taste, crowd and venue. Not a directory, a matching service. Covering Barcelona, Ibiza, Mallorca, Marbella and all of Spain. 48h response.
+
+
+---------------------------------------------------------
+6. DESTINATION WEDDING DIRECTORY
+   https://www.destinationweddingdirectory.co/
+   Specifically for destination weddings. Has a Spain section.
+   Free or low-cost listings.
+---------------------------------------------------------
+
+Business name: ELEVN DJS
+Category: Music & Entertainment / DJs
+Location: Barcelona, Spain
+
+Description:
+ELEVN DJS is a boutique DJ agency based in Barcelona specialising in destination weddings across Spain. We match international couples with curated, English-speaking wedding DJs based on their musical taste, guest profile and venue. Our DJs cover Barcelona, Madrid, Ibiza, Mallorca, Marbella, Costa Brava and the rest of Spain. Professional equipment, pre-event briefing call, full venue coordination. 48-hour response time.
+
+
+---------------------------------------------------------
+7. WEDDING DIRECTORY SPAIN
+   https://www.weddingdirectoryspain.com/
+   Niche directory for international couples marrying in Spain.
+   Good backlink, relevant audience.
+---------------------------------------------------------
+
+Business name: ELEVN DJS
+Category: DJs / Entertainment
+Location: Barcelona (covers all Spain)
+
+Description:
+ELEVN DJS is a boutique DJ agency based in Barcelona for international destination weddings across Spain. We match each couple with a curated, English-speaking wedding DJ based on their music taste, guest profile and venue. From cocktail hour through the last song of the night, with professional equipment and full coordination. Covering Barcelona, Ibiza, Mallorca, Marbella, Madrid, Costa Brava and more.
+
+
+=========================================================
+TIER 3 - ADDITIONAL EXPOSURE
+=========================================================
+
+
+---------------------------------------------------------
+8. SPAIN4WEDDINGS
+   https://www.spain4weddings.com/
+   Luxury wedding planning directory focused on Spain.
+---------------------------------------------------------
+
+Same description as #7.
+
+
+---------------------------------------------------------
+9. FIX THE MUSIC
+   https://www.fixthemusic.com/wedding-djs/spain
+   DJ-specific directory, ranks well for "wedding DJs Spain".
+   Getting listed here means appearing in their "10 Best
+   Wedding DJs in Spain" type articles.
+---------------------------------------------------------
+
+Business name: ELEVN DJS
+Location: Barcelona (all Spain)
+
+Description:
+Boutique DJ agency in Barcelona. We match international couples with curated wedding DJs across Spain. Personalised matching based on taste, crowd and venue. English-speaking DJs, professional equipment, pre-event briefing. Covering Barcelona, Madrid, Ibiza, Mallorca, Marbella, Costa Brava and beyond.
+
+
+=========================================================
+INSTAGRAM BIO
+@elevndjs
+=========================================================
+
+Bio:
 Wedding & Event DJs | Spain
 Curated DJ matching for international events
 Barcelona | Ibiza | Mallorca | All Spain
-Book your DJ below
+Start your matching below
 
-Link: https://elevndjs.com (direct, no linktree)
+Link: https://elevndjs.com (DIRECT, no Linktree)
 
-IMPORTANT: The Instagram link MUST go directly to elevndjs.com
-Do NOT use Linktree, Linktr.ee, or any intermediary.
-Google counts direct links from Instagram as signals.
+IMPORTANT: Google counts direct links from Instagram.
+Do NOT use Linktree or any intermediary service.
 
 
 =========================================================
-PRIORITY ORDER FOR REGISTRATION:
+PRIORITY ORDER:
 =========================================================
 
-1. Google Business Profile (HIGHEST PRIORITY - do this first)
-2. Bodas.net (Spain's #1 wedding directory, huge SEO value)
-3. Zankyou (international reach, strong domain authority)
-4. Matrimonio.com (additional coverage)
-5. Any luxury/niche directories you find
+1. Google Business Profile (FREE, highest SEO impact)
+2. Junebug Weddings (paid, best client match)
+3. Style Me Pretty (paid, massive domain authority)
+4. 5 Star Wedding Directory (paid, luxury positioning)
+5. Destination Wedding Directory (free/cheap)
+6. Wedding Directory Spain (free/cheap)
+7. Over The Moon (reach out)
+8. Fix The Music (free/cheap, good for DJ-specific queries)
+9. Spain4Weddings (free/cheap)
 
-Each listing = one backlink to elevndjs.com/weddings
-Google weighs directory listings heavily for local SEO.
+Each listing = 1 backlink to elevndjs.com/weddings
+Google weighs relevant backlinks heavily for ranking.
 =========================================================
