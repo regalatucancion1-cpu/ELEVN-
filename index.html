@@ -670,6 +670,11 @@
     .contact-headline .accent { color: var(--accent); }
     .contact-sub { font-size: 1.05rem; line-height: 1.6; color: var(--cream-dim); max-width: 44ch; margin: 0 auto 3.5rem; }
     .contact-actions { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 4rem; }
+    /* Contact form separated section */
+    #contact-form-section { padding: 5rem 2.5rem 6rem; background: var(--dark); border-top: 1px solid var(--line); }
+    .contact-form-wrap { max-width: 640px; margin: 0 auto; }
+    .cf-header { text-align: center; margin-bottom: 3rem; }
+    .cf-label { font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream-dim); }
     .contact-form { max-width: 640px; margin: 0 auto; text-align: left; }
     .contact-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; margin-bottom: 1.5rem; }
     .contact-field { display: flex; flex-direction: column; gap: 0.5rem; }
@@ -694,6 +699,7 @@
     .btn-ghost:hover { border-color: var(--cream); }
     @media (max-width: 720px) {
       #contact { padding: 6rem 1.25rem; }
+      #contact-form-section { padding: 3.5rem 1.25rem 4rem; }
       .contact-actions { flex-direction: column; align-items: stretch; }
       .btn-primary, .btn-ghost { text-align: center; padding: 1.1rem 1.6rem; }
     }
@@ -894,9 +900,16 @@
       <p class="contact-sub">Tell us about your event. We'll match you with the right DJ from our roster and come back within 48 hours.</p>
       <div class="contact-actions">
         <a href="match.html" class="btn-primary">Start the matching &rarr;</a>
-        <a href="mailto:hello@elevndjs.com" class="btn-ghost">Email us directly</a>
       </div>
+    </div>
+  </section>
 
+  <!-- CONTACT FORM — visually separated block -->
+  <section id="contact-form-section">
+    <div class="contact-form-wrap">
+      <div class="cf-header">
+        <span class="cf-label">( Or send us a message directly )</span>
+      </div>
       <form class="contact-form" id="contactForm" onsubmit="sendContact(event)">
         <div class="contact-form-grid">
           <div class="contact-field">
@@ -933,6 +946,7 @@
       </form>
     </div>
   </section>
+
 
   <!-- FOOTER -->
   <footer>
