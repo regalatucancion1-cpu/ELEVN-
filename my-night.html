@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=League+Spartan:wght@700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; background: #0a0a0a; }
@@ -525,7 +526,6 @@
 
     .time-axis {
       display: grid;
-      grid-template-columns: repeat(13, 1fr);
       padding: 0.6rem 0 0.3rem;
       border-top: 1px solid var(--line);
       font-family: 'Space Mono', monospace;
@@ -687,10 +687,11 @@
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 2.4rem 3rem; margin-bottom: 2rem;
     }
-    .setup-field-half { max-width: 60%; }
+    .setup-field-half { grid-column: 1 / -1; max-width: 320px; }
+    .setup-field input[type="time"] { color-scheme: dark; }
     @media (max-width: 720px) {
       .setup-grid { grid-template-columns: 1fr; gap: 1.8rem; }
-      .setup-field-half { max-width: 100%; }
+      .setup-field-half { max-width: 100%; grid-column: auto; }
     }
     .setup-field { display: flex; flex-direction: column; gap: 0.55rem; }
     .setup-field label {
@@ -988,6 +989,14 @@
             <label>VENUE</label>
             <input type="text" id="setup-venue" placeholder="Cap Rocat, Mallorca" autocomplete="off">
           </div>
+          <div class="setup-field">
+            <label>PARTY START</label>
+            <input type="time" id="setup-pstart" value="19:00">
+          </div>
+          <div class="setup-field">
+            <label>PARTY END</label>
+            <input type="time" id="setup-pend" value="03:00">
+          </div>
           <div class="setup-field setup-field-half">
             <label>GUEST COUNT</label>
             <input type="number" id="setup-guests" placeholder="120" min="2" max="3000" autocomplete="off">
@@ -1073,9 +1082,7 @@
           <span>LOW</span>
         </div>
         <canvas id="energyCanvas" width="1200" height="360"></canvas>
-        <div class="time-axis">
-          <span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>00</span><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span>
-        </div>
+        <div class="time-axis" id="timeAxis"></div>
         <div class="moment-axis">
           <span>COCKTAIL</span>
           <span>DINNER</span>
@@ -1334,10 +1341,10 @@
         </div>
         <div class="rider-row">
           <div>
-            <h4>Live sax / percussion</h4>
-            <p>Instrumentalist on top of the DJ set at peak moments.</p>
+            <h4>Live sax / percussion booked?</h4>
+            <p>Tick if you've already contracted a live instrumentalist on top of the DJ set. Helps your DJ time the peak around them.</p>
           </div>
-          <label class="switch"><input type="checkbox" data-rider="live"><span class="slider"></span></label>
+          <label class="switch"><input type="checkbox" data-rider="live_sax_booked"><span class="slider"></span></label>
         </div>
         <div class="rider-row">
           <div>
@@ -1438,16 +1445,19 @@
       const name2 = document.getElementById('setup-name2').value.trim();
       const date = document.getElementById('setup-date').value;
       const venue = document.getElementById('setup-venue').value.trim();
+      const partyStart = document.getElementById('setup-pstart').value || '19:00';
+      const partyEnd = document.getElementById('setup-pend').value || '03:00';
       const guests = document.getElementById('setup-guests').value.trim();
       const status = document.getElementById('setupStatus');
 
       if (!name1) { status.textContent = 'Add your name to continue.'; return; }
       if (!date) { status.textContent = 'Pick a wedding date.'; return; }
       if (!venue) { status.textContent = 'Add the venue.'; return; }
+      if (!partyStart || !partyEnd) { status.textContent = 'Add the party start and end times.'; return; }
       if (!guests || +guests < 2) { status.textContent = 'Add the guest count.'; return; }
       status.textContent = '';
 
-      SESSION = { name1, name2, date, venue, guests };
+      SESSION = { name1, name2, date, venue, partyStart, partyEnd, guests };
       applySession(SESSION);
       saveSession(SESSION);
       goToSection('s-intro');
@@ -1492,6 +1502,11 @@
       const yr = d.date ? d.date.split('-')[0].slice(2) : '';
       document.getElementById('posterTopId').textContent = `ELEVN // SESSION ${initials}-${yr}`;
       document.getElementById('navSessionLabel').textContent = `SESSION ${initials}-${yr} / LIVE`;
+      // Party hours -> energy curve axis (backward-compat defaults)
+      setPartyHours(d.partyStart || '19:00', d.partyEnd || '03:00');
+      renderTimeAxis();
+      drawCurve();
+      updateReadout();
     }
 
     function saveSession(d) {
@@ -1508,6 +1523,8 @@
       document.getElementById('setup-name2').value = d.name2 || '';
       document.getElementById('setup-date').value = d.date || '';
       document.getElementById('setup-venue').value = d.venue || '';
+      document.getElementById('setup-pstart').value = d.partyStart || '19:00';
+      document.getElementById('setup-pend').value = d.partyEnd || '03:00';
       document.getElementById('setup-guests').value = d.guests || '';
     }
 
@@ -1541,11 +1558,38 @@
     // ============================ ENERGY CURVE CANVAS ============================
     const canvas = document.getElementById('energyCanvas');
     const ctx = canvas.getContext('2d');
-    const HOURS = 12; // 18:00 to 06:00
-    const SAMPLES = 240; // one sample every 3 minutes
+    let HOURS = 8;       // total party span in hours, set from setup
+    let START_HOUR = 19; // first hour of the party, set from setup
+    const SAMPLES = 240; // one sample across the span
     let curve = new Array(SAMPLES).fill(0);
     let drawing = false;
     let lastIdx = -1;
+
+    function setPartyHours(startStr, endStr) {
+      if (!startStr || !endStr) return;
+      const [sH, sM] = startStr.split(':').map(Number);
+      const [eH, eM] = endStr.split(':').map(Number);
+      let s = sH + sM / 60;
+      let e = eH + eM / 60;
+      if (e <= s) e += 24; // crosses midnight
+      START_HOUR = s;
+      HOURS = Math.max(1, e - s);
+    }
+
+    function renderTimeAxis() {
+      const axis = document.getElementById('timeAxis');
+      if (!axis) return;
+      axis.innerHTML = '';
+      const numTicks = Math.ceil(HOURS) + 1;
+      axis.style.gridTemplateColumns = `repeat(${numTicks}, 1fr)`;
+      const startInt = Math.floor(START_HOUR);
+      for (let i = 0; i < numTicks; i++) {
+        const h = (startInt + i) % 24;
+        const span = document.createElement('span');
+        span.textContent = String(h).padStart(2, '0');
+        axis.appendChild(span);
+      }
+    }
 
     // Suggested default curve (HED profile: builds fast, peaks late, gentle fade)
     function defaultCurve() {
@@ -1625,7 +1669,7 @@
       const avg = curve.reduce((a, b) => a + b, 0) / SAMPLES;
       let peakVal = 0, peakIdx = 0;
       curve.forEach((v, i) => { if (v > peakVal) { peakVal = v; peakIdx = i; } });
-      const peakHourF = 18 + (peakIdx / (SAMPLES - 1)) * HOURS;
+      const peakHourF = START_HOUR + (peakIdx / (SAMPLES - 1)) * HOURS;
       const peakH = Math.floor(peakHourF) % 24;
       const peakM = Math.floor((peakHourF - Math.floor(peakHourF)) * 60);
       const fmt = (n) => String(n).padStart(2, '0');
@@ -1799,7 +1843,7 @@
 
     const lockinEl = document.getElementById('s-lockin');
 
-    const FORM_ENDPOINT = 'https://formsubmit.co/ajax/elevndjs@gmail.com';
+    const FORM_ENDPOINT = '/api/lock-session';
     async function lockSession() {
       const status = document.getElementById('lockinStatus');
       const consent = document.getElementById('lockinConsent');
@@ -1812,15 +1856,14 @@
       const mp = collectMustPlay();
       const initials = SESSION ? (SESSION.name1[0] + (SESSION.name2 ? SESSION.name2[0] : '')).toUpperCase() : '';
       const yr = SESSION && SESSION.date ? SESSION.date.split('-')[0].slice(2) : '';
+      const sid = initials && yr ? `${initials}-${yr}` : '';
       const payload = {
-        _subject: SESSION ? `ELEVN session brief locked, ${SESSION.name1}${SESSION.name2 ? ' & ' + SESSION.name2 : ''}` : 'ELEVN session brief locked',
-        _template: 'table',
-        _captcha: 'false',
-        session_id: initials && yr ? `${initials}-${yr}` : '',
+        session_id: sid,
         couple: SESSION ? `${SESSION.name1}${SESSION.name2 ? ' & ' + SESSION.name2 : ''}` : '',
         event_date: SESSION ? SESSION.date : '',
         venue: SESSION ? SESSION.venue : '',
         guests: SESSION ? SESSION.guests : '',
+        party_hours: SESSION ? `${SESSION.partyStart || ''} -> ${SESSION.partyEnd || ''}` : '',
         profile: 'HED, HIGH ENERGY DRIVER',
         energy_curve: curve.map(v => v.toFixed(2)).join(','),
         peak_time: document.getElementById('peakTime').textContent,
@@ -1850,25 +1893,275 @@
 
       btn.disabled = true;
       status.className = 'form-status';
-      status.textContent = 'Locking session...';
+      status.textContent = 'Building your brief PDF...';
 
       try {
+        const pdf = buildBriefPDF(payload, mp);
+        const filename = `elevn-session-${sid || 'brief'}.pdf`;
+        const pdfBlob = pdf.output('blob');
+        const pdfBase64 = pdf.output('datauristring').split(',')[1];
+
+        // Trigger download for the couple too
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(pdfBlob);
+        a.download = filename;
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+
+        status.textContent = 'Locking session...';
         const res = await fetch(FORM_ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(payload)
+          body: JSON.stringify({ ...payload, pdfBase64, pdfFilename: filename })
         });
         const j = await res.json().catch(() => ({}));
-        if (res.ok && (j.success === 'true' || j.success === true)) {
+        if (res.ok && j.success) {
           document.getElementById('lockinPre').style.display = 'none';
           document.getElementById('lockinDone').style.display = 'block';
           window.scrollTo({ top: lockinEl.offsetTop, behavior: 'smooth' });
-        } else throw new Error(j.message || 'Submission failed');
+        } else throw new Error(j.error || 'Submission failed');
       } catch (e) {
         btn.disabled = false;
         status.className = 'form-status error';
         status.textContent = 'Could not submit. Please email hello@elevndjs.com.';
+        console.error(e);
       }
+    }
+
+    // ============================ PDF BUILDER ============================
+    function buildBriefPDF(p, mustPlayList) {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+      const W = doc.internal.pageSize.getWidth();
+      const H = doc.internal.pageSize.getHeight();
+      const M = 40; // margin
+      const COL_BG = [10, 10, 10];
+      const COL_CARD = [20, 20, 20];
+      const COL_CREAM = [240, 237, 232];
+      const COL_DIM = [150, 150, 150];
+      const COL_ACC = [196, 106, 53];
+
+      const fillPage = () => {
+        doc.setFillColor(...COL_BG);
+        doc.rect(0, 0, W, H, 'F');
+      };
+
+      let y = M;
+
+      function newPage() {
+        doc.addPage();
+        fillPage();
+        y = M;
+      }
+
+      function ensure(spaceNeeded) {
+        if (y + spaceNeeded > H - M) newPage();
+      }
+
+      function sectionTitle(label) {
+        ensure(40);
+        y += 18;
+        doc.setFontSize(9);
+        doc.setTextColor(...COL_ACC);
+        doc.setFont('helvetica', 'bold');
+        doc.text(label.toUpperCase(), M, y);
+        y += 6;
+        doc.setDrawColor(60, 60, 60);
+        doc.line(M, y, W - M, y);
+        y += 14;
+      }
+
+      function kv(label, value) {
+        if (!value) return;
+        ensure(28);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        doc.setTextColor(...COL_DIM);
+        doc.text(label.toUpperCase(), M, y);
+        y += 12;
+        doc.setFontSize(11);
+        doc.setTextColor(...COL_CREAM);
+        const lines = doc.splitTextToSize(String(value), W - M * 2);
+        lines.forEach(line => {
+          ensure(14);
+          doc.text(line, M, y);
+          y += 14;
+        });
+        y += 4;
+      }
+
+      function bigBlock(label, value) {
+        if (!value) return;
+        ensure(40);
+        doc.setFontSize(8);
+        doc.setTextColor(...COL_DIM);
+        doc.text(label.toUpperCase(), M, y);
+        y += 14;
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(22);
+        doc.setTextColor(...COL_CREAM);
+        doc.text(String(value), M, y);
+        y += 22;
+        doc.setFont('helvetica', 'normal');
+      }
+
+      // ---------- COVER ----------
+      fillPage();
+
+      // top id
+      doc.setFontSize(8);
+      doc.setTextColor(...COL_DIM);
+      doc.text(`ELEVN  //  SESSION ${p.session_id || ''}`, M, M + 4);
+      doc.text(new Date().toISOString().slice(0, 10), W - M, M + 4, { align: 'right' });
+
+      // hero couple name
+      const couple = p.couple || '';
+      const parts = couple.split(' & ');
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(...COL_CREAM);
+      doc.setFontSize(54);
+      doc.text((parts[0] || '').toUpperCase(), M, 200);
+      if (parts[1]) {
+        doc.setTextColor(...COL_ACC);
+        doc.setFontSize(40);
+        doc.text('x', M, 250);
+        doc.setTextColor(...COL_CREAM);
+        doc.setFontSize(54);
+        doc.text(parts[1].toUpperCase(), M + 50, 250);
+      }
+
+      // sub line
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(11);
+      doc.setTextColor(...COL_DIM);
+      const sub = [p.event_date, p.venue, p.guests ? p.guests + ' guests' : '', p.party_hours].filter(Boolean).join('   //   ');
+      doc.text(sub, M, 290);
+
+      // big stats row
+      const statY = 360;
+      const cellW = (W - M * 2 - 30) / 3;
+      const drawStat = (i, label, val) => {
+        const x = M + i * (cellW + 15);
+        doc.setFillColor(...COL_CARD);
+        doc.rect(x, statY, cellW, 90, 'F');
+        doc.setTextColor(...COL_DIM);
+        doc.setFontSize(8);
+        doc.text(label.toUpperCase(), x + 14, statY + 22);
+        doc.setTextColor(...COL_ACC);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(28);
+        doc.text(String(val || '-'), x + 14, statY + 64);
+        doc.setFont('helvetica', 'normal');
+      };
+      drawStat(0, 'Peak time', p.peak_time);
+      drawStat(1, 'Peak energy', (p.peak_energy || '-') + '/10');
+      drawStat(2, 'Avg energy', (p.avg_energy || '-') + '/10');
+
+      // energy curve graphic
+      const curveY = 490;
+      const curveH = 160;
+      const curveW = W - M * 2;
+      doc.setFillColor(...COL_CARD);
+      doc.rect(M, curveY, curveW, curveH, 'F');
+
+      // curve line
+      const samples = (p.energy_curve || '').split(',').map(parseFloat).filter(v => !isNaN(v));
+      if (samples.length > 1) {
+        doc.setDrawColor(...COL_ACC);
+        doc.setLineWidth(1.6);
+        for (let i = 1; i < samples.length; i++) {
+          const x1 = M + ((i - 1) / (samples.length - 1)) * curveW;
+          const y1 = curveY + curveH - samples[i - 1] * (curveH - 16) - 8;
+          const x2 = M + (i / (samples.length - 1)) * curveW;
+          const y2 = curveY + curveH - samples[i] * (curveH - 16) - 8;
+          doc.line(x1, y1, x2, y2);
+        }
+      }
+      doc.setFontSize(7);
+      doc.setTextColor(...COL_DIM);
+      doc.text('ENERGY CURVE', M + 8, curveY + 14);
+
+      // footer note
+      doc.setFontSize(8);
+      doc.setTextColor(...COL_DIM);
+      doc.text('PROFILE   //   ' + (p.profile || ''), M, H - M - 16);
+      doc.text('TRUST MARGIN   //   ' + (p.trust || '7') + ' / 10', M, H - M);
+
+      // ---------- DETAILS PAGE(S) ----------
+      newPage();
+
+      sectionTitle('Drop track');
+      kv('The track that defines the night', p.drop_track || '-');
+
+      sectionTitle('Must play');
+      if (mustPlayList && mustPlayList.length) {
+        mustPlayList.forEach((t, i) => {
+          ensure(20);
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(8);
+          doc.setTextColor(...COL_ACC);
+          doc.text(String(i + 1).padStart(2, '0'), M, y);
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(11);
+          doc.setTextColor(...COL_CREAM);
+          doc.text(`${t.title}  ,  ${t.artist}`, M + 24, y);
+          y += 16;
+        });
+      } else {
+        kv('', 'none');
+      }
+
+      sectionTitle('No play');
+      kv('Genres out', p.no_play_genres || '-');
+      kv('Songs / artists out', p.no_play_songs || '-');
+
+      sectionTitle('Key moments');
+      kv('Opener', p.moment_opener);
+      kv('Entrance', p.moment_entrance);
+      kv('First dance', p.moment_firstdance);
+      kv('Cake / toast', p.moment_cake);
+      kv('Last song', p.moment_last);
+
+      sectionTitle('Crowd');
+      kv('Age skew', p.crowd_age);
+      kv('Dance intent', p.crowd_dance);
+      kv('Languages', p.crowd_langs);
+      kv('Origins', p.crowd_origins);
+
+      sectionTitle('Inspo');
+      const pls = (p.inspo_playlists || '').split(' | ').filter(Boolean);
+      if (pls.length) {
+        pls.forEach((u, i) => {
+          ensure(16);
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(9);
+          doc.setTextColor(...COL_ACC);
+          doc.textWithLink(u, M, y, { url: u });
+          y += 14;
+        });
+        y += 4;
+      }
+      kv('Reference DJ set', p.inspo_set);
+      kv('Club / venue feel', p.inspo_club);
+      kv('Notes', p.inspo_notes);
+
+      sectionTitle('Rider');
+      try {
+        const r = JSON.parse(p.rider || '{}');
+        Object.entries(r).forEach(([k, v]) => kv(k.replace(/_/g, ' '), v ? 'YES' : 'no'));
+      } catch (e) {}
+
+      // page numbers
+      const pages = doc.internal.pages.length - 1;
+      for (let i = 1; i <= pages; i++) {
+        doc.setPage(i);
+        doc.setFontSize(7);
+        doc.setTextColor(...COL_DIM);
+        doc.text(`elevndjs.com   //   ${p.session_id || ''}`, M, H - 20);
+        doc.text(`${i} / ${pages}`, W - M, H - 20, { align: 'right' });
+      }
+
+      return doc;
     }
 
     // seed one play card + one playlist
@@ -1877,6 +2170,7 @@
 
     // init canvas (runs even while hidden, re-sizes when timeline becomes active)
     defaultCurve();
+    renderTimeAxis();
     sizeCanvas();
     drawCurve();
     window.addEventListener('resize', () => {
