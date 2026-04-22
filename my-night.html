@@ -106,6 +106,14 @@
       box-shadow: 0 0 10px var(--accent);
       animation: pulse 2s infinite;
     }
+    .nav-edit {
+      background: none; border: 1px solid var(--line-strong);
+      color: var(--cream-dim); font-family: 'Space Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 0.42rem 0.85rem; cursor: pointer; transition: all 0.25s;
+    }
+    .nav-edit:hover { color: var(--accent); border-color: var(--accent); }
+    @media (max-width: 540px) { .nav-session span:not(.dot) { display: none; } .nav-edit { padding: 0.35rem 0.7rem; } }
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.3; }
@@ -661,6 +669,52 @@
     .chip:hover { border-color: var(--accent); }
     .chip.active { border-color: var(--accent); background: var(--accent); color: var(--cream); }
 
+    /* ============================ A0 / SETUP ============================ */
+    .setup-screen { background: #000; justify-content: center; align-items: center; }
+    .setup-inner { max-width: 880px; width: 100%; }
+    .setup-title {
+      font-family: 'League Spartan', sans-serif; font-weight: 900;
+      font-size: clamp(3rem, 9vw, 7rem); line-height: 0.85;
+      letter-spacing: -0.05em; margin: 1.4rem 0 1.6rem;
+      text-transform: lowercase; color: var(--cream);
+    }
+    .setup-title em { font-style: normal; color: var(--accent); }
+    .setup-sub {
+      color: var(--cream-dim); font-size: 1.1rem; line-height: 1.6;
+      max-width: 52ch; margin-bottom: 3.5rem;
+    }
+    .setup-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2.4rem 3rem; margin-bottom: 2rem;
+    }
+    .setup-field-half { max-width: 60%; }
+    @media (max-width: 720px) {
+      .setup-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+      .setup-field-half { max-width: 100%; }
+    }
+    .setup-field { display: flex; flex-direction: column; gap: 0.55rem; }
+    .setup-field label {
+      font-family: 'Space Mono', monospace; font-size: 0.66rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--cream-dim);
+    }
+    .setup-field input {
+      background: transparent; border: none;
+      border-bottom: 1px solid var(--line-strong);
+      color: var(--cream); font-family: 'Inter', sans-serif;
+      font-size: 1.4rem; font-weight: 500;
+      padding: 0.7rem 0; outline: none;
+      transition: border-color 0.25s; width: 100%;
+    }
+    .setup-field input:focus { border-color: var(--accent); }
+    .setup-field input::placeholder { color: rgba(240,237,232,0.18); }
+    .setup-field input[type="date"] { color-scheme: dark; }
+    .setup-status {
+      font-family: 'Space Mono', monospace; font-size: 0.78rem;
+      color: #ff6b6b; min-height: 1.2em; margin: 0 0 1.2rem;
+      letter-spacing: 0.04em;
+    }
+
     /* ============================ A3 / THE DROP ============================ */
     .drop-screen { background: #000; align-items: center; justify-content: center; text-align: center; padding-left: 2rem; padding-right: 2rem; }
     @media (min-width: 1101px) { .drop-screen { padding-left: 18rem; padding-right: 4rem; } }
@@ -884,7 +938,8 @@
       <a href="/" class="elevn-logo" aria-label="elevn home"><span>elevn</span><i class="elevn-dot"></i></a>
       <div class="nav-session">
         <span class="dot"></span>
-        <span>SESSION #0047 / LIVE</span>
+        <span id="navSessionLabel">SESSION / LIVE</span>
+        <button class="nav-edit" onclick="goToSection('s-setup')" title="Edit session details">EDIT</button>
       </div>
     </div>
   </nav>
@@ -909,42 +964,77 @@
 
   <main>
 
+    <!-- ============================ A0 / SETUP ============================ -->
+    <section class="screen setup-screen active" id="s-setup">
+      <div class="setup-inner">
+        <span class="step-tag">[ SESSION SETUP ]</span>
+        <h1 class="setup-title">build <em>your</em> session.</h1>
+        <p class="setup-sub">Five quick fields and your private control room is ready. Everything else, you craft inside.</p>
+
+        <div class="setup-grid">
+          <div class="setup-field">
+            <label>PARTNER 01</label>
+            <input type="text" id="setup-name1" placeholder="Your name" autocomplete="off">
+          </div>
+          <div class="setup-field">
+            <label>PARTNER 02</label>
+            <input type="text" id="setup-name2" placeholder="Their name (optional)" autocomplete="off">
+          </div>
+          <div class="setup-field">
+            <label>WEDDING DATE</label>
+            <input type="date" id="setup-date">
+          </div>
+          <div class="setup-field">
+            <label>VENUE</label>
+            <input type="text" id="setup-venue" placeholder="Cap Rocat, Mallorca" autocomplete="off">
+          </div>
+          <div class="setup-field setup-field-half">
+            <label>GUEST COUNT</label>
+            <input type="number" id="setup-guests" placeholder="120" min="2" max="3000" autocomplete="off">
+          </div>
+        </div>
+
+        <p class="setup-status" id="setupStatus" role="status" aria-live="polite"></p>
+        <button type="button" class="btn primary big" onclick="generatePoster()">GENERATE MY SESSION &rarr;</button>
+      </div>
+    </section>
+
     <!-- ============================ A1 / INTRO POSTER ============================ -->
-    <section class="screen poster active" id="s-intro">
+    <section class="screen poster" id="s-intro">
 
       <div class="ghost-type">hed.</div>
 
       <div class="poster-top">
-        <span>ELEVN // SESSION ID #0047</span>
+        <span id="posterTopId">ELEVN // SESSION</span>
         <span class="live">LIVE BRIEF</span>
       </div>
 
       <div class="poster-center">
         <div class="kicker">( HEADLINING THE NIGHT )</div>
         <h1 class="poster-names">
-          <span>CHRIS</span>
-          <span class="cross">×</span>
-          <span>EMMA</span>
+          <span id="posterName1">YOUR</span>
+          <span class="cross" id="posterCross">×</span>
+          <span id="posterName2">NAMES</span>
         </h1>
         <div class="poster-stats">
           <div class="stat">
             <span class="lbl">DATE</span>
-            <span class="val">12 · 09 · 26</span>
+            <span class="val" id="posterDate">. .  . .  . .</span>
           </div>
-          <span class="stat-divider">/</span>
-          <div class="stat">
+          <span class="stat-divider" id="posterLocDivider">/</span>
+          <div class="stat" id="posterLocStat">
             <span class="lbl">LOCATION</span>
-            <span class="val">MALLORCA / ES</span>
+            <span class="val" id="posterLocation">.</span>
           </div>
           <span class="stat-divider">/</span>
           <div class="stat">
             <span class="lbl">VENUE</span>
-            <span class="val">CAP ROCAT</span>
+            <span class="val" id="posterVenue">.</span>
           </div>
           <span class="stat-divider">/</span>
           <div class="stat">
             <span class="lbl">GUESTS</span>
-            <span class="val">120</span>
+            <span class="val" id="posterGuests">.</span>
           </div>
         </div>
       </div>
@@ -1340,6 +1430,87 @@
       }
     })();
 
+    // ============================ SESSION DATA ============================
+    let SESSION = null; // { name1, name2, date, venue, guests }
+
+    function generatePoster() {
+      const name1 = document.getElementById('setup-name1').value.trim();
+      const name2 = document.getElementById('setup-name2').value.trim();
+      const date = document.getElementById('setup-date').value;
+      const venue = document.getElementById('setup-venue').value.trim();
+      const guests = document.getElementById('setup-guests').value.trim();
+      const status = document.getElementById('setupStatus');
+
+      if (!name1) { status.textContent = 'Add your name to continue.'; return; }
+      if (!date) { status.textContent = 'Pick a wedding date.'; return; }
+      if (!venue) { status.textContent = 'Add the venue.'; return; }
+      if (!guests || +guests < 2) { status.textContent = 'Add the guest count.'; return; }
+      status.textContent = '';
+
+      SESSION = { name1, name2, date, venue, guests };
+      applySession(SESSION);
+      saveSession(SESSION);
+      goToSection('s-intro');
+    }
+
+    function applySession(d) {
+      // Names
+      document.getElementById('posterName1').textContent = d.name1.toUpperCase();
+      const cross = document.getElementById('posterCross');
+      const name2El = document.getElementById('posterName2');
+      if (d.name2) {
+        cross.style.display = '';
+        name2El.style.display = '';
+        name2El.textContent = d.name2.toUpperCase();
+      } else {
+        cross.style.display = 'none';
+        name2El.style.display = 'none';
+      }
+      // Date YYYY-MM-DD to DD · MM · YY
+      if (d.date) {
+        const [y, m, day] = d.date.split('-');
+        document.getElementById('posterDate').textContent = `${day} · ${m} · ${y.slice(2)}`;
+      }
+      // Venue / Location split by comma
+      const parts = d.venue.split(',').map(s => s.trim()).filter(Boolean);
+      const locStat = document.getElementById('posterLocStat');
+      const locDiv = document.getElementById('posterLocDivider');
+      if (parts.length > 1) {
+        document.getElementById('posterVenue').textContent = parts[0].toUpperCase();
+        document.getElementById('posterLocation').textContent = parts.slice(1).join(', ').toUpperCase();
+        locStat.style.display = '';
+        locDiv.style.display = '';
+      } else {
+        document.getElementById('posterVenue').textContent = (parts[0] || '').toUpperCase();
+        locStat.style.display = 'none';
+        locDiv.style.display = 'none';
+      }
+      // Guests
+      document.getElementById('posterGuests').textContent = d.guests;
+      // Session id label, derived from initials + year
+      const initials = (d.name1[0] + (d.name2 ? d.name2[0] : '')).toUpperCase();
+      const yr = d.date ? d.date.split('-')[0].slice(2) : '';
+      document.getElementById('posterTopId').textContent = `ELEVN // SESSION ${initials}-${yr}`;
+      document.getElementById('navSessionLabel').textContent = `SESSION ${initials}-${yr} / LIVE`;
+    }
+
+    function saveSession(d) {
+      try { localStorage.setItem('elevn_session', JSON.stringify(d)); } catch (e) {}
+    }
+    function loadSession() {
+      try {
+        const s = localStorage.getItem('elevn_session');
+        return s ? JSON.parse(s) : null;
+      } catch (e) { return null; }
+    }
+    function fillSetupFromSession(d) {
+      document.getElementById('setup-name1').value = d.name1 || '';
+      document.getElementById('setup-name2').value = d.name2 || '';
+      document.getElementById('setup-date').value = d.date || '';
+      document.getElementById('setup-venue').value = d.venue || '';
+      document.getElementById('setup-guests').value = d.guests || '';
+    }
+
     // ============================ WIZARD NAV ============================
     const trackItems = document.querySelectorAll('.tracklist li[data-target]');
     trackItems.forEach(li => {
@@ -1639,11 +1810,17 @@
         return;
       }
       const mp = collectMustPlay();
+      const initials = SESSION ? (SESSION.name1[0] + (SESSION.name2 ? SESSION.name2[0] : '')).toUpperCase() : '';
+      const yr = SESSION && SESSION.date ? SESSION.date.split('-')[0].slice(2) : '';
       const payload = {
-        _subject: 'ELEVN session brief locked',
+        _subject: SESSION ? `ELEVN session brief locked, ${SESSION.name1}${SESSION.name2 ? ' & ' + SESSION.name2 : ''}` : 'ELEVN session brief locked',
         _template: 'table',
         _captcha: 'false',
-        session_id: '#0047',
+        session_id: initials && yr ? `${initials}-${yr}` : '',
+        couple: SESSION ? `${SESSION.name1}${SESSION.name2 ? ' & ' + SESSION.name2 : ''}` : '',
+        event_date: SESSION ? SESSION.date : '',
+        venue: SESSION ? SESSION.venue : '',
+        guests: SESSION ? SESSION.guests : '',
         profile: 'HED, HIGH ENERGY DRIVER',
         energy_curve: curve.map(v => v.toFixed(2)).join(','),
         peak_time: document.getElementById('peakTime').textContent,
@@ -1707,6 +1884,14 @@
         sizeCanvas(); drawCurve();
       }
     });
+
+    // Restore session if previously saved, else stay on setup
+    SESSION = loadSession();
+    if (SESSION && SESSION.name1) {
+      fillSetupFromSession(SESSION);
+      applySession(SESSION);
+      goToSection('s-intro');
+    }
   </script>
 
 </body>
