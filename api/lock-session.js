@@ -98,7 +98,7 @@ function buildHtml(b) {
     row('Opener', b.moment_opener),
     row('Entrance', b.moment_entrance),
     row('First dance', b.moment_firstdance),
-    row('Cake / toast', b.moment_cake),
+    row('Parents dances', b.moment_parents),
     row('Last song', b.moment_last)
   ].join('')}</table>`;
 
@@ -162,7 +162,7 @@ function buildText(b) {
     `Opener: ${b.moment_opener || ''}`,
     `Entrance: ${b.moment_entrance || ''}`,
     `First dance: ${b.moment_firstdance || ''}`,
-    `Cake / toast: ${b.moment_cake || ''}`,
+    `Parents dances: ${b.moment_parents || ''}`,
     `Last song: ${b.moment_last || ''}`,
     '',
     `Crowd: ${b.crowd_age || ''} / ${b.crowd_dance || ''}`,

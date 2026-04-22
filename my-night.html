@@ -1265,8 +1265,8 @@
           <input type="text" id="m-entrance" placeholder="Track, Artist">
         </div>
         <div class="moment-row">
-          <div><span class="m-num">03</span><h4>Cake cut</h4></div>
-          <input type="text" id="m-cake" placeholder="Track, Artist">
+          <div><span class="m-num">03</span><h4>Parents dances</h4></div>
+          <input type="text" id="m-parents" placeholder="Mother & son, Father & daughter (one or both)">
         </div>
         <div class="moment-row">
           <div><span class="m-num">04</span><h4>Dance floor opener</h4></div>
@@ -1973,7 +1973,7 @@
         no_play_songs: document.getElementById('noPlaySongs').value.trim(),
         moment_firstdance: document.getElementById('m-firstdance').value.trim(),
         moment_entrance: document.getElementById('m-entrance').value.trim(),
-        moment_cake: document.getElementById('m-cake').value.trim(),
+        moment_parents: document.getElementById('m-parents').value.trim(),
         moment_opener: document.getElementById('m-opener').value.trim(),
         moment_last: document.getElementById('m-last').value.trim(),
         crowd_age: getChipValues('ageChips').join(', '),
@@ -2548,7 +2548,7 @@
         ['Opener',     p.moment_opener],
         ['Entrance',   p.moment_entrance],
         ['First dance', p.moment_firstdance],
-        ['Cake / toast', p.moment_cake],
+        ['Parents dances', p.moment_parents],
         ['Last song',  p.moment_last],
       ];
       let mY = momY + 24;
