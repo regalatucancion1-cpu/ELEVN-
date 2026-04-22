@@ -1937,233 +1937,816 @@
     function buildBriefPDF(p, mustPlayList) {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-      const W = doc.internal.pageSize.getWidth();
-      const H = doc.internal.pageSize.getHeight();
-      const M = 40; // margin
-      const COL_BG = [10, 10, 10];
-      const COL_CARD = [20, 20, 20];
-      const COL_CREAM = [240, 237, 232];
-      const COL_DIM = [150, 150, 150];
-      const COL_ACC = [196, 106, 53];
+      const W = doc.internal.pageSize.getWidth();   // 595.28
+      const H = doc.internal.pageSize.getHeight();  // 841.89
+      const M = 48;
 
-      const fillPage = () => {
-        doc.setFillColor(...COL_BG);
+      // palette
+      const C = {
+        bg:        [10, 10, 10],
+        bgSoft:    [18, 18, 18],
+        cream:     [240, 237, 232],
+        creamBg:   [244, 240, 232],
+        ink:       [22, 18, 14],
+        inkSoft:   [55, 48, 42],
+        dim:       [140, 138, 132],
+        dimDark:   [110, 100, 90],
+        line:      [42, 42, 42],
+        lineLight: [200, 195, 185],
+        acc:       [196, 106, 53],
+      };
+
+      const setFill = c => doc.setFillColor(c[0], c[1], c[2]);
+      const setStroke = c => doc.setDrawColor(c[0], c[1], c[2]);
+      const setText = c => doc.setTextColor(c[0], c[1], c[2]);
+      const sessionId = p.session_id || '';
+      const todayISO = new Date().toISOString().slice(0, 10);
+
+      // ---------- HELPERS ----------
+      function pageBg(palette) {
+        setFill(palette === 'dark' ? C.bg : C.creamBg);
         doc.rect(0, 0, W, H, 'F');
-      };
-
-      let y = M;
-
-      function newPage() {
-        doc.addPage();
-        fillPage();
-        y = M;
       }
 
-      function ensure(spaceNeeded) {
-        if (y + spaceNeeded > H - M) newPage();
-      }
-
-      function sectionTitle(label) {
-        ensure(40);
-        y += 18;
-        doc.setFontSize(9);
-        doc.setTextColor(...COL_ACC);
-        doc.setFont('helvetica', 'bold');
-        doc.text(label.toUpperCase(), M, y);
-        y += 6;
-        doc.setDrawColor(60, 60, 60);
-        doc.line(M, y, W - M, y);
-        y += 14;
-      }
-
-      function kv(label, value) {
-        if (!value) return;
-        ensure(28);
+      // header strip on top of every non-cover page
+      function header(palette, sectionLabel, sectionNum) {
+        const ink = palette === 'dark' ? C.dim : C.dimDark;
+        const line = palette === 'dark' ? C.line : C.lineLight;
+        setText(ink);
         doc.setFont('helvetica', 'normal');
-        doc.setFontSize(8);
-        doc.setTextColor(...COL_DIM);
-        doc.text(label.toUpperCase(), M, y);
-        y += 12;
-        doc.setFontSize(11);
-        doc.setTextColor(...COL_CREAM);
-        const lines = doc.splitTextToSize(String(value), W - M * 2);
-        lines.forEach(line => {
-          ensure(14);
-          doc.text(line, M, y);
-          y += 14;
-        });
-        y += 4;
-      }
-
-      function bigBlock(label, value) {
-        if (!value) return;
-        ensure(40);
-        doc.setFontSize(8);
-        doc.setTextColor(...COL_DIM);
-        doc.text(label.toUpperCase(), M, y);
-        y += 14;
+        doc.setFontSize(7.5);
+        // brand mark
+        const brand = palette === 'dark' ? C.cream : C.ink;
+        setText(brand);
         doc.setFont('helvetica', 'bold');
-        doc.setFontSize(22);
-        doc.setTextColor(...COL_CREAM);
-        doc.text(String(value), M, y);
-        y += 22;
+        doc.text('elevn.', M, M);
+        // accent dot
+        setFill(C.acc);
+        doc.circle(M + doc.getTextWidth('elevn') + 1.5, M - 1, 1.6, 'F');
+
+        // section label center-ish
+        setText(ink);
         doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7);
+        const label = sectionNum ? `${String(sectionNum).padStart(2, '0')}  /  ${sectionLabel.toUpperCase()}` : sectionLabel.toUpperCase();
+        doc.text(label, W / 2, M, { align: 'center', charSpace: 1.2 });
+
+        // session id top right
+        doc.text(sessionId.toUpperCase(), W - M, M, { align: 'right', charSpace: 1.2 });
+
+        // thin horizontal rule under header
+        setStroke(line);
+        doc.setLineWidth(0.4);
+        doc.line(M, M + 8, W - M, M + 8);
       }
 
-      // ---------- COVER ----------
-      fillPage();
+      function footer(palette, pageNum, total) {
+        const ink = palette === 'dark' ? C.dim : C.dimDark;
+        const line = palette === 'dark' ? C.line : C.lineLight;
+        setStroke(line);
+        doc.setLineWidth(0.4);
+        doc.line(M, H - M - 8, W - M, H - M - 8);
+        setText(ink);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7);
+        doc.text('elevndjs.com', M, H - M, { charSpace: 1.2 });
+        doc.text(`${String(pageNum).padStart(2, '0')} / ${String(total).padStart(2, '0')}`, W - M, H - M, { align: 'right', charSpace: 1.2 });
+      }
 
-      // top id
-      doc.setFontSize(8);
-      doc.setTextColor(...COL_DIM);
-      doc.text(`ELEVN  //  SESSION ${p.session_id || ''}`, M, M + 4);
-      doc.text(new Date().toISOString().slice(0, 10), W - M, M + 4, { align: 'right' });
-
-      // hero couple name
-      const couple = p.couple || '';
-      const parts = couple.split(' & ');
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(...COL_CREAM);
-      doc.setFontSize(54);
-      doc.text((parts[0] || '').toUpperCase(), M, 200);
-      if (parts[1]) {
-        doc.setTextColor(...COL_ACC);
-        doc.setFontSize(40);
-        doc.text('x', M, 250);
-        doc.setTextColor(...COL_CREAM);
+      function bigTitle(text, palette, yPos) {
+        const ink = palette === 'dark' ? C.cream : C.ink;
+        setText(ink);
+        doc.setFont('times', 'italic');
         doc.setFontSize(54);
-        doc.text(parts[1].toUpperCase(), M + 50, 250);
+        doc.text(text, M, yPos);
       }
 
-      // sub line
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(11);
-      doc.setTextColor(...COL_DIM);
-      const sub = [p.event_date, p.venue, p.guests ? p.guests + ' guests' : '', p.party_hours].filter(Boolean).join('   //   ');
-      doc.text(sub, M, 290);
-
-      // big stats row
-      const statY = 360;
-      const cellW = (W - M * 2 - 30) / 3;
-      const drawStat = (i, label, val) => {
-        const x = M + i * (cellW + 15);
-        doc.setFillColor(...COL_CARD);
-        doc.rect(x, statY, cellW, 90, 'F');
-        doc.setTextColor(...COL_DIM);
-        doc.setFontSize(8);
-        doc.text(label.toUpperCase(), x + 14, statY + 22);
-        doc.setTextColor(...COL_ACC);
+      function kicker(text, yPos, palette) {
+        const ink = palette === 'dark' ? C.dim : C.dimDark;
+        setText(ink);
         doc.setFont('helvetica', 'bold');
-        doc.setFontSize(28);
-        doc.text(String(val || '-'), x + 14, statY + 64);
-        doc.setFont('helvetica', 'normal');
-      };
-      drawStat(0, 'Peak time', p.peak_time);
-      drawStat(1, 'Peak energy', (p.peak_energy || '-') + '/10');
-      drawStat(2, 'Avg energy', (p.avg_energy || '-') + '/10');
-
-      // energy curve graphic
-      const curveY = 490;
-      const curveH = 160;
-      const curveW = W - M * 2;
-      doc.setFillColor(...COL_CARD);
-      doc.rect(M, curveY, curveW, curveH, 'F');
-
-      // curve line
-      const samples = (p.energy_curve || '').split(',').map(parseFloat).filter(v => !isNaN(v));
-      if (samples.length > 1) {
-        doc.setDrawColor(...COL_ACC);
-        doc.setLineWidth(1.6);
-        for (let i = 1; i < samples.length; i++) {
-          const x1 = M + ((i - 1) / (samples.length - 1)) * curveW;
-          const y1 = curveY + curveH - samples[i - 1] * (curveH - 16) - 8;
-          const x2 = M + (i / (samples.length - 1)) * curveW;
-          const y2 = curveY + curveH - samples[i] * (curveH - 16) - 8;
-          doc.line(x1, y1, x2, y2);
-        }
+        doc.setFontSize(8);
+        doc.text(text.toUpperCase(), M, yPos, { charSpace: 1.6 });
       }
+
+      function bodyText(text, x, y, palette, opts = {}) {
+        const ink = palette === 'dark' ? C.cream : C.inkSoft;
+        setText(ink);
+        doc.setFont('helvetica', opts.bold ? 'bold' : 'normal');
+        doc.setFontSize(opts.size || 10);
+        doc.text(text, x, y, opts);
+      }
+
+      // ===================================================================
+      // PAGE 1 - COVER (dark, full bleed)
+      // ===================================================================
+      pageBg('dark');
+
+      // top frame: brand + session
+      setText(C.cream);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      doc.text('elevn.', M, M + 6);
+      setFill(C.acc);
+      doc.circle(M + doc.getTextWidth('elevn') + 2, M + 5, 2.2, 'F');
+
+      setText(C.dim);
+      doc.setFont('helvetica', 'normal');
       doc.setFontSize(7);
-      doc.setTextColor(...COL_DIM);
-      doc.text('ENERGY CURVE', M + 8, curveY + 14);
+      doc.text(`SESSION  ${sessionId.toUpperCase()}`, W - M, M + 6, { align: 'right', charSpace: 1.6 });
+      setStroke(C.line);
+      doc.setLineWidth(0.4);
+      doc.line(M, M + 16, W - M, M + 16);
 
-      // footer note
+      // small label
+      setText(C.dim);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7.5);
+      doc.text('A SESSION BRIEF, BUILT FOR', M, 220, { charSpace: 2 });
+
+      // hero couple
+      const couple = (p.couple || '').trim();
+      const parts = couple.split(/\s*&\s*/);
+      const heroFontSize = parts[0] && parts[0].length > 10 ? 60 : 76;
+      doc.setFont('times', 'bolditalic');
+      doc.setFontSize(heroFontSize);
+      setText(C.cream);
+      doc.text((parts[0] || ''), M, 290);
+      if (parts[1]) {
+        // amp
+        doc.setFont('times', 'italic');
+        doc.setFontSize(heroFontSize * 0.7);
+        setText(C.acc);
+        doc.text('&', M + 14, 290 + heroFontSize * 0.85);
+        // partner 2
+        doc.setFont('times', 'bolditalic');
+        doc.setFontSize(heroFontSize);
+        setText(C.cream);
+        doc.text(parts[1], M + 60, 290 + heroFontSize * 1.2);
+      }
+
+      // tagline
+      setText(C.dim);
+      doc.setFont('times', 'italic');
+      doc.setFontSize(13);
+      const taglineY = parts[1] ? 290 + heroFontSize * 1.2 + 38 : 290 + 38;
+      doc.text('A tailored map of your night, drawn together.', M, taglineY);
+
+      // bottom info table (4 columns)
+      const infoRows = [
+        ['DATE',    p.event_date || '-'],
+        ['VENUE',   (p.venue || '-')],
+        ['GUESTS',  p.guests || '-'],
+        ['HOURS',   p.party_hours || '-'],
+      ];
+      const infoY = H - M - 110;
+      setStroke(C.line);
+      doc.setLineWidth(0.4);
+      doc.line(M, infoY - 18, W - M, infoY - 18);
+      const colW = (W - M * 2) / 4;
+      infoRows.forEach(([label, val], i) => {
+        const x = M + i * colW;
+        setText(C.dim);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7);
+        doc.text(label, x, infoY, { charSpace: 1.6 });
+        setText(C.cream);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(11);
+        const lines = doc.splitTextToSize(String(val), colW - 12);
+        lines.slice(0, 2).forEach((ln, j) => doc.text(ln, x, infoY + 18 + j * 14));
+      });
+
+      // bottom strip
+      setStroke(C.line);
+      doc.line(M, H - M - 20, W - M, H - M - 20);
+      setText(C.dim);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7);
+      doc.text(`SESSION LOCKED   //   ${todayISO}`, M, H - M - 6, { charSpace: 1.6 });
+      doc.text('PRIVATE  //  FOR THE COUPLE & DJ ONLY', W - M, H - M - 6, { align: 'right', charSpace: 1.6 });
+
+      // ===================================================================
+      // PAGE 2 - THE NIGHT (dark)
+      // ===================================================================
+      doc.addPage();
+      pageBg('dark');
+      header('dark', 'The night', 1);
+
+      kicker('the energy curve', M + 60);
+      bigTitle('how it flows.', 'dark', M + 105);
+
+      // intro line
+      setText(C.dim);
+      doc.setFont('times', 'italic');
+      doc.setFontSize(12);
+      doc.text('From the first guests at the door to the last song on the floor.', M, M + 132);
+
+      // ----- big stats strip -----
+      const statsY = M + 170;
+      const statCells = [
+        ['PEAK TIME',   p.peak_time || '-'],
+        ['PEAK ENERGY', (p.peak_energy || '-') + ' / 10'],
+        ['AVG ENERGY',  (p.avg_energy || '-') + ' / 10'],
+      ];
+      const sCellW = (W - M * 2) / 3;
+      statCells.forEach(([lab, val], i) => {
+        const x = M + i * sCellW;
+        if (i > 0) {
+          setStroke(C.line);
+          doc.setLineWidth(0.4);
+          doc.line(x, statsY - 4, x, statsY + 50);
+        }
+        setText(C.dim);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7);
+        doc.text(lab, x + 8, statsY + 6, { charSpace: 1.6 });
+        setText(C.acc);
+        doc.setFont('times', 'bold');
+        doc.setFontSize(30);
+        doc.text(String(val), x + 8, statsY + 42);
+      });
+
+      // ----- curve graphic -----
+      const cTop = statsY + 90;
+      const cH = 220;
+      const cW = W - M * 2;
+      // panel
+      setFill(C.bgSoft);
+      doc.rect(M, cTop, cW, cH, 'F');
+
+      // grid
+      setStroke([35, 35, 35]);
+      doc.setLineWidth(0.3);
+      for (let i = 1; i < 4; i++) {
+        const yy = cTop + (cH * i) / 4;
+        doc.line(M + 36, yy, M + cW - 8, yy);
+      }
+      // y labels
+      setText(C.dimDark);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(6.5);
+      ['10', '7.5', '5', '2.5', '0'].forEach((lab, i) => {
+        doc.text(lab, M + 30, cTop + (cH * i) / 4 + 2, { align: 'right' });
+      });
+
+      // hour ticks (use party_hours)
+      const ph = String(p.party_hours || '').split('->').map(s => s.trim());
+      let startH = 19, endH = 27; // default 19:00 to 03:00
+      if (ph.length === 2 && ph[0] && ph[1]) {
+        const [sH, sM] = ph[0].split(':').map(Number);
+        const [eH, eM] = ph[1].split(':').map(Number);
+        startH = sH + (sM || 0) / 60;
+        let e = eH + (eM || 0) / 60;
+        if (e <= startH) e += 24;
+        endH = e;
+      }
+      const span = endH - startH;
+      const innerLeft = M + 36;
+      const innerRight = M + cW - 8;
+      const innerW = innerRight - innerLeft;
+      const numTicks = Math.min(9, Math.ceil(span) + 1);
+      const tickStep = span / (numTicks - 1);
+      for (let i = 0; i < numTicks; i++) {
+        const tx = innerLeft + (i / (numTicks - 1)) * innerW;
+        const tHour = Math.round(startH + i * tickStep);
+        const lab = String(tHour % 24).padStart(2, '0');
+        setStroke([35, 35, 35]);
+        doc.setLineWidth(0.3);
+        doc.line(tx, cTop + cH - 18, tx, cTop + cH - 14);
+        setText(C.dimDark);
+        doc.setFontSize(6.5);
+        doc.text(lab, tx, cTop + cH - 6, { align: 'center' });
+      }
+
+      // baseline
+      setStroke(C.dimDark);
+      doc.setLineWidth(0.4);
+      doc.line(innerLeft, cTop + cH - 18, innerRight, cTop + cH - 18);
+
+      // curve
+      const samples = (p.energy_curve || '').split(',').map(parseFloat).filter(v => !isNaN(v));
+      const curveTop = cTop + 24;
+      const curveH = cH - 24 - 22; // padding top + 22 for ticks/labels
+      if (samples.length > 1) {
+        // filled area (as polygon via lines + close)
+        // build deltas from start
+        const startX = innerLeft;
+        const startY = curveTop + curveH - samples[0] * curveH;
+        const linesArr = [];
+        let prevX = startX, prevY = startY;
+        for (let i = 1; i < samples.length; i++) {
+          const x = innerLeft + (i / (samples.length - 1)) * innerW;
+          const yy = curveTop + curveH - samples[i] * curveH;
+          linesArr.push([x - prevX, yy - prevY]);
+          prevX = x; prevY = yy;
+        }
+        // close down to baseline and back to start
+        const baselineY = curveTop + curveH;
+        linesArr.push([0, baselineY - prevY]);
+        linesArr.push([startX - prevX, 0]);
+
+        // fill (semi via stacked translucent rects approach won't work without GState; use solid darker tone)
+        setFill([60, 32, 16]);
+        doc.lines(linesArr, startX, startY, [1, 1], 'F', true);
+
+        // stroke line
+        setStroke(C.acc);
+        doc.setLineWidth(1.6);
+        let sx = startX, sy = startY;
+        for (let i = 1; i < samples.length; i++) {
+          const x = innerLeft + (i / (samples.length - 1)) * innerW;
+          const yy = curveTop + curveH - samples[i] * curveH;
+          doc.line(sx, sy, x, yy);
+          sx = x; sy = yy;
+        }
+
+        // peak marker
+        let peakIdx = 0, peakVal = 0;
+        samples.forEach((v, i) => { if (v > peakVal) { peakVal = v; peakIdx = i; } });
+        const px = innerLeft + (peakIdx / (samples.length - 1)) * innerW;
+        const py = curveTop + curveH - peakVal * curveH;
+        setFill(C.cream);
+        doc.circle(px, py, 3.2, 'F');
+        setStroke(C.acc);
+        doc.setLineWidth(0.6);
+        doc.circle(px, py, 6, 'S');
+        setText(C.cream);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7);
+        const peakLabel = `PEAK  ${p.peak_time || ''}  /  ${p.peak_energy || ''}`;
+        const labW = doc.getTextWidth(peakLabel);
+        const labX = Math.min(innerRight - labW, Math.max(innerLeft, px - labW / 2));
+        doc.text(peakLabel, labX, py - 12, { charSpace: 1.4 });
+      }
+
+      // axes label
+      setText(C.dimDark);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(6.5);
+      doc.text('ENERGY  /  TIME', M + cW - 8, cTop + 14, { align: 'right', charSpace: 1.6 });
+
+      // ----- the drop call-out -----
+      const dropY = cTop + cH + 50;
+      setStroke(C.line);
+      doc.setLineWidth(0.4);
+      doc.line(M, dropY - 24, W - M, dropY - 24);
+      setText(C.dim);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7.5);
+      doc.text('THE DROP   /   THE TRACK THAT DEFINES THE NIGHT', M, dropY - 8, { charSpace: 1.6 });
+      setText(C.cream);
+      doc.setFont('times', 'italic');
+      doc.setFontSize(22);
+      const dropTrack = p.drop_track || 'open call';
+      const dropLines = doc.splitTextToSize('"' + dropTrack + '"', W - M * 2);
+      dropLines.slice(0, 2).forEach((ln, i) => doc.text(ln, M, dropY + 14 + i * 26));
+
+      // ===================================================================
+      // PAGE 3 - THE TRACKS (cream)
+      // ===================================================================
+      doc.addPage();
+      pageBg('cream');
+      header('cream', 'The tracks', 2);
+
+      kicker('the soundtrack', M + 60);
+      setText(C.ink);
+      doc.setFont('times', 'italic');
+      doc.setFontSize(54);
+      doc.text('what we play', M, M + 105);
+      setText(C.dimDark);
+      doc.setFont('times', 'italic');
+      doc.setFontSize(12);
+      doc.text('and what stays out of the booth.', M, M + 130);
+
+      // Two-column layout
+      const colTop = M + 170;
+      const gutter = 28;
+      const col2W = (W - M * 2 - gutter) / 2;
+      const colLX = M;
+      const colRX = M + col2W + gutter;
+      const colMaxBottom = H - M - 30;
+
+      // LEFT - MUST PLAY
+      setText(C.dimDark);
+      doc.setFont('helvetica', 'bold');
       doc.setFontSize(8);
-      doc.setTextColor(...COL_DIM);
-      doc.text('PROFILE   //   ' + (p.profile || ''), M, H - M - 16);
-      doc.text('TRUST MARGIN   //   ' + (p.trust || '7') + ' / 10', M, H - M);
+      doc.text('MUST PLAY', colLX, colTop, { charSpace: 2 });
+      setStroke(C.lineLight);
+      doc.setLineWidth(0.5);
+      doc.line(colLX, colTop + 8, colLX + col2W, colTop + 8);
 
-      // ---------- DETAILS PAGE(S) ----------
-      newPage();
-
-      sectionTitle('Drop track');
-      kv('The track that defines the night', p.drop_track || '-');
-
-      sectionTitle('Must play');
-      if (mustPlayList && mustPlayList.length) {
-        mustPlayList.forEach((t, i) => {
-          ensure(20);
+      let lY = colTop + 28;
+      const mp = mustPlayList || [];
+      if (mp.length) {
+        mp.forEach((t, i) => {
+          if (lY > colMaxBottom - 30) return;
+          // number
+          setText(C.acc);
           doc.setFont('helvetica', 'bold');
           doc.setFontSize(8);
-          doc.setTextColor(...COL_ACC);
-          doc.text(String(i + 1).padStart(2, '0'), M, y);
-          doc.setFont('helvetica', 'normal');
+          doc.text(String(i + 1).padStart(2, '0'), colLX, lY);
+          // title
+          setText(C.ink);
+          doc.setFont('times', 'bold');
           doc.setFontSize(11);
-          doc.setTextColor(...COL_CREAM);
-          doc.text(`${t.title}  ,  ${t.artist}`, M + 24, y);
-          y += 16;
-        });
-      } else {
-        kv('', 'none');
-      }
-
-      sectionTitle('No play');
-      kv('Genres out', p.no_play_genres || '-');
-      kv('Songs / artists out', p.no_play_songs || '-');
-
-      sectionTitle('Key moments');
-      kv('Opener', p.moment_opener);
-      kv('Entrance', p.moment_entrance);
-      kv('First dance', p.moment_firstdance);
-      kv('Cake / toast', p.moment_cake);
-      kv('Last song', p.moment_last);
-
-      sectionTitle('Crowd');
-      kv('Age brackets', p.crowd_age);
-      kv('Dance intent', p.crowd_dance);
-      kv('Languages', p.crowd_langs);
-      kv('Origins', p.crowd_origins);
-
-      sectionTitle('Inspo');
-      const pls = (p.inspo_playlists || '').split(' | ').filter(Boolean);
-      if (pls.length) {
-        pls.forEach((u, i) => {
-          ensure(16);
+          const titleLines = doc.splitTextToSize(t.title || '', col2W - 30);
+          doc.text(titleLines[0] || '', colLX + 22, lY);
+          // artist
+          setText(C.inkSoft);
           doc.setFont('helvetica', 'normal');
           doc.setFontSize(9);
-          doc.setTextColor(...COL_ACC);
-          doc.textWithLink(u, M, y, { url: u });
-          y += 14;
+          doc.text(t.artist || '', colLX + 22, lY + 14);
+          // separator
+          setStroke([220, 215, 205]);
+          doc.setLineWidth(0.3);
+          doc.line(colLX + 22, lY + 22, colLX + col2W, lY + 22);
+          lY += 32;
         });
-        y += 4;
+      } else {
+        setText(C.dimDark);
+        doc.setFont('times', 'italic');
+        doc.setFontSize(11);
+        doc.text('open canvas — read the room.', colLX, lY);
       }
-      kv('Reference DJ set', p.inspo_set);
-      kv('Club / venue feel', p.inspo_club);
-      kv('Notes', p.inspo_notes);
 
-      sectionTitle('Rider');
+      // RIGHT - NO PLAY
+      setText(C.dimDark);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8);
+      doc.text('NO PLAY', colRX, colTop, { charSpace: 2 });
+      setStroke(C.lineLight);
+      doc.setLineWidth(0.5);
+      doc.line(colRX, colTop + 8, colRX + col2W, colTop + 8);
+
+      let rY = colTop + 28;
+      // genres out
+      setText(C.dimDark);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7);
+      doc.text('GENRES OUT', colRX, rY, { charSpace: 1.6 });
+      rY += 14;
+      const genres = (p.no_play_genres || '').split(',').map(s => s.trim()).filter(Boolean);
+      if (genres.length) {
+        // chip-style
+        let chipX = colRX, chipY = rY;
+        genres.forEach(g => {
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(8);
+          const tw = doc.getTextWidth(g) + 14;
+          if (chipX + tw > colRX + col2W) { chipX = colRX; chipY += 22; }
+          setStroke(C.ink);
+          doc.setLineWidth(0.5);
+          doc.roundedRect(chipX, chipY - 9, tw, 16, 8, 8, 'S');
+          setText(C.ink);
+          doc.text(g, chipX + 7, chipY + 1.5);
+          chipX += tw + 6;
+        });
+        rY = chipY + 26;
+      } else {
+        setText(C.dimDark);
+        doc.setFont('times', 'italic');
+        doc.setFontSize(10);
+        doc.text('none flagged', colRX, rY);
+        rY += 22;
+      }
+
+      // songs/artists out
+      setText(C.dimDark);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7);
+      doc.text('SONGS  /  ARTISTS OUT', colRX, rY, { charSpace: 1.6 });
+      rY += 14;
+      setText(C.ink);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      const noSongs = p.no_play_songs || 'none specified';
+      doc.splitTextToSize(noSongs, col2W).slice(0, 14).forEach(ln => {
+        if (rY > colMaxBottom) return;
+        doc.text(ln, colRX, rY);
+        rY += 13;
+      });
+
+      // ===================================================================
+      // PAGE 4 - THE ROOM (dark)
+      // ===================================================================
+      doc.addPage();
+      pageBg('dark');
+      header('dark', 'The room', 3);
+
+      kicker('the moments + the crowd', M + 60);
+      bigTitle('who is in it.', 'dark', M + 105);
+      setText(C.dim);
+      doc.setFont('times', 'italic');
+      doc.setFontSize(12);
+      doc.text('Five anchor points and the floor that surrounds them.', M, M + 130);
+
+      // ----- moments timeline -----
+      const momY = M + 175;
+      setText(C.dim);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7.5);
+      doc.text('KEY MOMENTS', M, momY, { charSpace: 1.6 });
+      setStroke(C.line);
+      doc.setLineWidth(0.4);
+      doc.line(M + 90, momY - 3, W - M, momY - 3);
+
+      const moments = [
+        ['Opener',     p.moment_opener],
+        ['Entrance',   p.moment_entrance],
+        ['First dance', p.moment_firstdance],
+        ['Cake / toast', p.moment_cake],
+        ['Last song',  p.moment_last],
+      ];
+      let mY = momY + 24;
+      moments.forEach(([lab, val]) => {
+        // dot + connecting line
+        setFill(C.acc);
+        doc.circle(M + 4, mY - 3, 2.4, 'F');
+        setText(C.dim);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7.5);
+        doc.text(lab.toUpperCase(), M + 18, mY, { charSpace: 1.6 });
+        setText(C.cream);
+        doc.setFont('times', 'italic');
+        doc.setFontSize(12);
+        const v = val && val.trim() ? val : '—';
+        const lns = doc.splitTextToSize(v, W - M * 2 - 130);
+        doc.text(lns[0] || '', M + 130, mY);
+        mY += 24;
+      });
+
+      // ----- crowd block -----
+      const crwY = mY + 28;
+      setStroke(C.line);
+      doc.setLineWidth(0.4);
+      doc.line(M, crwY - 14, W - M, crwY - 14);
+      setText(C.dim);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7.5);
+      doc.text('THE CROWD', M, crwY, { charSpace: 1.6 });
+
+      // age brackets bars
+      const ageList = (p.crowd_age || '').split(',').map(s => s.trim()).filter(Boolean);
+      const allBrackets = ['<25', '25-35', '35-45', '45-55', '55-65', '65+'];
+      const labelMap = { '<25': 'Under 25', '25-35': '25 - 35', '35-45': '35 - 45', '45-55': '45 - 55', '55-65': '55 - 65', '65+': '65+' };
+      const barW = (W - M * 2 - 5 * 8) / 6;
+      const barY = crwY + 16;
+      allBrackets.forEach((b, i) => {
+        const bx = M + i * (barW + 8);
+        const active = ageList.includes(b);
+        setFill(active ? C.acc : C.line);
+        doc.rect(bx, barY, barW, 8, 'F');
+        setText(active ? C.cream : C.dimDark);
+        doc.setFont('helvetica', active ? 'bold' : 'normal');
+        doc.setFontSize(7);
+        doc.text(labelMap[b], bx + barW / 2, barY + 22, { align: 'center', charSpace: 1.2 });
+      });
+
+      // dance intent inline
+      let dY = barY + 50;
+      setText(C.dim);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7);
+      doc.text('DANCE INTENT', M, dY, { charSpace: 1.6 });
+      setText(C.cream);
+      doc.setFont('times', 'italic');
+      doc.setFontSize(13);
+      doc.text(`${p.crowd_dance || '-'} / 10`, M + 110, dY);
+      dY += 22;
+
+      // languages + origins as 2 columns
+      const lcW = (W - M * 2 - 30) / 2;
+      function renderTagBlock(label, valStr, x, top) {
+        setText(C.dim);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7);
+        doc.text(label, x, top, { charSpace: 1.6 });
+        const vals = (valStr || '').split(',').map(s => s.trim()).filter(Boolean);
+        let cx = x, cy = top + 16;
+        if (!vals.length) {
+          setText(C.dimDark);
+          doc.setFont('times', 'italic');
+          doc.setFontSize(10);
+          doc.text('—', x, cy);
+          return;
+        }
+        vals.forEach(v => {
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(8);
+          const tw = doc.getTextWidth(v) + 14;
+          if (cx + tw > x + lcW) { cx = x; cy += 22; }
+          setStroke(C.dim);
+          doc.setLineWidth(0.4);
+          doc.roundedRect(cx, cy - 9, tw, 16, 8, 8, 'S');
+          setText(C.cream);
+          doc.text(v, cx + 7, cy + 1.5);
+          cx += tw + 6;
+        });
+      }
+      renderTagBlock('LANGUAGES', p.crowd_langs, M, dY);
+      renderTagBlock('ORIGINS',   p.crowd_origins, M + lcW + 30, dY);
+
+      // ===================================================================
+      // PAGE 5 - THE BRIEF (cream)
+      // ===================================================================
+      doc.addPage();
+      pageBg('cream');
+      header('cream', 'The brief', 4);
+
+      kicker('inspo + rider', M + 60);
+      setText(C.ink);
+      doc.setFont('times', 'italic');
+      doc.setFontSize(54);
+      doc.text('the brief.', M, M + 105);
+      setText(C.dimDark);
+      doc.setFont('times', 'italic');
+      doc.setFontSize(12);
+      doc.text('References, add-ons and how much margin you give us.', M, M + 130);
+
+      // playlists
+      let bY = M + 175;
+      setText(C.dimDark);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7.5);
+      doc.text('PLAYLISTS', M, bY, { charSpace: 1.6 });
+      setStroke(C.lineLight);
+      doc.line(M + 80, bY - 3, W - M, bY - 3);
+      bY += 16;
+      const pls2 = (p.inspo_playlists || '').split(' | ').filter(Boolean);
+      if (pls2.length) {
+        pls2.slice(0, 6).forEach((u, i) => {
+          setText(C.acc);
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(7);
+          doc.text(String(i + 1).padStart(2, '0'), M, bY);
+          setText(C.ink);
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(9);
+          const dis = doc.splitTextToSize(u, W - M * 2 - 22)[0];
+          doc.textWithLink(dis, M + 22, bY, { url: u });
+          bY += 16;
+        });
+      } else {
+        setText(C.dimDark);
+        doc.setFont('times', 'italic');
+        doc.setFontSize(10);
+        doc.text('none shared', M, bY);
+        bY += 18;
+      }
+      bY += 12;
+
+      // notes
+      function noteRow(label, val) {
+        if (!val) return;
+        setText(C.dimDark);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7);
+        doc.text(label, M, bY, { charSpace: 1.6 });
+        setText(C.ink);
+        doc.setFont('times', 'italic');
+        doc.setFontSize(11);
+        doc.splitTextToSize(val, W - M * 2 - 130).slice(0, 4).forEach((ln, i) => {
+          doc.text(ln, M + 130, bY + i * 14);
+        });
+        const lineCount = doc.splitTextToSize(val, W - M * 2 - 130).slice(0, 4).length;
+        bY += Math.max(20, lineCount * 14 + 6);
+      }
+      noteRow('REFERENCE SET', p.inspo_set);
+      noteRow('CLUB / VENUE',  p.inspo_club);
+      noteRow('NOTES',         p.inspo_notes);
+
+      // rider
+      bY += 12;
+      setText(C.dimDark);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7.5);
+      doc.text('RIDER', M, bY, { charSpace: 1.6 });
+      setStroke(C.lineLight);
+      doc.line(M + 50, bY - 3, W - M, bY - 3);
+      bY += 18;
+      const riderLabels = {
+        mc: 'Bilingual MC',
+        live_sax_booked: 'Live sax / percussion booked',
+        requests: 'Guest requests on the night',
+      };
       try {
         const r = JSON.parse(p.rider || '{}');
-        Object.entries(r).forEach(([k, v]) => kv(k.replace(/_/g, ' '), v ? 'YES' : 'no'));
+        Object.entries(riderLabels).forEach(([k, lab]) => {
+          const v = !!r[k];
+          setText(C.ink);
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(10);
+          doc.text(lab, M, bY);
+          // dot
+          setFill(v ? C.acc : [200, 195, 185]);
+          doc.circle(W - M - 30, bY - 3, 4, 'F');
+          setText(v ? C.acc : C.dimDark);
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(8);
+          doc.text(v ? 'YES' : 'NO', W - M, bY, { align: 'right', charSpace: 1.4 });
+          bY += 18;
+        });
       } catch (e) {}
 
-      // page numbers
-      const pages = doc.internal.pages.length - 1;
-      for (let i = 1; i <= pages; i++) {
+      // trust margin viz
+      bY += 16;
+      setText(C.dimDark);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7.5);
+      doc.text('TRUST MARGIN', M, bY, { charSpace: 1.6 });
+      setStroke(C.lineLight);
+      doc.line(M + 110, bY - 3, W - M, bY - 3);
+      bY += 24;
+
+      const trust = parseFloat(p.trust || 7);
+      const trackY = bY + 6;
+      const trackLeft = M + 70;
+      const trackRight = W - M - 70;
+      const trackW2 = trackRight - trackLeft;
+      // labels
+      setText(C.dimDark);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7);
+      doc.text('BY THE BRIEF', M, trackY + 2, { charSpace: 1.4 });
+      doc.text('FULL FREEDOM', W - M, trackY + 2, { align: 'right', charSpace: 1.4 });
+      // line
+      setStroke(C.ink);
+      doc.setLineWidth(1);
+      doc.line(trackLeft, trackY, trackRight, trackY);
+      // ticks
+      for (let i = 0; i <= 10; i++) {
+        const tx = trackLeft + (i / 10) * trackW2;
+        doc.line(tx, trackY - 4, tx, trackY + 4);
+      }
+      // marker
+      const mx = trackLeft + (Math.max(0, Math.min(10, trust)) / 10) * trackW2;
+      setFill(C.acc);
+      doc.circle(mx, trackY, 7, 'F');
+      setText(C.cream);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8);
+      doc.text(String(trust), mx, trackY + 2.8, { align: 'center' });
+
+      // ===================================================================
+      // PAGE 6 - SIGNED OFF (dark)
+      // ===================================================================
+      doc.addPage();
+      pageBg('dark');
+      header('dark', 'Signed off', 5);
+
+      // Big "SESSION LOCKED" mark
+      setText(C.dim);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8);
+      doc.text('SESSION', M, H * 0.38, { charSpace: 4 });
+      setText(C.cream);
+      doc.setFont('times', 'bolditalic');
+      doc.setFontSize(110);
+      doc.text('locked.', M, H * 0.38 + 90);
+
+      setText(C.acc);
+      doc.setFont('times', 'italic');
+      doc.setFontSize(16);
+      doc.text(couple, M, H * 0.38 + 130);
+      setText(C.dim);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.text(`${p.event_date || ''}   //   ${p.venue || ''}`, M, H * 0.38 + 152, { charSpace: 1.4 });
+
+      // closing quote
+      setText(C.cream);
+      doc.setFont('times', 'italic');
+      doc.setFontSize(14);
+      doc.text('"see you on the floor."', M, H * 0.78);
+
+      // signature line
+      setStroke(C.line);
+      doc.setLineWidth(0.4);
+      doc.line(M, H - M - 50, M + 200, H - M - 50);
+      setText(C.dim);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7);
+      doc.text('LOCKED  /  ' + todayISO, M, H - M - 36, { charSpace: 1.6 });
+      doc.text('SESSION  ' + sessionId.toUpperCase(), M, H - M - 22, { charSpace: 1.6 });
+
+      // brand mark bottom right
+      setText(C.cream);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(18);
+      doc.text('elevn.', W - M, H - M - 30, { align: 'right' });
+      setFill(C.acc);
+      doc.circle(W - M - 1, H - M - 32, 2.6, 'F');
+
+      // ===================================================================
+      // FOOTERS on every page except cover
+      // ===================================================================
+      const totalPages = doc.internal.pages.length - 1;
+      for (let i = 2; i <= totalPages; i++) {
         doc.setPage(i);
-        doc.setFontSize(7);
-        doc.setTextColor(...COL_DIM);
-        doc.text(`elevndjs.com   //   ${p.session_id || ''}`, M, H - 20);
-        doc.text(`${i} / ${pages}`, W - M, H - 20, { align: 'right' });
+        // detect background by reading currentPage palette: track explicitly via array
+        const palette = (i === 3 || i === 5) ? 'cream' : 'dark';
+        footer(palette, i, totalPages);
       }
 
       return doc;
