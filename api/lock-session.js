@@ -103,7 +103,7 @@ function buildHtml(b) {
   ].join('')}</table>`;
 
   const crowd = `<table style="border-collapse:collapse;">${[
-    row('Age skew', b.crowd_age),
+    row('Age brackets', b.crowd_age),
     row('Dance intent', b.crowd_dance),
     row('Languages', b.crowd_langs),
     row('Origins', b.crowd_origins)

@@ -1241,10 +1241,15 @@
 
       <div class="crowd-grid">
         <div>
-          <span class="mono-label">AGE SKEW</span>
-          <div class="slider-wrap">
-            <input type="range" min="0" max="10" value="5" id="ageSkew">
-            <div class="slider-ends"><span>Mostly 20s</span><span>Mostly 50s+</span></div>
+          <span class="mono-label">AGE BRACKETS IN THE ROOM</span>
+          <p style="color: var(--cream-dim); font-size: 0.78rem; margin: 0.2rem 0 0.7rem;">Tick every bracket that has a meaningful chunk of guests. Multiple is fine.</p>
+          <div class="chips" id="ageChips">
+            <button class="chip" data-val="<25">Under 25</button>
+            <button class="chip" data-val="25-35">25 - 35</button>
+            <button class="chip" data-val="35-45">35 - 45</button>
+            <button class="chip" data-val="45-55">45 - 55</button>
+            <button class="chip" data-val="55-65">55 - 65</button>
+            <button class="chip" data-val="65+">65+</button>
           </div>
         </div>
 
@@ -1878,7 +1883,7 @@
         moment_cake: document.getElementById('m-cake').value.trim(),
         moment_opener: document.getElementById('m-opener').value.trim(),
         moment_last: document.getElementById('m-last').value.trim(),
-        crowd_age: document.getElementById('ageSkew').value,
+        crowd_age: getChipValues('ageChips').join(', '),
         crowd_dance: document.getElementById('danceIntent').value,
         crowd_langs: getChipValues('langChips').join(', '),
         crowd_origins: getChipValues('originChips').join(', '),
@@ -2123,7 +2128,7 @@
       kv('Last song', p.moment_last);
 
       sectionTitle('Crowd');
-      kv('Age skew', p.crowd_age);
+      kv('Age brackets', p.crowd_age);
       kv('Dance intent', p.crowd_dance);
       kv('Languages', p.crowd_langs);
       kv('Origins', p.crowd_origins);
