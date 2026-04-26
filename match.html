@@ -862,41 +862,44 @@
       // Section 1: Basics (no scoring)
       { id: "name",    type: "text",  label: "01 / Basics",        title: "What's your name?", placeholder: "Your name" },
       { id: "email",   type: "email", label: "02 / Basics",        title: "Your email", placeholder: "you@domain.com" },
-      { id: "date",    type: "date",  label: "03 / Basics",        title: "When is your wedding?" },
-      { id: "venue",   type: "text",  label: "04 / Basics",        title: "Where is your wedding?", placeholder: "City / venue" },
-      { id: "guests",  type: "select",label: "05 / Basics",        title: "Approximately how many guests?",
+      { id: "phone",   type: "tel",   label: "03 / Basics",        title: "Your phone (optional)",
+        sub: "We use it only if email replies bounce or for a quick call about your date.",
+        placeholder: "+34 600 000 000", optional: true },
+      { id: "date",    type: "date",  label: "04 / Basics",        title: "When is your wedding?" },
+      { id: "venue",   type: "text",  label: "05 / Basics",        title: "Where is your wedding?", placeholder: "City / venue" },
+      { id: "guests",  type: "select",label: "06 / Basics",        title: "Approximately how many guests?",
         options: ["Under 50", "50–100", "100–150", "150–200", "200+"] },
 
       // Section 2: Vibe (scoring)
-      { id: "vibe", type: "choice", label: "06 / Vibe", title: "How would you describe the vibe you want?",
+      { id: "vibe", type: "choice", label: "07 / Vibe", title: "How would you describe the vibe you want?",
         options: [
           { key: "A", text: "Elegant and sophisticated, think rooftop bar, not nightclub", score: { CS: 2 } },
           { key: "B", text: "Fun and familiar, everyone singing along, all ages happy",    score: { CE: 2 } },
           { key: "C", text: "High energy, we want people sweating on the dance floor",      score: { HED: 2 } },
           { key: "D", text: "Cool and international, the sound of London, NYC, or Lagos",   score: { GUS: 2 } }
         ]},
-      { id: "peak", type: "choice", label: "07 / Vibe", title: "When you imagine the peak of your party, what do you see?",
+      { id: "peak", type: "choice", label: "08 / Vibe", title: "When you imagine the peak of your party, what do you see?",
         options: [
           { key: "A", text: "A stylish crowd grooving to a deep, classy beat",                     score: { CS: 2 } },
           { key: "B", text: "Everyone, grandparents included, on the dance floor to a classic",   score: { CE: 2 } },
           { key: "C", text: "Hands in the air, bass drops, pure energy",                            score: { HED: 2 } },
           { key: "D", text: "People vibing to R&B, Afrobeats, or hip-hop they've never heard at a wedding", score: { GUS: 2 } }
         ]},
-      { id: "important", type: "choice", label: "08 / Vibe", title: "What's more important to you?",
+      { id: "important", type: "choice", label: "09 / Vibe", title: "What's more important to you?",
         options: [
           { key: "A", text: "Taste and curation, fewer hits but better music",       score: { CS: 1, GUS: 1 } },
           { key: "B", text: "Crowd connection, I want everyone to feel included",    score: { CE: 2 } },
           { key: "C", text: "Energy and momentum, a party that builds and explodes", score: { HED: 2 } },
           { key: "D", text: "Something different, I don't want it to sound like every other wedding", score: { CS: 1, GUS: 1 } }
         ]},
-      { id: "crowd", type: "choice", label: "09 / Vibe", title: "Describe your crowd:",
+      { id: "crowd", type: "choice", label: "10 / Vibe", title: "Describe your crowd:",
         options: [
           { key: "A", text: "Mostly friends, 25–40, into music and nightlife",       score: { CS: 1, HED: 1 } },
           { key: "B", text: "Mixed ages, parents, uncles, colleagues, and friends", score: { CE: 2 } },
           { key: "C", text: "Young, energetic, here to party hard",                  score: { HED: 2 } },
           { key: "D", text: "International, diverse backgrounds, well-traveled",     score: { GUS: 2 } }
         ]},
-      { id: "place", type: "choice", label: "10 / Vibe", title: "If your wedding party was a place, it would be:",
+      { id: "place", type: "choice", label: "11 / Vibe", title: "If your wedding party was a place, it would be:",
         options: [
           { key: "A", text: "A rooftop bar in Barcelona with a view",                  score: { CS: 2 } },
           { key: "B", text: "A lively wedding in Tuscany where everyone dances",       score: { CE: 2 } },
@@ -905,7 +908,7 @@
         ]},
 
       // Section 3: Music references
-      { id: "artists", type: "multi", label: "11 / Music", title: "Pick the artists that resonate with you",
+      { id: "artists", type: "multi", label: "12 / Music", title: "Pick the artists that resonate with you",
         sub: "Select all that apply.",
         options: [
           { text: "Disclosure, Peggy Gou, Kaytranada",        score: { CS: 1 } },
@@ -917,31 +920,31 @@
           { text: "Frank Ocean, SZA, Tyler the Creator",      score: { GUS: 1 } },
           { text: "ABBA, Queen, 80s classics",                score: { CE: 1 } }
         ]},
-      { id: "reference", type: "textarea", label: "12 / Music",
+      { id: "reference", type: "textarea", label: "13 / Music",
         title: "Describe a party where you loved the music.",
         sub: "What made it great? Optional but helpful.",
         placeholder: "A friend's wedding in Menorca, the DJ opened with deep house, moved into classics around 1am..."
       },
-      { id: "avoid", type: "textarea", label: "13 / Music",
+      { id: "avoid", type: "textarea", label: "14 / Music",
         title: "Anything you definitely DON'T want?",
         sub: "Genres, songs or vibes to avoid.",
         placeholder: "No cheesy wedding classics, no commercial EDM..."
       },
 
       // Section 4: Final details
-      { id: "service", type: "choice", label: "14 / Details", title: "What do you need from us?",
+      { id: "service", type: "choice", label: "15 / Details", title: "What do you need from us?",
         options: [
           { key: "A", text: "Full reception, cocktail, dinner, party" },
           { key: "B", text: "Party only, after dinner" },
           { key: "C", text: "After-party set" },
           { key: "D", text: "Not sure yet, let's discuss" }
         ]},
-      { id: "notes", type: "textarea", label: "15 / Details",
+      { id: "notes", type: "textarea", label: "16 / Details",
         title: "Anything else we should know?",
         sub: "Optional.",
         placeholder: "Surprise performance, language of the crowd, bilingual MC..."
       },
-      { id: "confirm", type: "confirm", label: "16 / Ready", title: "That's it.",
+      { id: "confirm", type: "confirm", label: "17 / Ready", title: "That's it.",
         sub: "We'll review your answers and get back to you within 48 hours with your DJ match."
       }
     ];
@@ -953,14 +956,17 @@
       // Section 1: Basics
       { id: "name",    type: "text",  label: "01 / Basics", title: "What's your name?", placeholder: "Your name" },
       { id: "email",   type: "email", label: "02 / Basics", title: "Your work email", placeholder: "you@company.com" },
-      { id: "company", type: "text",  label: "03 / Basics", title: "Company or brand", placeholder: "Company name" },
-      { id: "date",    type: "date",  label: "04 / Basics", title: "When is your event?" },
-      { id: "venue",   type: "text",  label: "05 / Basics", title: "Where is it?", placeholder: "City / venue" },
-      { id: "guests",  type: "select",label: "06 / Basics", title: "Approximate number of attendees?",
+      { id: "phone",   type: "tel",   label: "03 / Basics", title: "Your phone (optional)",
+        sub: "We use it only if email replies bounce or for a quick call about your date.",
+        placeholder: "+34 600 000 000", optional: true },
+      { id: "company", type: "text",  label: "04 / Basics", title: "Company or brand", placeholder: "Company name" },
+      { id: "date",    type: "date",  label: "05 / Basics", title: "When is your event?" },
+      { id: "venue",   type: "text",  label: "06 / Basics", title: "Where is it?", placeholder: "City / venue" },
+      { id: "guests",  type: "select",label: "07 / Basics", title: "Approximate number of attendees?",
         options: ["Under 50", "50–150", "150–300", "300–500", "500+"] },
 
       // Section 2: Event format (no scoring)
-      { id: "format", type: "choice", label: "07 / Format", title: "What kind of corporate event is it?",
+      { id: "format", type: "choice", label: "08 / Format", title: "What kind of corporate event is it?",
         options: [
           { key: "A", text: "Gala dinner / awards night" },
           { key: "B", text: "Product launch / brand activation" },
@@ -971,28 +977,28 @@
         ]},
 
       // Section 3: Audience & vibe (scoring)
-      { id: "audience", type: "choice", label: "08 / Audience", title: "Who's in the room?",
+      { id: "audience", type: "choice", label: "09 / Audience", title: "Who's in the room?",
         options: [
           { key: "A", text: "Executives and senior stakeholders, mature, conservative",        score: { CS: 2 } },
           { key: "B", text: "Mixed corporate, all ages, all levels, broad appeal",             score: { CE: 2 } },
           { key: "C", text: "Young professionals, here to let loose",                          score: { HED: 2 } },
           { key: "D", text: "International clients, well-traveled, cosmopolitan",              score: { GUS: 2 } }
         ]},
-      { id: "vibe", type: "choice", label: "09 / Vibe", title: "What energy are you going for?",
+      { id: "vibe", type: "choice", label: "10 / Vibe", title: "What energy are you going for?",
         options: [
           { key: "A", text: "Elegant background, never intrusive, always on-brand",           score: { CS: 2 } },
           { key: "B", text: "Smooth cocktail into a controlled party after dinner",             score: { CE: 2 } },
           { key: "C", text: "Full party, we want them dancing, no holding back",               score: { HED: 2 } },
           { key: "D", text: "Cool, international, current, the sound of a global brand",       score: { GUS: 2 } }
         ]},
-      { id: "moment", type: "choice", label: "10 / Vibe", title: "When is the music most important?",
+      { id: "moment", type: "choice", label: "11 / Vibe", title: "When is the music most important?",
         options: [
           { key: "A", text: "Cocktail and welcome, set the tone, look polished",               score: { CS: 1, CE: 1 } },
           { key: "B", text: "Dinner background, elegant, never loud",                          score: { CS: 2 } },
           { key: "C", text: "After dinner, get people up and moving",                          score: { HED: 1, CE: 1 } },
           { key: "D", text: "Late night, proper club-level set",                               score: { HED: 1, GUS: 1 } }
         ]},
-      { id: "place", type: "choice", label: "11 / Vibe", title: "If the event had a reference, it would be:",
+      { id: "place", type: "choice", label: "12 / Vibe", title: "If the event had a reference, it would be:",
         options: [
           { key: "A", text: "A rooftop launch in Barcelona with minimal, elegant music",        score: { CS: 2 } },
           { key: "B", text: "A Christmas party where HR and the CEO both dance",                score: { CE: 2 } },
@@ -1001,7 +1007,7 @@
         ]},
 
       // Section 4: Music references (scoring)
-      { id: "artists", type: "multi", label: "12 / Music", title: "Pick the sounds that fit your brand",
+      { id: "artists", type: "multi", label: "13 / Music", title: "Pick the sounds that fit your brand",
         sub: "Select all that apply.",
         options: [
           { text: "Deep house, lounge, Café del Mar",          score: { CS: 1 } },
@@ -1015,24 +1021,24 @@
         ]},
 
       // Section 5: Operations (no scoring)
-      { id: "brand", type: "choice", label: "13 / Brief", title: "Any brand alignment we need to respect?",
+      { id: "brand", type: "choice", label: "14 / Brief", title: "Any brand alignment we need to respect?",
         options: [
           { key: "A", text: "Yes, strict brand guidelines, tone and volume" },
           { key: "B", text: "Somewhat, we'll share a brief" },
           { key: "C", text: "No, total creative freedom" }
         ]},
-      { id: "mc", type: "choice", label: "14 / Brief", title: "Do you need MC / announcements?",
+      { id: "mc", type: "choice", label: "15 / Brief", title: "Do you need MC / announcements?",
         options: [
           { key: "A", text: "Yes, awards, speeches, call-outs" },
           { key: "B", text: "Only welcome and closing" },
           { key: "C", text: "No, just music" }
         ]},
-      { id: "avoid", type: "textarea", label: "15 / Brief",
+      { id: "avoid", type: "textarea", label: "16 / Brief",
         title: "Anything you definitely DON'T want?",
         sub: "Genres, songs, vibes to avoid.",
         placeholder: "No reggaeton, no explicit lyrics, nothing political..."
       },
-      { id: "service", type: "choice", label: "16 / Details", title: "What do you need from us?",
+      { id: "service", type: "choice", label: "17 / Details", title: "What do you need from us?",
         options: [
           { key: "A", text: "Full event, cocktail, dinner, party" },
           { key: "B", text: "Dinner + party only" },
@@ -1040,12 +1046,12 @@
           { key: "D", text: "Background music all day" },
           { key: "E", text: "Not sure yet, let's discuss" }
         ]},
-      { id: "notes", type: "textarea", label: "17 / Details",
+      { id: "notes", type: "textarea", label: "18 / Details",
         title: "Anything else we should know?",
         sub: "Optional.",
         placeholder: "Speeches, video cues, dress code, language of the crowd..."
       },
-      { id: "confirm", type: "confirm", label: "18 / Ready", title: "That's it.",
+      { id: "confirm", type: "confirm", label: "19 / Ready", title: "That's it.",
         sub: "We'll review your brief and get back to you within 48 hours with your DJ match and a proposal."
       }
     ];
@@ -1080,9 +1086,9 @@
       body += `<h2 class="step-title">${q.title}</h2>`;
       if (q.sub) body += `<p class="step-sub">${q.sub}</p>`;
 
-      if (q.type === "text" || q.type === "email" || q.type === "date") {
+      if (q.type === "text" || q.type === "email" || q.type === "date" || q.type === "tel") {
         body += `<div class="field">
-          <input type="${q.type}" id="in-${q.id}" placeholder="${q.placeholder || ''}">
+          <input type="${q.type}" id="in-${q.id}" placeholder="${q.placeholder || ''}"${q.type === 'tel' ? ' autocomplete="tel" inputmode="tel"' : ''}>
         </div>`;
       } else if (q.type === "select") {
         body += `<div class="field">
@@ -1185,9 +1191,9 @@
       const q = QUESTIONS[currentStep - 1];
 
       // Collect value from inputs
-      if (["text", "email", "date", "select"].includes(q.type)) {
+      if (["text", "email", "date", "select", "tel"].includes(q.type)) {
         const val = document.getElementById("in-" + q.id).value.trim();
-        if (!val && q.type !== "textarea") {
+        if (!val && !q.optional) {
           alert("Please fill this one in before continuing.");
           return;
         }
@@ -1296,6 +1302,7 @@
         eventType: eventType,
         name: answers.name,
         email: answers.email,
+        phone: answers.phone,
         company: answers.company,
         date: answers.date,
         venue: answers.venue,
@@ -1315,6 +1322,7 @@
 `EVENT TYPE: ${lead.eventType || '-'}
 NAME: ${lead.name || '-'}
 EMAIL: ${lead.email || '-'}
+PHONE: ${lead.phone || '-'}
 ${lead.eventType === 'corporate' ? 'COMPANY: ' + (lead.company || '-') + '\n' : ''}DATE: ${lead.date || '-'}
 VENUE: ${lead.venue || '-'}
 GUESTS: ${lead.guests || '-'}
@@ -1340,6 +1348,7 @@ ${lead.notes || '-'}`;
         consent: 'Accepted privacy policy on ' + new Date().toISOString(),
         name: lead.name || '',
         email: lead.email || '',
+        phone: lead.phone || '',
         event_type: lead.eventType || '',
         company: lead.company || '',
         date: lead.date || '',
