@@ -1375,7 +1375,7 @@ ${lead.notes || '-'}`;
         if (res.ok && (data.success === 'true' || data.success === true)) {
           btn.textContent = 'Sent';
           status.className = 'form-status success';
-          status.textContent = 'Thanks, we received your answers. We will get back to you within 24 hours at ' + (lead.email || 'your email') + '.';
+          status.innerHTML = 'Thanks, we received your answers. We will get back to you within 24 hours at ' + (lead.email ? lead.email.replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c])) : 'your email') + '.<br><span style="opacity:0.7;">If you don\'t see it, please check your spam or promotions folder.</span>';
         } else {
           throw new Error(data.message || 'Submission failed');
         }
