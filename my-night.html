@@ -958,6 +958,20 @@
     .sum-row:last-child { border-bottom: none; }
     .sum-row span { color: var(--cream-dim); }
     .sum-row strong { color: var(--cream); font-weight: 700; }
+    .lockin-extra { margin: 0 0 1.5rem; text-align: left; }
+    .lockin-extra label {
+      display: block; font-family: 'Space Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--cream-dim); margin-bottom: 0.6rem;
+    }
+    .lockin-extra textarea {
+      width: 100%; background: transparent; color: var(--cream);
+      border: 1px solid var(--line-strong); padding: 1rem 1.2rem;
+      font-family: 'Inter', sans-serif; font-size: 0.95rem; line-height: 1.55;
+      min-height: 110px; resize: vertical; transition: border-color 0.2s ease;
+    }
+    .lockin-extra textarea:focus { outline: none; border-color: var(--accent); }
+    .lockin-extra textarea::placeholder { color: rgba(240,237,232,0.22); }
     .consent {
       display: inline-flex; align-items: flex-start; gap: 0.7rem;
       margin: 1.5rem auto; font-family: 'Space Mono', monospace;
@@ -1457,6 +1471,11 @@
             <div class="sum-row"><span>MUST PLAY</span><strong id="sumMustPlay">0 tracks</strong></div>
             <div class="sum-row"><span>NO PLAY</span><strong id="sumNoPlay">0 genres</strong></div>
             <div class="sum-row"><span>TRUST</span><strong id="sumTrust">7 / 10</strong></div>
+          </div>
+
+          <div class="lockin-extra">
+            <label for="extraNotes">Anything else we should know?</label>
+            <textarea id="extraNotes" placeholder="Allergies in the family, surprise moments, a guest who wants to perform, accessibility, anything we haven't asked about..."></textarea>
           </div>
 
           <label class="consent">
@@ -1986,6 +2005,7 @@
         inspo_notes: document.getElementById('inspo-notes').value.trim(),
         rider: JSON.stringify(getRiderValues()),
         trust: trustSlider.value,
+        extra_notes: document.getElementById('extraNotes').value.trim(),
         locked_at: new Date().toISOString()
       };
 
@@ -2708,6 +2728,7 @@
       noteRow('REFERENCE SET', p.inspo_set);
       noteRow('CLUB / VENUE',  p.inspo_club);
       noteRow('NOTES',         p.inspo_notes);
+      noteRow('ANYTHING ELSE', p.extra_notes);
 
       // rider
       bY += 12;
