@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const BLOG = resolve(ROOT, "blog.html");
-const SITE = "https://elevndjs.com";
+const SITE = "https://www.elevndjs.com";
 const DATE = "2026-04-17";
 
 const ARTICLES = [

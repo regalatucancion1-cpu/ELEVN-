@@ -17,22 +17,22 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_US">
   <meta property="og:site_name" content="ELEVN DJS">
-  <meta property="og:url" content="https://elevndjs.com/">
+  <meta property="og:url" content="https://www.elevndjs.com/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ELEVN DJS | Wedding & Event DJs in Spain | DJ Agency Barcelona">
   <meta name="twitter:description" content="Boutique DJ agency in Barcelona. Curated wedding DJs and event DJs across Spain. Personalised matching, 48h response.">
   <meta name="geo.region" content="ES-CT">
   <meta name="geo.placename" content="Barcelona">
-  <link rel="canonical" href="https://elevndjs.com/">
+  <link rel="canonical" href="https://www.elevndjs.com/">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": "https://elevndjs.com/#business",
+    "@id": "https://www.elevndjs.com/#business",
     "name": "ELEVN DJS",
     "alternateName": ["elevn.", "Elevn DJs", "Eleven DJs"],
     "description": "Boutique DJ agency in Barcelona. Curated DJs for weddings, corporate events and private parties across Spain. Personalised DJ matching for destination weddings in Barcelona, Ibiza, Mallorca, Marbella and beyond.",
-    "url": "https://elevndjs.com",
+    "url": "https://www.elevndjs.com",
     "email": "hello@elevndjs.com",
     "priceRange": "$$$",
     "sameAs": ["https://www.instagram.com/elevndjs/"],
@@ -1012,8 +1012,36 @@
       document.body.classList.toggle('no-scroll', open);
     }
 
-    // Contact form, POSTs to FormSubmit.co (delivers to elevndjs@gmail.com)
-    const CONTACT_ENDPOINT = 'https://formsubmit.co/ajax/elevndjs@gmail.com';
+    // Contact form, POSTs to our own /api/contact (Resend)
+    const CONTACT_ENDPOINT = '/api/contact';
+
+    async function postWithRetry(url, payload, { retries = 1, timeoutMs = 30000 } = {}) {
+      let lastErr;
+      for (let attempt = 0; attempt <= retries; attempt++) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), timeoutMs);
+        try {
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(payload),
+            signal: controller.signal
+          });
+          clearTimeout(timer);
+          const json = await res.json().catch(() => ({}));
+          if (res.ok && json.success) return json;
+          lastErr = new Error(json.error || ('HTTP ' + res.status));
+          if (res.status >= 400 && res.status < 500) throw lastErr;
+        } catch (e) {
+          clearTimeout(timer);
+          lastErr = e;
+          if (e.name === 'AbortError') lastErr = new Error('Request timed out');
+        }
+        if (attempt < retries) await new Promise(r => setTimeout(r, 3000));
+      }
+      throw lastErr;
+    }
+
     async function sendContact(ev) {
       ev.preventDefault();
       const form = ev.target;
@@ -1036,10 +1064,7 @@
         event_type: form.event_type.value.trim(),
         date: form.date.value.trim(),
         message: form.message.value.trim(),
-        consent: 'Accepted privacy policy on ' + new Date().toISOString(),
-        _subject: 'ELEVN contact, ' + (form.name.value.trim() || 'New lead'),
-        _template: 'table',
-        _captcha: 'false'
+        consent: 'Accepted privacy policy on ' + new Date().toISOString()
       };
 
       btn.disabled = true;
@@ -1048,25 +1073,17 @@
       status.textContent = '';
 
       try {
-        const res = await fetch(CONTACT_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        const json = await res.json().catch(() => ({}));
-        if (res.ok && (json.success === 'true' || json.success === true)) {
-          btn.textContent = 'Sent';
-          status.className = 'contact-status success';
-          status.textContent = 'Thanks, we received your message. We will get back to you within 48 hours.';
-          form.reset();
-        } else {
-          throw new Error(json.message || 'Failed');
-        }
+        await postWithRetry(CONTACT_ENDPOINT, data, { retries: 1, timeoutMs: 30000 });
+        btn.textContent = 'Sent';
+        status.className = 'contact-status success';
+        status.textContent = 'Thanks, we received your message. We will get back to you within 48 hours.';
+        form.reset();
       } catch (err) {
+        console.error('Contact submit failed:', err);
         btn.disabled = false;
         btn.textContent = '\u2192 Send message';
         status.className = 'contact-status error';
-        status.textContent = 'Something went wrong. Please email us directly at hello@elevndjs.com.';
+        status.textContent = 'We could not send your message (' + (err.message || 'network error') + '). Please email us at hello@elevndjs.com.';
       }
     }
   </script>
