@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Sax Aperitivo | ELEVN DJS</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=League+Spartan:wght@700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <!-- jsPDF is loaded lazily on submit (see loadJsPDF) so it never blocks page load / mobile memory -->
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: #0a0a0a; }
+
+    :root {
+      --dark: #0a0a0a;
+      --darker: #050505;
+      --card: #141414;
+      --line: rgba(255,255,255,0.08);
+      --line-strong: rgba(255,255,255,0.22);
+      --cream: #f0ede8;
+      --cream-dim: rgba(240,237,232,0.55);
+      --accent: #C46A35;
+      --accent-hover: #d47a42;
+      --accent-glow: rgba(196,106,53,0.45);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: var(--cream);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    .mono { font-family: 'Space Mono', monospace; }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 2;
+      opacity: 0.05; mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.9'/></svg>");
+    }
+
+    /* ============ NAV ============ */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+      background: rgba(10,10,10,0.72);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+    }
+    .elevn-logo {
+      font-family: 'League Spartan', sans-serif; font-weight: 900; font-size: 1.9rem;
+      line-height: 0.8; letter-spacing: -0.05em; text-transform: lowercase;
+      color: var(--cream); text-decoration: none; display: inline-flex; align-items: flex-end; gap: 0.06em;
+    }
+    .elevn-dot { display: inline-block; width: 0.26em; height: 0.26em; border-radius: 50%; background: var(--accent); margin-bottom: 0.15em; }
+    .nav-session {
+      display: flex; align-items: center; gap: 0.7rem;
+      font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--cream-dim);
+    }
+    .nav-session .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+    @media (max-width: 540px) { .nav-session span:not(.dot) { display: none; } }
+
+    /* ============ LAYOUT ============ */
+    main { max-width: 760px; margin: 0 auto; padding: 7rem 1.5rem 6rem; }
+    section.block { padding: 3.2rem 0; border-top: 1px solid var(--line); }
+    section.block:first-of-type { border-top: none; }
+    .step-tag {
+      font-family: 'Space Mono', monospace; font-size: 0.66rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--accent); display: inline-block; margin-bottom: 1rem;
+    }
+    h1.hero {
+      font-family: 'League Spartan', sans-serif; font-weight: 900; line-height: 0.92;
+      letter-spacing: -0.03em; font-size: clamp(2.6rem, 8vw, 4.6rem); text-transform: uppercase;
+    }
+    h1.hero .accent { color: var(--accent); }
+    h2.sec-title { font-family: 'League Spartan', sans-serif; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2.1rem); letter-spacing: -0.02em; text-transform: uppercase; line-height: 1; }
+    p.lead { color: var(--cream-dim); font-size: 1rem; margin-top: 0.9rem; max-width: 52ch; }
+    p.hint { color: var(--cream-dim); font-size: 0.82rem; margin-top: 0.5rem; }
+
+    /* ============ FIELDS ============ */
+    .field { margin-top: 1.4rem; }
+    label.flabel { display: block; font-family: 'Space Mono', monospace; font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream-dim); margin-bottom: 0.5rem; }
+    input[type=text], input[type=email], input[type=date], input[type=number], textarea, select {
+      width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--line-strong);
+      color: var(--cream); font-family: 'Inter', sans-serif; font-size: 1.04rem; padding: 0.6rem 0;
+      transition: border-color 0.25s; border-radius: 0;
+    }
+    select { -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%23C46A35' stroke-width='2'><path d='M3 5l4 4 4-4'/></svg>"); background-repeat: no-repeat; background-position: right 0.2rem center; }
+    select option { background: var(--card); color: var(--cream); }
+    input:focus, textarea:focus, select:focus { border-bottom-color: var(--accent); outline: none; }
+    input::placeholder, textarea::placeholder { color: rgba(240,237,232,0.3); }
+    textarea { resize: vertical; min-height: 3.2rem; }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+    @media (max-width: 560px) { .row2 { grid-template-columns: 1fr; } }
+
+    /* ============ VIBE CARDS ============ */
+    .vibe-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; margin-top: 1.6rem; }
+    @media (max-width: 620px) { .vibe-grid { grid-template-columns: 1fr; } }
+    .vibe-card { border: 1px solid var(--line-strong); background: var(--card); overflow: hidden; transition: border-color 0.2s, transform 0.2s; }
+    .vibe-card.sel { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 18px 40px -24px var(--accent-glow); }
+    .vibe-video { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; }
+    .vibe-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .vibe-meta { padding: 0.9rem 1rem 1.05rem; display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; }
+    .vibe-name { font-family: 'League Spartan', sans-serif; font-weight: 800; font-size: 1.05rem; text-transform: uppercase; letter-spacing: -0.01em; }
+    .vibe-sub { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-dim); margin-top: 0.15rem; }
+    .vibe-pick { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; border: 1px solid var(--line-strong); color: var(--cream-dim); padding: 0.4rem 0.7rem; background: transparent; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+    .vibe-card.sel .vibe-pick { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* ============ MOMENTS ============ */
+    .toggle-row { display: flex; align-items: center; gap: 0.9rem; margin-top: 1.6rem; flex-wrap: wrap; }
+    .seg { display: inline-flex; border: 1px solid var(--line-strong); }
+    .seg button { font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; background: transparent; color: var(--cream-dim); border: none; padding: 0.55rem 1.1rem; cursor: pointer; transition: all 0.2s; }
+    .seg button.on { background: var(--accent); color: #fff; }
+    .moment-list { margin-top: 0.4rem; }
+    .moment { margin-top: 1.4rem; }
+    .moment.hidden { display: none; }
+
+    /* ============ CHIPS ============ */
+    .chips { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 0.8rem; }
+    .chip { font-family: 'Space Mono', monospace; font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--line-strong); color: var(--cream-dim); padding: 0.45rem 0.8rem; cursor: pointer; background: transparent; transition: all 0.2s; }
+    .chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* repeatable inputs */
+    .repeat-row { display: flex; gap: 0.6rem; align-items: center; margin-top: 0.7rem; }
+    .repeat-row input { flex: 1; }
+    .mini-btn { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; background: transparent; border: 1px solid var(--line-strong); color: var(--cream-dim); padding: 0.42rem 0.7rem; cursor: pointer; transition: all 0.2s; }
+    .mini-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .x-btn { border: none; background: transparent; color: var(--cream-dim); cursor: pointer; font-size: 1.1rem; line-height: 1; padding: 0 0.3rem; }
+    .x-btn:hover { color: var(--accent); }
+
+    /* ============ SUBMIT ============ */
+    .btn-primary {
+      font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #fff; padding: 1.15rem 2.4rem; background: var(--accent); border: 1px solid var(--accent);
+      cursor: pointer; transition: all 0.25s; margin-top: 1.6rem;
+    }
+    .btn-primary:hover { background: transparent; border-color: var(--cream); color: var(--cream); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    label.consent { display: flex; gap: 0.7rem; align-items: flex-start; margin-top: 1.8rem; font-size: 0.78rem; color: var(--cream-dim); cursor: pointer; max-width: 56ch; }
+    label.consent input { accent-color: var(--accent); width: 16px; height: 16px; margin-top: 0.15rem; }
+    .form-status { margin-top: 1.1rem; font-family: 'Space Mono', monospace; font-size: 0.76rem; letter-spacing: 0.04em; color: var(--cream-dim); min-height: 1.2rem; }
+    .form-status.error { color: #ff7a6b; }
+    .form-status.success { color: var(--accent); }
+
+    /* DONE state */
+    #doneBlock { display: none; text-align: center; padding: 5rem 0; }
+    #doneBlock h2 { font-family: 'League Spartan', sans-serif; font-weight: 900; font-size: clamp(2.2rem,7vw,3.6rem); text-transform: uppercase; letter-spacing: -0.02em; }
+    #doneBlock p { color: var(--cream-dim); margin-top: 1rem; }
+    .draft-note { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-dim); margin-top: 0.6rem; opacity: 0.7; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="elevn-logo">elevn<span class="elevn-dot"></span></a>
+      <div class="nav-session"><span class="dot"></span><span id="navLabel">SAX APERITIVO / DRAFT</span></div>
+    </div>
+  </nav>
+
+  <main id="formRoot">
+    <!-- 01 SETUP -->
+    <section class="block">
+      <span class="step-tag">[ 01 / your event ]</span>
+      <h1 class="hero">Your sax,<br><span class="accent">your aperitivo.</span></h1>
+      <p class="lead">You booked the saxophone for your cocktail hour. Now let's shape exactly how it feels. Fill what you can, it autosaves as you go, and there are no wrong answers.</p>
+
+      <div class="row2">
+        <div class="field"><label class="flabel">Name(s)</label><input type="text" id="names" placeholder="Andrea &amp; Jack" autocomplete="off"></div>
+        <div class="field"><label class="flabel">Event date</label><input type="date" id="date"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label class="flabel">Venue / location</label><input type="text" id="venue" placeholder="Villa in Sitges" autocomplete="off"></div>
+        <div class="field"><label class="flabel">Guests</label><input type="number" id="guests" min="1" placeholder="65"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label class="flabel">Aperitivo time window</label><input type="text" id="window" placeholder="19:00 → 20:30" autocomplete="off"></div>
+        <div class="field"><label class="flabel">Your email</label><input type="email" id="email" placeholder="you@email.com" autocomplete="off"></div>
+      </div>
+    </section>
+
+    <!-- 02 THE VIBE -->
+    <section class="block">
+      <span class="step-tag">[ 02 / the vibe ]</span>
+      <h2 class="sec-title">Pick your sound</h2>
+      <p class="lead">Watch a few seconds of each and tap the one that fits your aperitivo. You can change it any time.</p>
+      <div class="vibe-grid" id="vibeGrid"></div>
+      <div class="field"><label class="flabel">Anything about the vibe we should know?</label><textarea id="vibeNotes" placeholder="Sunset on the terrace, relaxed but with groove..."></textarea></div>
+    </section>
+
+    <!-- 03 MOMENTS -->
+    <section class="block">
+      <span class="step-tag">[ 03 / key moments ]</span>
+      <h2 class="sec-title">Moments that matter</h2>
+      <p class="lead">The aperitivo has its own little script. Tell us what's happening so the sax lands in the right place.</p>
+
+      <div class="toggle-row">
+        <span class="flabel" style="margin:0;">Is there a grand entrance into the aperitivo?</span>
+        <div class="seg" id="entranceSeg">
+          <button type="button" data-v="yes">Yes</button>
+          <button type="button" data-v="no" class="on">No</button>
+        </div>
+      </div>
+
+      <div class="moment-list">
+        <div class="moment hidden" id="m-entrance-wrap"><label class="flabel">Your entrance, song or idea</label><input type="text" id="m-entrance" placeholder="Walk in to a sax version of..."></div>
+        <div class="moment"><label class="flabel">Anything you'd like to tell us?</label><textarea id="m-notes" placeholder="A surprise, a special moment, a person to dedicate a song to, timing notes... anything goes."></textarea></div>
+      </div>
+    </section>
+
+    <!-- 04 MUST HEAR -->
+    <section class="block">
+      <span class="step-tag">[ 04 / must hear ]</span>
+      <h2 class="sec-title">Songs you'd love</h2>
+      <p class="lead">Tracks you'd dream of hearing the sax play over. Add as many as you like.</p>
+      <div id="mustList"></div>
+      <button type="button" class="mini-btn" id="addMust" style="margin-top:0.9rem;">+ Add a song</button>
+    </section>
+
+    <!-- 05 REFERENCES -->
+    <section class="block">
+      <span class="step-tag">[ 05 / references ]</span>
+      <h2 class="sec-title">Inspiration</h2>
+      <p class="lead">Drop Spotify playlists or links that capture the mood you want.</p>
+      <div id="playlistList"></div>
+      <button type="button" class="mini-btn" id="addPlaylist" style="margin-top:0.9rem;">+ Add a playlist link</button>
+      <div class="field"><label class="flabel">Reference notes</label><textarea id="inspoNotes" placeholder="That Ibiza beach-club feeling, more soul than house..."></textarea></div>
+    </section>
+
+    <!-- 06 NO PLAY -->
+    <section class="block">
+      <span class="step-tag">[ 06 / no play ]</span>
+      <h2 class="sec-title">Keep these away</h2>
+      <p class="lead">Genres, songs or anything you definitely don't want.</p>
+      <div class="field"><textarea id="noPlay" placeholder="No cheesy pop, nothing too loud during speeches..."></textarea></div>
+    </section>
+
+    <!-- 07 SETUP -->
+    <section class="block">
+      <span class="step-tag">[ 07 / setup ]</span>
+      <h2 class="sec-title">Setup &amp; logistics</h2>
+      <div class="row2">
+        <div class="field"><label class="flabel">Format</label>
+          <select id="setupFormat">
+            <option value="">Choose...</option>
+            <option>Sax solo over backing tracks</option>
+            <option>Sax + DJ</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="field"><label class="flabel">Roaming among guests?</label>
+          <select id="setupRoaming">
+            <option value="">Choose...</option>
+            <option>Yes, walk into the crowd</option>
+            <option>Mostly from one spot</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field"><label class="flabel">Outdoor? Shade for the player?</label><input type="text" id="setupOutdoor" placeholder="Outdoor terrace, shade available"></div>
+        <div class="field"><label class="flabel">Power on site?</label><input type="text" id="setupPower" placeholder="Yes, sockets near the bar"></div>
+      </div>
+      <div class="field"><label class="flabel">Anything else for us?</label><textarea id="extraNotes" placeholder="Surprise for the couple, timing notes..."></textarea></div>
+
+      <!-- honeypot -->
+      <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+        <label>Leave empty <input type="text" id="honey" tabindex="-1" autocomplete="off"></label>
+      </div>
+
+      <label class="consent"><input type="checkbox" id="consent"><span>I'm happy for ELEVN to use these details to prepare my sax aperitivo, and I've checked everything looks right.</span></label>
+
+      <div><button type="button" class="btn-primary" id="submitBtn">→ Lock my aperitivo brief</button></div>
+      <div class="form-status" id="status"></div>
+      <div class="draft-note" id="draftNote"></div>
+    </section>
+  </main>
+
+  <div id="doneBlock">
+    <span class="step-tag">[ brief locked ]</span>
+    <h2>See you on<br>the dancefloor.</h2>
+    <p>Your aperitivo brief is in. We've emailed ELEVN your details and your PDF copy has downloaded. We'll be in touch.</p>
+  </div>
+
+  <script>
+    'use strict';
+
+    /* ============ VIBE DATA (title = genre from the reference video) ============ */
+    var VIBES = [
+      { id: 'covers',  name: 'Covers & Hits', sub: 'Sax over the songs everyone knows', yt: 'UmvUegtOWTQ' },
+      { id: 'funky',   name: 'Funky Lounge',  sub: 'Groovy, warm, garden-session feel', yt: 'u1a6b2pvgvg' },
+      { id: 'afro',    name: 'Afro House',    sub: 'Sunset, hypnotic, percussive',      yt: 'WqTs024uyPA' },
+      { id: 'jazz',    name: 'Jazz House',    sub: 'Smooth, classy, deep groove',       yt: 'f2RhYHFufss' }
+    ];
+
+    var DRAFT_KEY = 'elevn-sax-draft';
+    var PRIMARY = null;  // single chosen vibe id
+    var entrance = 'no';
+    var restoring = false;
+
+    /* ---------- build vibe cards ---------- */
+    var grid = document.getElementById('vibeGrid');
+    VIBES.forEach(function (v) {
+      var card = document.createElement('div');
+      card.className = 'vibe-card';
+      card.dataset.id = v.id;
+      card.innerHTML =
+        '<div class="vibe-video"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/' + v.yt + '?rel=0&modestbranding=1" title="' + v.name + '" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>' +
+        '<div class="vibe-meta"><div><div class="vibe-name">' + v.name + '</div><div class="vibe-sub">' + v.sub + '</div></div>' +
+        '<button type="button" class="vibe-pick" data-id="' + v.id + '">Choose</button></div>';
+      grid.appendChild(card);
+    });
+
+    grid.addEventListener('click', function (e) {
+      var btn = e.target.closest('.vibe-pick');
+      if (!btn) return;
+      var id = btn.dataset.id;
+      PRIMARY = (PRIMARY === id) ? null : id; // single choice, tap again to clear
+      renderVibes();
+      save();
+    });
+
+    function renderVibes() {
+      document.querySelectorAll('.vibe-card').forEach(function (card) {
+        var id = card.dataset.id;
+        var chosen = PRIMARY === id;
+        card.classList.toggle('sel', chosen);
+        card.querySelector('.vibe-pick').textContent = chosen ? 'Chosen ✓' : 'Choose';
+      });
+    }
+
+    /* ---------- entrance toggle ---------- */
+    var entranceSeg = document.getElementById('entranceSeg');
+    entranceSeg.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      entrance = b.dataset.v;
+      entranceSeg.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x.dataset.v === entrance); });
+      document.getElementById('m-entrance-wrap').classList.toggle('hidden', entrance !== 'yes');
+      save();
+    });
+
+    /* ---------- repeatable: must-hear songs ---------- */
+    var mustList = document.getElementById('mustList');
+    document.getElementById('addMust').addEventListener('click', function () { addMust(); save(); });
+    function addMust(val) {
+      var row = document.createElement('div');
+      row.className = 'repeat-row';
+      row.innerHTML = '<input type="text" class="must-in" placeholder="Song, artist"><button type="button" class="x-btn" aria-label="remove">×</button>';
+      mustList.appendChild(row);
+      if (val) row.querySelector('input').value = val;
+      row.querySelector('input').addEventListener('input', save);
+      row.querySelector('.x-btn').addEventListener('click', function () { row.remove(); save(); });
+    }
+
+    /* ---------- repeatable: playlists ---------- */
+    var playlistList = document.getElementById('playlistList');
+    document.getElementById('addPlaylist').addEventListener('click', function () { addPlaylist(); save(); });
+    function addPlaylist(val) {
+      var row = document.createElement('div');
+      row.className = 'repeat-row';
+      row.innerHTML = '<input type="text" class="pl-in" placeholder="https://open.spotify.com/..."><button type="button" class="x-btn" aria-label="remove">×</button>';
+      playlistList.appendChild(row);
+      if (val) row.querySelector('input').value = val;
+      row.querySelector('input').addEventListener('input', save);
+      row.querySelector('.x-btn').addEventListener('click', function () { row.remove(); save(); });
+    }
+
+    /* ============ STATE COLLECTION ============ */
+    function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+    function collectMust() { return Array.prototype.map.call(document.querySelectorAll('.must-in'), function (i) { return i.value.trim(); }).filter(Boolean); }
+    function collectPlaylists() { return Array.prototype.map.call(document.querySelectorAll('.pl-in'), function (i) { return i.value.trim(); }).filter(Boolean); }
+
+    function primaryName() { var v = VIBES.find(function (x) { return x.id === PRIMARY; }); return v ? v.name : ''; }
+
+    function snapshot() {
+      return {
+        names: val('names'), date: val('date'), venue: val('venue'), guests: val('guests'),
+        window: val('window'), email: val('email'),
+        primary: PRIMARY, vibeNotes: val('vibeNotes'),
+        entrance: entrance,
+        mEntrance: val('m-entrance'), mNotes: val('m-notes'),
+        must: collectMust(), playlists: collectPlaylists(), inspoNotes: val('inspoNotes'),
+        noPlay: val('noPlay'),
+        setupFormat: val('setupFormat'), setupRoaming: val('setupRoaming'), setupOutdoor: val('setupOutdoor'), setupPower: val('setupPower'),
+        extraNotes: val('extraNotes')
+      };
+    }
+
+    /* ============ AUTOSAVE / RESTORE ============ */
+    var saveTimer = null;
+    function save() {
+      if (restoring) return;
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(function () {
+        try {
+          localStorage.setItem(DRAFT_KEY, JSON.stringify(snapshot()));
+          var n = document.getElementById('draftNote');
+          n.textContent = 'Draft saved ✓';
+        } catch (e) { /* storage full / unavailable, ignore */ }
+      }, 250);
+    }
+
+    function restore() {
+      var raw;
+      try { raw = localStorage.getItem(DRAFT_KEY); } catch (e) { return; }
+      if (!raw) return;
+      var d;
+      try { d = JSON.parse(raw); } catch (e) { return; } // malformed draft, ignore
+      restoring = true;
+      try {
+        setVal('names', d.names); setVal('date', d.date); setVal('venue', d.venue); setVal('guests', d.guests);
+        setVal('window', d.window); setVal('email', d.email);
+        PRIMARY = d.primary || null; renderVibes();
+        setVal('vibeNotes', d.vibeNotes);
+        entrance = d.entrance || 'no';
+        entranceSeg.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x.dataset.v === entrance); });
+        document.getElementById('m-entrance-wrap').classList.toggle('hidden', entrance !== 'yes');
+        setVal('m-entrance', d.mEntrance); setVal('m-notes', d.mNotes);
+        (d.must || []).forEach(function (m) { addMust(m); });
+        (d.playlists || []).forEach(function (p) { addPlaylist(p); });
+        setVal('inspoNotes', d.inspoNotes); setVal('noPlay', d.noPlay);
+        setVal('setupFormat', d.setupFormat); setVal('setupRoaming', d.setupRoaming);
+        setVal('setupOutdoor', d.setupOutdoor); setVal('setupPower', d.setupPower); setVal('extraNotes', d.extraNotes);
+      } catch (e) { /* never let a restore error freeze the page */ console.warn('restore skipped', e); }
+      restoring = false;
+    }
+    function setVal(id, v) { var el = document.getElementById(id); if (el && v != null) el.value = v; }
+
+    // autosave on any input/change across the form
+    document.getElementById('formRoot').addEventListener('input', save);
+    document.getElementById('formRoot').addEventListener('change', save);
+
+    /* ============ NETWORK (timeout + retry, never hangs) ============ */
+    async function postWithRetry(url, payload, opts) {
+      opts = opts || {};
+      var retries = opts.retries == null ? 1 : opts.retries;
+      var timeoutMs = opts.timeoutMs || 45000;
+      var lastErr;
+      for (var attempt = 0; attempt <= retries; attempt++) {
+        var controller = new AbortController();
+        var timer = setTimeout(function () { controller.abort(); }, timeoutMs);
+        try {
+          var res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(payload),
+            signal: controller.signal
+          });
+          clearTimeout(timer);
+          var json = await res.json().catch(function () { return {}; });
+          if (res.ok && json.success) return json;
+          lastErr = new Error(json.error || ('HTTP ' + res.status));
+          if (res.status >= 400 && res.status < 500) throw lastErr;
+        } catch (e) {
+          clearTimeout(timer);
+          lastErr = (e && e.name === 'AbortError') ? new Error('Request timed out') : e;
+        }
+        if (attempt < retries) await new Promise(function (r) { setTimeout(r, 2500); });
+      }
+      throw lastErr;
+    }
+
+    /* ============ LAZY + OPTIONAL jsPDF ============ */
+    function loadJsPDF() {
+      return new Promise(function (resolve, reject) {
+        if (window.jspdf && window.jspdf.jsPDF) return resolve(window.jspdf.jsPDF);
+        var s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+        s.onload = function () { (window.jspdf && window.jspdf.jsPDF) ? resolve(window.jspdf.jsPDF) : reject(new Error('jsPDF missing')); };
+        s.onerror = function () { reject(new Error('jsPDF failed to load')); };
+        document.head.appendChild(s);
+        setTimeout(function () { reject(new Error('jsPDF load timeout')); }, 12000);
+      });
+    }
+
+    function buildPDF(p) {
+      var jsPDF = window.jspdf.jsPDF;
+      var doc = new jsPDF({ unit: 'pt', format: 'a4' });
+      var W = doc.internal.pageSize.getWidth();
+      var M = 48, y = 0;
+      var ACC = [196, 106, 53], INK = [22, 18, 14], DIM = [120, 112, 104];
+
+      // cover band
+      doc.setFillColor(10, 10, 10); doc.rect(0, 0, W, 150, 'F');
+      doc.setTextColor(240, 237, 232);
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(10);
+      doc.text('ELEVN // SAX APERITIVO ' + (p.session_id || ''), M, 54, { charSpace: 1.5 });
+      doc.setFont('times', 'bolditalic'); doc.setFontSize(30);
+      doc.text(p.couple || 'Your aperitivo', M, 96);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(180, 175, 168);
+      doc.text([p.event_date, p.venue, (p.guests ? p.guests + ' guests' : '')].filter(Boolean).join('   ·   '), M, 122);
+      y = 188;
+
+      function h(t) {
+        doc.setTextColor(ACC[0], ACC[1], ACC[2]); doc.setFont('helvetica', 'bold'); doc.setFontSize(9);
+        doc.text(t.toUpperCase(), M, y, { charSpace: 1.4 });
+        doc.setDrawColor(225, 220, 212); doc.setLineWidth(0.5); doc.line(M, y + 7, W - M, y + 7);
+        y += 22;
+      }
+      function kv(label, value) {
+        if (!value) return;
+        doc.setTextColor(DIM[0], DIM[1], DIM[2]); doc.setFont('helvetica', 'normal'); doc.setFontSize(8);
+        doc.text(label.toUpperCase(), M, y, { charSpace: 0.8 });
+        doc.setTextColor(INK[0], INK[1], INK[2]); doc.setFont('helvetica', 'normal'); doc.setFontSize(10.5);
+        var lines = doc.splitTextToSize(String(value), W - M - 150);
+        doc.text(lines, M + 130, y);
+        y += Math.max(16, lines.length * 13);
+        if (y > 780) { doc.addPage(); y = 60; }
+      }
+
+      h('The vibe');
+      kv('Style', p.style_main);
+      kv('Vibe notes', p.vibe_notes);
+      y += 8; h('Key moments');
+      kv('Aperitivo entrance', p.has_entrance);
+      kv('Entrance', p.moment_entrance);
+      kv('Notes', p.moment_notes);
+      y += 8; h('Must hear');
+      kv('Songs', (p.must_hear || '').split(' | ').join('\n'));
+      y += 8; h('References');
+      kv('Playlists', (p.inspo_playlists || '').split(' | ').join('\n'));
+      kv('Notes', p.inspo_notes);
+      kv('No play', p.no_play);
+      y += 8; h('Setup');
+      kv('Format', p.setup_format);
+      kv('Roaming', p.setup_roaming);
+      kv('Outdoor / shade', p.setup_outdoor);
+      kv('Power', p.setup_power);
+      kv('Extra notes', p.extra_notes);
+
+      return doc;
+    }
+
+    /* ============ SUBMIT (guarded, degrades gracefully, never freezes) ============ */
+    var sending = false;
+    var submitBtn = document.getElementById('submitBtn');
+    var statusEl = document.getElementById('status');
+
+    submitBtn.addEventListener('click', submit);
+
+    async function submit() {
+      if (sending) return; // double-submit guard
+      if (document.getElementById('honey').value) return; // bot
+      var consent = document.getElementById('consent');
+      if (!consent.checked) {
+        statusEl.className = 'form-status error';
+        statusEl.textContent = 'Please tick the confirmation box first.';
+        return;
+      }
+      if (!val('names')) {
+        statusEl.className = 'form-status error';
+        statusEl.textContent = 'Add your name(s) so we know whose party this is.';
+        document.getElementById('names').focus();
+        return;
+      }
+
+      sending = true;
+      submitBtn.disabled = true;
+      statusEl.className = 'form-status';
+      statusEl.textContent = 'Locking your brief...';
+
+      var s = snapshot();
+      var initials = (s.names.replace(/[^A-Za-z& ]/g, '').split(/[&\s]+/).filter(Boolean).map(function (w) { return w[0]; }).join('') || '').toUpperCase().slice(0, 3);
+      var yr = s.date ? s.date.split('-')[0].slice(2) : '';
+      var sid = initials && yr ? (initials + '-' + yr) : initials;
+
+      var payload = {
+        session_id: sid,
+        couple: s.names,
+        event_date: s.date,
+        venue: s.venue,
+        guests: s.guests,
+        aperitivo_window: s.window,
+        email: s.email,
+        style_main: primaryName(),
+        vibe_notes: s.vibeNotes,
+        has_entrance: s.entrance === 'yes' ? 'Yes' : 'No',
+        moment_entrance: s.mEntrance,
+        moment_notes: s.mNotes,
+        must_hear: s.must.join(' | '),
+        inspo_playlists: s.playlists.join(' | '),
+        inspo_notes: s.inspoNotes,
+        no_play: s.noPlay,
+        setup_format: s.setupFormat,
+        setup_roaming: s.setupRoaming,
+        setup_outdoor: s.setupOutdoor,
+        setup_power: s.setupPower,
+        extra_notes: s.extraNotes,
+        locked_at: new Date().toISOString()
+      };
+
+      // PDF is optional. If anything goes wrong building it, we still submit.
+      var pdfBase64 = '', pdfFilename = 'elevn-aperitivo-' + (sid || 'brief') + '.pdf';
+      try {
+        await loadJsPDF();
+        var doc = buildPDF(payload);
+        var blob = doc.output('blob');
+        pdfBase64 = doc.output('datauristring').split(',')[1];
+        // give the client their copy
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = pdfFilename;
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+      } catch (pdfErr) {
+        console.warn('PDF skipped, submitting without it', pdfErr);
+      }
+
+      try {
+        await postWithRetry('/api/sax-brief', pdfBase64 ? Object.assign({}, payload, { pdfBase64: pdfBase64, pdfFilename: pdfFilename }) : payload, { retries: 1, timeoutMs: 45000 });
+        try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+        document.getElementById('formRoot').style.display = 'none';
+        document.getElementById('doneBlock').style.display = 'block';
+        document.getElementById('navLabel').textContent = 'BRIEF LOCKED';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (err) {
+        console.error(err);
+        sending = false;
+        submitBtn.disabled = false;
+        statusEl.className = 'form-status error';
+        statusEl.textContent = 'Could not send. Please try again, or email hello@elevndjs.com.';
+      }
+    }
+
+    /* ============ INIT ============ */
+    restore();
+    if (!document.querySelector('.must-in')) addMust();
+    if (!document.querySelector('.pl-in')) addPlaylist();
+  </script>
+</body>
+</html>
