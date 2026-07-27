@@ -485,57 +485,137 @@
     function buildPDF(p) {
       var jsPDF = window.jspdf.jsPDF;
       var doc = new jsPDF({ unit: 'pt', format: 'a4' });
-      var W = doc.internal.pageSize.getWidth();
-      var M = 48, y = 0;
-      var ACC = [196, 106, 53], INK = [22, 18, 14], DIM = [120, 112, 104];
+      var W = doc.internal.pageSize.getWidth();   // ~595
+      var H = doc.internal.pageSize.getHeight();  // ~842
+      var M = 56;                  // page margin
+      var COL = M + 134;           // value column x
+      var BOTTOM = H - 70;         // content baseline limit
 
-      // cover band
-      doc.setFillColor(10, 10, 10); doc.rect(0, 0, W, 150, 'F');
-      doc.setTextColor(240, 237, 232);
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(10);
-      doc.text('ELEVN // SAX APERITIVO ' + (p.session_id || ''), M, 54, { charSpace: 1.5 });
-      doc.setFont('times', 'bolditalic'); doc.setFontSize(30);
-      doc.text(p.couple || 'Your aperitivo', M, 96);
-      doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(180, 175, 168);
-      doc.text([p.event_date, p.venue, (p.guests ? p.guests + ' guests' : '')].filter(Boolean).join('   ·   '), M, 122);
-      y = 188;
+      // ELEVN palette
+      var BLACK = [13, 12, 11], CREAM = [240, 237, 232], FAINT = [150, 144, 138];
+      var ACC = [196, 106, 53], ACC_SOFT = [247, 240, 232];
+      var INK = [26, 22, 18], DIM = [138, 130, 122], HAIR = [228, 222, 214];
+      function fill(c) { doc.setFillColor(c[0], c[1], c[2]); }
+      function stroke(c) { doc.setDrawColor(c[0], c[1], c[2]); }
+      function ink(c) { doc.setTextColor(c[0], c[1], c[2]); }
 
+      var pageNum = 1, y = 0;
+      function footer() {
+        stroke(HAIR); doc.setLineWidth(0.5); doc.line(M, BOTTOM + 22, W - M, BOTTOM + 22);
+        doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); ink(DIM);
+        doc.text('ELEVN · SAX APERITIVO', M, BOTTOM + 36, { charSpace: 1 });
+        doc.text('elevndjs.com', W / 2, BOTTOM + 36, { align: 'center', charSpace: 1 });
+        doc.text(String(pageNum), W - M, BOTTOM + 36, { align: 'right' });
+      }
+      function newPage() { footer(); doc.addPage(); pageNum++; y = 88; }
+      function ensure(space) { if (y + space > BOTTOM) newPage(); }
+
+      // ---------- cover band ----------
+      var BAND = 236;
+      fill(BLACK); doc.rect(0, 0, W, BAND, 'F');
+      fill(ACC); doc.rect(0, BAND, W, 3, 'F');
+
+      ink(CREAM); doc.setFont('helvetica', 'bold'); doc.setFontSize(14);
+      doc.text('ELEVN', M, 70, { charSpace: 3.5 });
+      ink(FAINT); doc.setFont('helvetica', 'normal'); doc.setFontSize(8);
+      doc.text("DJ'S", M + 66, 70, { charSpace: 2 });
+      if (p.session_id) {
+        ink(FAINT); doc.setFont('helvetica', 'bold'); doc.setFontSize(8);
+        doc.text('REF ' + p.session_id, W - M, 70, { align: 'right', charSpace: 1.5 });
+      }
+
+      ink(ACC); doc.setFont('helvetica', 'bold'); doc.setFontSize(8.5);
+      doc.text('SAXOPHONE · APERITIVO BRIEF', M, 124, { charSpace: 2.6 });
+
+      ink(CREAM); doc.setFont('times', 'bolditalic'); doc.setFontSize(34);
+      var titleLines = doc.splitTextToSize(p.couple || 'Your aperitivo', W - 2 * M);
+      doc.text(titleLines, M, 162);
+
+      ink([176, 170, 163]); doc.setFont('helvetica', 'normal'); doc.setFontSize(10.5);
+      var meta = [p.event_date, p.venue, (p.guests ? p.guests + ' guests' : '')].filter(Boolean).join('   ·   ');
+      var metaY = Math.min(162 + (titleLines.length - 1) * 36 + 32, BAND - 34);
+      if (meta) doc.text(meta, M, metaY);
+
+      // ---------- hero: chosen style ----------
+      y = BAND + 44;
+      if (p.style_main) {
+        var boxH = 64;
+        fill(ACC_SOFT); doc.rect(M, y, W - 2 * M, boxH, 'F');
+        fill(ACC); doc.rect(M, y, 4, boxH, 'F');
+        ink(ACC); doc.setFont('helvetica', 'bold'); doc.setFontSize(8);
+        doc.text('CHOSEN STYLE', M + 24, y + 26, { charSpace: 1.8 });
+        ink(INK); doc.setFont('times', 'bolditalic'); doc.setFontSize(21);
+        doc.text(p.style_main, M + 24, y + 50);
+        y += boxH + 34;
+      }
+
+      // ---------- helpers ----------
       function h(t) {
-        doc.setTextColor(ACC[0], ACC[1], ACC[2]); doc.setFont('helvetica', 'bold'); doc.setFontSize(9);
-        doc.text(t.toUpperCase(), M, y, { charSpace: 1.4 });
-        doc.setDrawColor(225, 220, 212); doc.setLineWidth(0.5); doc.line(M, y + 7, W - M, y + 7);
-        y += 22;
+        ensure(54);
+        fill(ACC); doc.rect(M, y - 8, 6, 6, 'F');
+        ink(INK); doc.setFont('helvetica', 'bold'); doc.setFontSize(10.5);
+        doc.text(t.toUpperCase(), M + 16, y, { charSpace: 1.8 });
+        stroke(HAIR); doc.setLineWidth(0.5); doc.line(M, y + 13, W - M, y + 13);
+        y += 32;
       }
       function kv(label, value) {
         if (!value) return;
-        doc.setTextColor(DIM[0], DIM[1], DIM[2]); doc.setFont('helvetica', 'normal'); doc.setFontSize(8);
-        doc.text(label.toUpperCase(), M, y, { charSpace: 0.8 });
-        doc.setTextColor(INK[0], INK[1], INK[2]); doc.setFont('helvetica', 'normal'); doc.setFontSize(10.5);
-        var lines = doc.splitTextToSize(String(value), W - M - 150);
-        doc.text(lines, M + 130, y);
-        y += Math.max(16, lines.length * 13);
-        if (y > 780) { doc.addPage(); y = 60; }
+        doc.setFont('helvetica', 'normal'); doc.setFontSize(10.5);
+        var lines = doc.splitTextToSize(String(value), W - COL - M);
+        var rowH = Math.max(15, lines.length * 13.5);
+        ensure(rowH + 6);
+        ink(DIM); doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5);
+        doc.text(label.toUpperCase(), M, y + 1, { charSpace: 0.8 });
+        ink(INK); doc.setFont('helvetica', 'normal'); doc.setFontSize(10.5);
+        doc.text(lines, COL, y + 1);
+        y += rowH + 8;
       }
+      function numbered(raw) {
+        var items = (raw || '').split(' | ').map(function (s) { return s.trim(); }).filter(Boolean);
+        if (!items.length) { kv('', null); return; }
+        items.forEach(function (it, i) {
+          doc.setFont('helvetica', 'normal'); doc.setFontSize(10.5);
+          var lines = doc.splitTextToSize(it, W - (M + 30) - M);
+          var rowH = Math.max(15, lines.length * 13.5);
+          ensure(rowH + 5);
+          ink(ACC); doc.setFont('times', 'bolditalic'); doc.setFontSize(12);
+          doc.text(('0' + (i + 1)).slice(-2), M, y + 1);
+          ink(INK); doc.setFont('helvetica', 'normal'); doc.setFontSize(10.5);
+          doc.text(lines, M + 30, y + 1);
+          y += rowH + 7;
+        });
+      }
+      function gap(n) { y += (n || 14); }
 
+      // ---------- body ----------
       h('The vibe');
-      kv('Style', p.style_main);
-      kv('Vibe notes', p.vibe_notes);
-      y += 8; h('Key moments');
+      kv('Notes', p.vibe_notes || '—');
+      gap(); h('Key moments');
       kv('Aperitivo entrance', p.has_entrance);
       kv('Entrance', p.moment_entrance);
       kv('Notes', p.moment_notes);
-      y += 8; h('Must hear');
-      kv('Songs', (p.must_hear || '').split(' | ').join('\n'));
-      y += 8; h('References');
-      kv('Playlists', (p.inspo_playlists || '').split(' | ').join('\n'));
-      kv('Notes', p.inspo_notes);
-      kv('No play', p.no_play);
-      y += 8; h('Setup');
+      if (p.must_hear) { gap(); h('Must hear'); numbered(p.must_hear); }
+      if (p.inspo_playlists || p.inspo_notes || p.no_play) {
+        gap(); h('References');
+        if (p.inspo_playlists) numbered(p.inspo_playlists);
+        kv('Notes', p.inspo_notes);
+        kv('No play', p.no_play);
+      }
+      gap(); h('Setup');
       kv('Format', p.setup_format);
       kv('Roaming', p.setup_roaming);
       kv('Outdoor / shade', p.setup_outdoor);
       kv('Power', p.setup_power);
       kv('Extra notes', p.extra_notes);
+      gap(); h('Logistics');
+      kv('Aperitivo window', p.aperitivo_window);
+      kv('Contact', p.email);
+
+      // closing line + final footer
+      ensure(40);
+      ink(DIM); doc.setFont('times', 'italic'); doc.setFontSize(10);
+      doc.text('Locked ' + (p.locked_at ? String(p.locked_at).slice(0, 10) : '') + '. We tailor the live set around this brief.', M, y + 8);
+      footer();
 
       return doc;
     }
@@ -598,26 +678,34 @@
         locked_at: new Date().toISOString()
       };
 
-      // PDF is optional. If anything goes wrong building it, we still submit.
+      // Build the PDF, but do NOT hand it over yet. The download must never happen
+      // before the brief is safely on our side, or the client walks away with a
+      // file that looks like proof while nothing ever reached us.
       var pdfBase64 = '', pdfFilename = 'elevn-aperitivo-' + (sid || 'brief') + '.pdf';
+      var pdfBlob = null;
       try {
         await loadJsPDF();
         var doc = buildPDF(payload);
-        var blob = doc.output('blob');
+        pdfBlob = doc.output('blob');
         pdfBase64 = doc.output('datauristring').split(',')[1];
-        // give the client their copy
-        var a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = pdfFilename;
-        document.body.appendChild(a); a.click(); a.remove();
-        setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
       } catch (pdfErr) {
         console.warn('PDF skipped, submitting without it', pdfErr);
       }
 
+      function deliverPdf() {
+        if (!pdfBlob) return;
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(pdfBlob);
+        a.download = pdfFilename;
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+      }
+
       try {
-        await postWithRetry('/api/sax-brief', pdfBase64 ? Object.assign({}, payload, { pdfBase64: pdfBase64, pdfFilename: pdfFilename }) : payload, { retries: 1, timeoutMs: 45000 });
+        await postWithRetry('/api/sax-brief', pdfBase64 ? Object.assign({}, payload, { pdfBase64: pdfBase64, pdfFilename: pdfFilename }) : payload, { retries: 2, timeoutMs: 45000 });
         try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+        // Confirmed on our side. Only now does the client get their copy.
+        deliverPdf();
         document.getElementById('formRoot').style.display = 'none';
         document.getElementById('doneBlock').style.display = 'block';
         document.getElementById('navLabel').textContent = 'BRIEF LOCKED';
@@ -627,8 +715,41 @@
         sending = false;
         submitBtn.disabled = false;
         statusEl.className = 'form-status error';
-        statusEl.textContent = 'Could not send. Please try again, or email hello@elevndjs.com.';
+        statusEl.innerHTML = 'We could not lock your brief, so <strong>we have not received it</strong>. ' +
+          'Your answers are saved on this device, press Lock my brief again. ' +
+          'If it keeps failing, <a href="' + mailtoFallback(payload) + '" style="color:inherit;text-decoration:underline;">send it to us by email</a> instead.';
+        statusEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
+    }
+
+    /* Last resort, so a brief is never lost just because the network failed. */
+    function mailtoFallback(p) {
+      var body = [
+        'ELEVN // SAX APERITIVO ' + (p.session_id || ''),
+        'Event: ' + (p.couple || ''),
+        'Date: ' + (p.event_date || ''),
+        'Venue: ' + (p.venue || ''),
+        'Guests: ' + (p.guests || ''),
+        'Aperitivo window: ' + (p.aperitivo_window || ''),
+        '',
+        'Style: ' + (p.style_main || ''),
+        'Vibe notes: ' + (p.vibe_notes || ''),
+        'Aperitivo entrance: ' + (p.has_entrance || '') + ' ' + (p.moment_entrance || ''),
+        'Moment notes: ' + (p.moment_notes || ''),
+        'Must hear: ' + (p.must_hear || 'none'),
+        'Playlists: ' + (p.inspo_playlists || 'none'),
+        'Reference notes: ' + (p.inspo_notes || ''),
+        'No play: ' + (p.no_play || 'none'),
+        '',
+        'Format: ' + (p.setup_format || ''),
+        'Roaming: ' + (p.setup_roaming || ''),
+        'Outdoor / shade: ' + (p.setup_outdoor || ''),
+        'Power: ' + (p.setup_power || ''),
+        'Extra notes: ' + (p.extra_notes || '')
+      ].join('\n');
+      return 'mailto:hello@elevndjs.com?subject=' +
+        encodeURIComponent('Sax aperitivo brief, ' + (p.couple || '')) +
+        '&body=' + encodeURIComponent(body);
     }
 
     /* ============ INIT ============ */
