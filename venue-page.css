@@ -81,6 +81,11 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .footer-col a { font-family: 'Inter', sans-serif; font-size: 0.86rem; line-height: 1.45; letter-spacing: 0; text-transform: none; color: var(--cream-dim); text-decoration: none; transition: color 0.2s; }
 .footer-col a:hover { color: var(--cream); }
 
+/* Secondary, low-friction route next to the main CTA */
+.cta-alt { margin-top: 1.4rem; font-family: 'Space Mono', monospace; font-size: 0.72rem; line-height: 1.8; letter-spacing: 0.04em; color: var(--cream-dim); }
+.cta-alt a { color: var(--cream); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 1px; transition: color 0.2s; }
+.cta-alt a:hover { color: var(--accent); }
+
 .related { margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--line); }
 .related h3 { font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream-dim); margin-bottom: 2rem; }
 .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
