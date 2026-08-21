@@ -129,6 +129,13 @@
 
     #cta { padding: 10rem 2.5rem; background: var(--darker); border-top: 1px solid var(--line); text-align: center; }
     .cta-inner { max-width: 780px; margin: 0 auto; }
+    .linkgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .linkgrid a { display: block; padding: 1.5rem; border: 1px solid var(--line); text-decoration: none; transition: border-color 0.2s, background 0.2s; }
+    .linkgrid a:hover { border-color: var(--accent); background: var(--darker); }
+    .linkgrid .lg-label { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.7rem; }
+    .linkgrid .lg-title { font-size: 1.02rem; font-weight: 600; color: var(--cream); line-height: 1.3; display: block; margin-bottom: 0.5rem; }
+    .linkgrid .lg-note { font-size: 0.85rem; line-height: 1.5; color: var(--cream-dim); display: block; }
+    @media (max-width: 720px) { .linkgrid { grid-template-columns: 1fr; } }
     .cta-headline { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(2.5rem, 6.5vw, 6rem); line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; color: var(--cream); margin-bottom: 2rem; }
     .cta-headline .lower { text-transform: lowercase; font-style: italic; font-weight: 300; }
     .cta-headline .accent { color: var(--accent); }
@@ -156,7 +163,7 @@
   <style>
     /* off-canvas mobile drawer must not create a horizontal scrollbar */
     body { overflow-x: hidden; }
-    .footer-nav { position: static; top: auto; left: auto; width: auto; z-index: auto; background: none; backdrop-filter: none; -webkit-backdrop-filter: none; max-width: 1100px; margin: 0 auto 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(240,237,232,0.12); display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 3rem; text-align: left; }
+    .footer-nav { position: static; top: auto; left: auto; width: auto; z-index: auto; background: none; backdrop-filter: none; -webkit-backdrop-filter: none; max-width: 1100px; margin: 0 auto 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(240,237,232,0.12); display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); gap: 2rem; text-align: left; }
     .footer-nav .footer-col h3 { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: #C46A35; font-weight: 400; margin: 0 0 1.4rem; }
     .footer-nav .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin: 0; padding: 0; }
     .footer-nav .footer-col li { margin: 0; }
@@ -166,6 +173,39 @@
     .footer-nav { grid-template-columns: 1fr; gap: 2.5rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; }
     }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Do you provide DJs for corporate events in Barcelona?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, and it is a core part of what we do. Barcelona is the third congress city in the world, so a large share of our corporate work is companies here for a conference, a trade fair or an incentive trip who need one good night alongside it: delegate parties, exhibitor and sponsor events, gala dinners, welcome receptions, product launches and closing nights. Every DJ on the roster works in English and is used to briefing with an agency or an in-house event team." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you work with the production company already contracted for our event?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, and at a conference it is usually the cleanest arrangement. There is normally an AV or production company on site with a system, an engineer and a schedule. We come as DJ only, plug into what they have built and agree the handover with them in advance, which avoids hiring sound twice and keeps the people who tuned the room in charge of it. Where a space has nothing suitable, we supply sound and lighting ourselves." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you work to a run of show with fixed cues?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, and we would rather have one. Speeches, awards, videos, sponsor moments and stage handovers all get music planned into and out of them, agreed in advance and held on the night, so the music is part of the production rather than something that happens between the parts of it." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you handle invoicing for a company?",
+        "acceptedAnswer": { "@type": "Answer", "text": "We are established and invoice in Spain, with intra-community VAT registration for billing companies in other EU member states. Briefing, coordination and paperwork are handled in English with a named contact rather than a general inbox. If your procurement process requires particular supplier documentation, ask at the enquiry stage and we will tell you exactly what we can provide." }
+      },
+      {
+        "@type": "Question",
+        "name": "How far in advance should we book a corporate DJ in Barcelona?",
+        "acceptedAnswer": { "@type": "Answer", "text": "As early as you confirm the venue, particularly if your dates fall in one of the peak congress weeks. In those weeks the venues, hotels, audiovisual companies, crew and entertainment suppliers are all working at capacity at the same time, because every exhibitor is running something of its own alongside the main event. Outside those weeks there is considerably more flexibility." }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -311,10 +351,48 @@
     </div>
   </section>
 
+  <!-- CONGRESS CITY -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="label"><span class="line"></span><span>( 04 ) BARCELONA <span class="sq"></span> CONGRESS CITY</span></div>
+      <h2 class="section-headline">Third<br><span class="lower">congress city</span><br><span class="accent">in the world.</span></h2>
+      <p class="pain-body" style="max-width:62ch;margin-bottom:2.5rem;">Barcelona has spent twenty-five consecutive years inside the top five of the ICCA ranking of international meeting destinations, and has now moved up to third, behind Lisbon and Paris. The city reports 1,992 MICE events and 683,783 delegates. Which means a great many companies land here for three days of business and then need one good night.</p>
+      <div class="pain-grid">
+        <div class="pain-item">
+          <span class="pain-num">( 01 )</span>
+          <h3 class="pain-title">The room is from everywhere</h3>
+          <p class="pain-body">Delegates from dozens of countries, spanning twenty-five to sixty, with no shared musical history at all. Reading that room is a specific skill and it is the reason ELEVN exists.</p>
+        </div>
+        <div class="pain-item">
+          <span class="pain-num">( 02 )</span>
+          <h3 class="pain-title">We plug into your production</h3>
+          <p class="pain-body">At a congress there is usually an AV company already on site with a system and an engineer. Our preferred arrangement is DJ only, plugged into what they have built, with the handover agreed in advance.</p>
+        </div>
+        <div class="pain-item">
+          <span class="pain-num">( 03 )</span>
+          <h3 class="pain-title">The date decides a lot</h3>
+          <p class="pain-body">In the peak weeks the venues, hotels, crew and suppliers all tighten at once. Entertainment belongs in the plan when you confirm the space, not in the final month.</p>
+        </div>
+      </div>
+      <div class="linkgrid" style="margin-top:3rem;">
+        <a href="/conference-after-party-dj-barcelona">
+          <span class="lg-label">Format</span>
+          <span class="lg-title">Conference after parties</span>
+          <span class="lg-note">A short late window, an international room and a run of show with hard cues.</span>
+        </a>
+        <a href="/barcelona-congress-season-guide">
+          <span class="lg-label">Planning</span>
+          <span class="lg-title">Barcelona congress season</span>
+          <span class="lg-note">The weeks that fill the city, and the quieter windows if your dates can move.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section id="cta">
     <div class="cta-inner">
-      <div class="label" style="justify-content:center;"><span class="line"></span><span>( 04 ) GET STARTED</span></div>
+      <div class="label" style="justify-content:center;"><span class="line"></span><span>( 05 ) GET STARTED</span></div>
       <h2 class="cta-headline">Tell us<br><span class="lower">about your</span> <span class="accent">event</span>.</h2>
       <p class="cta-sub">Share your brief and we'll match you with the right DJ within 48 hours, with a clear proposal and transparent pricing.</p>
       <div class="cta-btns">
@@ -361,6 +439,16 @@
           <li><a href="/wedding-dj-masia-victoria">Masia Victoria</a></li>
           <li><a href="/wedding-dj-villa-almanita">Villa Almanita</a></li>
           <li><a href="/wedding-dj-la-baronia">La Baronia</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Corporate</h3>
+        <ul>
+          <li><a href="/corporate">Corporate event DJs</a></li>
+          <li><a href="/conference-after-party-dj-barcelona">Conference after parties</a></li>
+          <li><a href="/barcelona-congress-season-guide">Barcelona congress season</a></li>
+          <li><a href="/dj-corporate-event-spain-guide">Booking a corporate DJ in Spain</a></li>
+          <li><a href="/spain-best-destination-international-events">Why Spain for an international event</a></li>
         </ul>
       </div>
       <div class="footer-col">
